@@ -1,8 +1,7 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
-import { ScanSearch, Code2, Workflow, Rocket, ArrowRight } from 'lucide-react';
+import { ScanSearch, Code2, Workflow, Rocket } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
 
@@ -10,8 +9,8 @@ const steps = [
   {
     number: '01',
     icon: ScanSearch,
-    title: 'Discovery & Auditing',
-    description: 'We audit your SEO, content gaps, ad tracking, and existing tools — then map a tailored growth strategy for your market.',
+    title: 'Audit & Strategy',
+    description: 'We identify gaps in growth, tracking, and operations — then map a clear action plan for maximum impact.',
     color: '#0066FF',
     bg: 'from-blue-500/5 to-blue-600/3',
     border: 'border-gray-100',
@@ -21,8 +20,8 @@ const steps = [
   {
     number: '02',
     icon: Code2,
-    title: 'Design & Development',
-    description: 'Agile sprints, pixel-perfect design, and iterative builds with continuous feedback.',
+    title: 'Build & Design',
+    description: 'Agile development of your custom system — built inside your accounts, on your stack.',
     color: '#0066FF',
     bg: 'from-blue-500/5 to-blue-600/3',
     border: 'border-gray-100',
@@ -32,8 +31,8 @@ const steps = [
   {
     number: '03',
     icon: Workflow,
-    title: 'Automation & Integration',
-    description: 'We build and connect your automation workflows — linking your CRM, booking system, content pipeline, and ads tracking into one seamless system.',
+    title: 'Automate & Integrate',
+    description: 'Everything connected into one workflow engine — CRM, content pipeline, outreach, and ads tracking.',
     color: '#0066FF',
     bg: 'from-blue-500/5 to-blue-600/3',
     border: 'border-gray-100',
@@ -43,8 +42,8 @@ const steps = [
   {
     number: '04',
     icon: Rocket,
-    title: 'Launch & Support',
-    description: 'Zero-downtime deployment, monitoring, and dedicated ongoing support.',
+    title: 'Launch & Scale',
+    description: 'Ongoing optimization and support — the system runs, improves, and scales without you managing it manually.',
     color: '#0066FF',
     bg: 'from-blue-500/5 to-blue-600/3',
     border: 'border-gray-100',
@@ -63,8 +62,8 @@ export default function Process() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           label="Our Process"
-          title={<>How We Bring <span className="gradient-text">Ideas to Life</span></>}
-          description="A proven four-step framework that takes you from audit to full automation — driving consistent growth for your clinic or business."
+          title={<>From Audit to Automation <span className="gradient-text">in 4 Steps</span></>}
+          description="A clear, outcome-driven framework — from identifying gaps to running a fully automated growth engine."
         />
 
         {/* Desktop: horizontal flow */}

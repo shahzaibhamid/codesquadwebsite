@@ -1,188 +1,163 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Search,
+  Globe,
   Workflow,
-  FileText,
-  UserCheck,
-  Repeat2,
-  Target,
-  Code2,
-  CalendarDays,
   BarChart3,
-  ClipboardList,
-  Sparkles,
+  Repeat2,
+  Mail,
+  Headphones,
   X,
+  CheckCheck,
   Building2,
   Stethoscope,
   Smile,
   Rocket,
-  CheckCheck,
-  MoveUpRight,
 } from 'lucide-react';
-import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
+import { AnimatedSection } from '@/components/animated-section';
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                                */
 /* ------------------------------------------------------------------ */
 
-const CARD_BG = 'linear-gradient(135deg, #F0F7FF 0%, #F5FAFF 50%, #FFFFFF 100%)';
-const ICON_GRAD = 'linear-gradient(135deg, #0066FF, #338AFF)';
-const ACCENT = '#0066FF';
-const GLOW = 'rgba(0, 102, 255, 0.08)';
-const TAG = 'bg-blue-50/50 text-blue-700 border-blue-100/50';
-
 const services = [
   {
-    icon: Search,
-    title: 'SEO & Search Optimization',
-    description: 'Complete SEO audit, keyword research, and AI-ready schema markup for maximum search visibility.',
-    highlights: ['Technical SEO Audit', 'Keyword Research', 'AI Schema Markup'],
-    cardGradient: CARD_BG,
-    iconGradient: ICON_GRAD,
-    accentColor: ACCENT,
-    glowColor: GLOW,
-    tagBg: TAG,
+    icon: Globe,
+    title: 'Growth & Visibility Engine',
+    cardNumber: 1,
+    subServices: [
+      'ChatGPT, Perplexity, Gemini citations',
+      'Technical SEO & authority building',
+      'AI-powered content pipelines',
+      'Keyword research & mapping',
+    ],
     modal: {
-      headline: 'Dominate Search Results & AI Answers.',
-      description: 'We run a full technical SEO audit, research the exact keywords your audience uses, and implement schema markup so you appear in both traditional search and AI-powered answers from ChatGPT, Perplexity, and Google AI.',
+      headline: 'You Get Discovered Where Decisions Happen.',
+      description: 'We build visibility across traditional search and AI-powered answers. Your brand gets cited in ChatGPT, Perplexity, and Gemini while ranking on Google through technical SEO and keyword-targeted content.',
       industries: [
-        { icon: Smile, label: 'Aesthetic Labs', detail: 'Target high-intent cosmetic searches and appear in AI answers for treatment queries.' },
-        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Rank for dental procedures and show up in AI-driven local health searches.' },
-        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Dominate local search and AI answers for wellness and beauty services.' },
-        { icon: Rocket, label: 'Startups', detail: 'Build search authority and AI visibility from day one.' },
+        { icon: Smile, label: 'Aesthetic Labs', detail: 'Appear in AI answers for treatment queries and local intent searches.' },
+        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Rank for high-intent service searches and build search authority.' },
+        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Turn content into discoverability across search and AI tools.' },
+        { icon: Rocket, label: 'Startups', detail: 'Get cited early where buyers ask questions and make decisions.' },
       ],
-      includes: ['Full site crawl & technical audit', 'Keyword opportunity report', 'Schema markup implementation', 'AI crawlability optimization'],
+      includes: ['GEO / AEO citations', 'Technical SEO audit', 'AI content pipeline', 'Authority building', 'Keyword mapping'],
+    },
+  },
+  {
+    icon: Mail,
+    title: 'AI Outreach Engine',
+    cardNumber: 2,
+    subServices: [
+      'ICP Filtering & Enrichment',
+      'AI Cold Email Systems',
+      'Deliverability Infrastructure',
+      'Outbound Pipeline Automation',
+    ],
+    modal: {
+      headline: 'Consistent Pipeline of Qualified Meetings.',
+      description: 'We build the full outbound stack: enrichment, ICP gating, AI-written cold email, and deliverability infrastructure. The system runs pipeline while you sleep, booking qualified meetings without manual outreach.',
+      industries: [
+        { icon: Smile, label: 'Aesthetic Labs', detail: 'Auto-outreach to referral partners and high-value leads.' },
+        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Automated recall and referral outreach that books appointments.' },
+        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Connect outreach to booking for a fully automated pipeline.' },
+        { icon: Rocket, label: 'Startups', detail: 'Launch an outbound machine that scales with your team.' },
+      ],
+      includes: ['Data enrichment setup', 'ICP filtering & segmentation', 'AI cold email sequences', 'Deliverability infrastructure', 'CRM integration'],
+    },
+  },
+  {
+    icon: BarChart3,
+    title: 'Attribution & Ads Engine',
+    cardNumber: 3,
+    subServices: [
+      'Full Tracking Stack',
+      'Meta Pixel & UTMs',
+      'Conversions API (CAPI)',
+      'Revenue Attribution Clarity',
+      'GA4 & GTM Setup',
+    ],
+    modal: {
+      headline: 'You Finally Know What\'s Working.',
+      description: 'We install the full tracking stack, then automate reporting so you always know which ads, pages, and campaigns drive real revenue. Every conversion is traced back to the source.',
+      industries: [
+        { icon: Smile, label: 'Aesthetic Labs', detail: 'Track consultation bookings back to the exact ad that drove them.' },
+        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Full attribution from ad click to confirmed appointment.' },
+        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Automated dashboards with weekly performance summaries.' },
+        { icon: Rocket, label: 'Startups', detail: 'Make data-driven decisions from day one.' },
+      ],
+      includes: ['GTM & GA4 setup', 'Meta Pixel & Conversions API', 'UTM tracking structure', 'Automated ROAS dashboard', 'Monthly attribution reports'],
     },
   },
   {
     icon: Workflow,
-    title: 'Business Automation Setup',
-    description: 'Connect your CRM, booking, email, and social tools into one seamless automated workflow.',
-    highlights: ['CRM Integration', 'Workflow Automation', 'Multi-tool Sync'],
-    cardGradient: CARD_BG,
-    iconGradient: ICON_GRAD,
-    accentColor: ACCENT,
-    glowColor: GLOW,
-    tagBg: TAG,
+    title: 'Automation Engine',
+    cardNumber: 4,
+    subServices: [
+      'CRM + booking workflows',
+      'Back-office automation',
+      'Client intake & support systems',
+      'Care coordination',
+    ],
     modal: {
-      headline: 'Your Business Runs on Autopilot.',
-      description: 'We set up and connect your automation tools so your team stops doing repetitive manual tasks. From auto-confirming appointments to sending review requests after visits — everything is wired up and tested.',
+      headline: 'Operations Run Without Manual Effort.',
+      description: 'We automate the back-office end to end: client intake forms, care coordination, CRM workflows, RTM, and technical OCR processing. Your team spends less time on admin and more time on high-value work.',
       industries: [
-        { icon: Smile, label: 'Aesthetic Labs', detail: 'Auto-send pre-treatment prep, post-care follow-ups, and review requests.' },
-        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Automate appointment reminders, recall campaigns, and new patient onboarding.' },
-        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Connect booking, billing, and marketing tools with zero manual entry.' },
-        { icon: Rocket, label: 'Startups', detail: 'Launch with a fully automated lead-to-customer pipeline from day one.' },
+        { icon: Smile, label: 'Aesthetic Labs', detail: 'Automated intake, prep, and follow-up sequences.' },
+        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Patient intake, insurance processing, and coordination.' },
+        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Less admin work so practitioners get time back.' },
+        { icon: Rocket, label: 'Startups', detail: 'Scale operations without scaling headcount.' },
       ],
-      includes: ['Platform account setup', 'Tool-to-tool connections', 'Workflow testing & QA', 'Team handover training'],
+      includes: ['CRM & booking automation', 'Client intake workflow', 'Care coordination setup', 'RTM & OCR integration', 'Back-office automation'],
     },
   },
   {
-    icon: FileText,
-    title: 'Content Creation & Management',
-    description: 'AI-powered content pipeline plus monthly delivery of blogs, social posts, and repurposed assets.',
-    highlights: ['AI Content Pipeline', 'Monthly Delivery', 'Multi-format Assets'],
-    cardGradient: CARD_BG,
-    iconGradient: ICON_GRAD,
-    accentColor: ACCENT,
-    glowColor: GLOW,
-    tagBg: TAG,
+    icon: Repeat2,
+    title: 'Content Repurposing Engine',
+    cardNumber: 5,
+    subServices: [
+      'Blog → Social Posts',
+      'Blog → Email Series',
+      'Blog → Video Scripts',
+      'Multi-channel Distribution',
+      'Brand Voice Consistency',
+    ],
     modal: {
-      headline: 'Content That Works Around the Clock.',
-      description: 'We build an AI-powered pipeline that researches, drafts, and publishes SEO blogs, then repurposes them into social posts, email content, and video scripts. Plus monthly delivery of fresh content across all channels.',
+      headline: 'Maximum Output From Minimal Input.',
+      description: 'We take each blog or long-form piece and repurpose it across social media, email, ad copy, and video scripts. Your message stays consistent and your brand stays visible across every channel without creating from scratch each time.',
       industries: [
-        { icon: Smile, label: 'Aesthetic Labs', detail: 'Weekly treatment content, before/after guides, and Instagram-ready assets.' },
-        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Consistent oral health content across blog, email, and social channels.' },
-        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Build topical authority with content that feeds your entire marketing strategy.' },
-        { icon: Rocket, label: 'Startups', detail: 'Enterprise-level content output without the enterprise headcount.' },
+        { icon: Smile, label: 'Aesthetic Labs', detail: 'One treatment guide becomes content across IG, email, and ads.' },
+        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Repurpose patient education content across every channel.' },
+        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Maximize ROI on every content piece.' },
+        { icon: Rocket, label: 'Startups', detail: 'Scale content output without scaling your team or budget.' },
       ],
-      includes: ['AI content pipeline setup', '4-8 SEO blogs/month', 'Social media assets', 'Email newsletter content', 'Multi-format repurposing'],
+      includes: ['Content audit & asset mapping', 'Social post creation', 'Email newsletter repurposing', 'Ad copy extraction', 'Video script formatting'],
     },
   },
   {
-    icon: UserCheck,
-    title: 'Quality Control & Compliance',
-    description: 'Human review workflows ensuring every AI-generated piece meets your brand and compliance standards.',
-    highlights: ['Brand Voice Check', 'Compliance Review', 'Approval Workflow'],
-    cardGradient: CARD_BG,
-    iconGradient: ICON_GRAD,
-    accentColor: ACCENT,
-    glowColor: GLOW,
-    tagBg: TAG,
+    icon: Headphones,
+    title: 'Customer Support Engine',
+    cardNumber: 6,
+    subServices: [
+      'Ticket routing & triage',
+      'Helpdesk automation',
+      'Client follow-up workflows',
+      'Knowledge base support',
+    ],
     modal: {
-      headline: 'AI Speed. Human Accuracy.',
-      description: 'We set up review workflows where your team (or ours) checks AI content before it goes live. This catches factual errors, keeps your brand voice consistent, and ensures medical/aesthetic content meets compliance standards.',
+      headline: 'Support That Scales Without Chaos.',
+      description: 'We build customer support systems that route, prioritize, and automate responses so your team can handle more clients without losing quality or speed.',
       industries: [
-        { icon: Smile, label: 'Aesthetic Labs', detail: 'Ensure treatment descriptions are accurate and compliant with advertising standards.' },
-        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Medical content reviewed for accuracy before it reaches patients.' },
-        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Protect your reputation with a human checkpoint on every published piece.' },
-        { icon: Rocket, label: 'Startups', detail: 'Scale content confidently knowing a human approves everything first.' },
+        { icon: Smile, label: 'Aesthetic Labs', detail: 'Handle patient questions and follow-ups without slowing the front desk.' },
+        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Automate appointment support and patient communication.' },
+        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Reduce admin load while keeping response times fast.' },
+        { icon: Rocket, label: 'Startups', detail: 'Scale support without building a large support team.' },
       ],
-      includes: ['Review stage workflow build', 'Approval notification setup', 'Edit & feedback loop', 'Compliance checking'],
+      includes: ['Helpdesk workflow setup', 'Auto-triage and routing', 'Client follow-up automation', 'Knowledge base structure', 'Response templates'],
     },
   },
-  {
-    icon: Target,
-    title: 'Ads Management & Tracking',
-    description: 'Complete ad tracking setup plus ongoing campaign management with clear ROAS and attribution reporting.',
-    highlights: ['Full Tracking Setup', 'Campaign Management', 'ROAS Reporting'],
-    cardGradient: CARD_BG,
-    iconGradient: ICON_GRAD,
-    accentColor: ACCENT,
-    glowColor: GLOW,
-    tagBg: TAG,
-    modal: {
-      headline: 'Ads That Actually Drive Results.',
-      description: 'We install complete tracking (GTM, GA4, Meta Pixel), then manage your Google and Meta campaigns with a focus on real outcomes — bookings, calls, and enquiries. Monthly reports show exactly what you spent and earned.',
-      industries: [
-        { icon: Smile, label: 'Aesthetic Labs', detail: 'Track consultation bookings and optimize campaigns for treatment conversions.' },
-        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Attribute new patient calls to exact ads and optimize for local acquisition.' },
-        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Full funnel tracking from ad impression to appointment confirmation.' },
-        { icon: Rocket, label: 'Startups', detail: 'Data-driven ad spend that maximizes every dollar of your budget.' },
-      ],
-      includes: ['GTM & tracking setup', 'Campaign management', 'Monthly ROAS reports', 'Attribution analysis', 'Budget optimization'],
-    },
-  },
-  {
-    icon: ClipboardList,
-    title: 'Strategy & Performance Reporting',
-    description: 'Monthly strategy sessions with comprehensive reports and 30-day action plans to keep you growing.',
-    highlights: ['Monthly Strategy Call', 'Performance Dashboard', '30-Day Action Plan'],
-    cardGradient: CARD_BG,
-    iconGradient: ICON_GRAD,
-    accentColor: ACCENT,
-    glowColor: GLOW,
-    tagBg: TAG,
-    modal: {
-      headline: 'Always Know Where You Stand.',
-      description: 'Every month you get a comprehensive report and strategy call covering what moved, what didn\'t, and exactly what we\'re doing next. No guesswork — clear data and a prioritized action plan.',
-      industries: [
-        { icon: Smile, label: 'Aesthetic Labs', detail: 'Track growth in new enquiries, treatment bookings, and content visibility.' },
-        { icon: Stethoscope, label: 'Dental Clinics', detail: 'Monthly insight into new patient growth, SEO rankings, and ad ROI.' },
-        { icon: Building2, label: 'Clinics & MedSpas', detail: 'Holistic view of your digital performance with clear next steps.' },
-        { icon: Rocket, label: 'Startups', detail: 'Stay aligned with your growth targets with monthly founder-level reviews.' },
-      ],
-      includes: ['Monthly report dashboard', '60-min strategy call', 'KPI tracking', '30-day priority action plan'],
-    },
-  },
-];
-
-const whatYouGet = [
-  { label: 'Full Automation Infrastructure', color: '#0066FF' },
-  { label: 'Done-For-You Content Engine', color: '#7C3AED' },
-  { label: 'Search + AI Visibility', color: '#059669' },
-  { label: 'Content Repurposing at Scale', color: '#EC4899' },
-  { label: 'Ads Tracking & Attribution', color: '#0EA5E9' },
-  { label: 'Monthly Strategy + Reporting', color: '#8B5CF6' },
-  { label: 'Brand-Owned Automation Setup', color: '#F97316' },
-  { label: 'Unified Messaging Across Channels', color: '#10B981' },
-  { label: 'Dedicated Customer Care Support', color: '#DC2626' },
-  { label: 'Sales Funnel Optimization', color: '#7C2D12' },
-  { label: '24/7 Technical Monitoring', color: '#1E40AF' },
-  { label: 'Lead Nurturing Automation', color: '#BE185D' },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -215,46 +190,29 @@ function ServiceModal({
           className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header band */}
-          <div className="relative p-8 pb-6 rounded-t-3xl" style={{ background: service.cardGradient }}>
+          <div className="relative p-8 pb-6 rounded-t-3xl bg-gradient-to-br from-[#0A1628] to-[#0d1f3a]">
             <button
               onClick={onClose}
-              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/80 hover:bg-white flex items-center justify-center shadow-sm transition-all hover:scale-105"
+              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all"
             >
-              <X className="w-4 h-4 text-gray-600" />
+              <X className="w-4 h-4 text-white" />
             </button>
-
-            <div
-              className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg mb-5"
-              style={{ background: service.iconGradient }}
-            >
+            <div className="w-14 h-14 rounded-2xl bg-[#0066FF] flex items-center justify-center shadow-lg mb-5">
               <service.icon className="w-6 h-6 text-white" strokeWidth={2} />
             </div>
-
-            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: service.accentColor }}>
-              {service.title}
-            </p>
-            <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight leading-tight">
-              {service.modal.headline}
-            </h2>
+            <p className="text-xs font-bold uppercase tracking-widest text-[#338AFF] mb-1">{service.title}</p>
+            <h2 className="text-2xl font-extrabold text-white tracking-tight leading-tight">{service.modal.headline}</h2>
           </div>
 
           <div className="p-8 pt-6 space-y-8">
             <p className="text-gray-600 leading-relaxed">{service.modal.description}</p>
 
-            {/* Who it's for */}
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Who It&apos;s For</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {service.modal.industries.map((ind) => (
-                  <div
-                    key={ind.label}
-                    className="flex gap-3 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-gray-200 transition-colors"
-                  >
-                    <div
-                      className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ background: service.iconGradient }}
-                    >
+                  <div key={ind.label} className="flex gap-3 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                    <div className="w-9 h-9 rounded-xl bg-[#0066FF] flex items-center justify-center shrink-0">
                       <ind.icon className="w-4 h-4 text-white" strokeWidth={2} />
                     </div>
                     <div>
@@ -266,29 +224,24 @@ function ServiceModal({
               </div>
             </div>
 
-            {/* What's included */}
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">What&apos;s Included</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {service.modal.includes.map((item) => (
                   <div key={item} className="flex items-center gap-2.5">
-                    <CheckCheck className="w-4 h-4 shrink-0" style={{ color: service.accentColor }} />
+                    <CheckCheck className="w-4 h-4 shrink-0 text-[#0066FF]" />
                     <span className="text-sm text-gray-700 font-medium">{item}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* CTA */}
-            <motion.button
-              whileHover={{ scale: 1.02, boxShadow: '0 12px 30px rgba(0,0,0,0.15)' }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full py-4 rounded-2xl text-white font-bold text-sm shadow-lg"
-              style={{ background: service.iconGradient }}
+            <button
+              className="w-full py-4 rounded-2xl text-white font-bold text-sm shadow-lg bg-gradient-to-r from-[#0066FF] to-[#338AFF] hover:from-[#0052CC] hover:to-[#0066FF] transition-all"
               onClick={onClose}
             >
               Get Started with This Service
-            </motion.button>
+            </button>
           </div>
         </motion.div>
       </motion.div>
@@ -300,122 +253,78 @@ function ServiceModal({
 /*  Service Card                                                        */
 /* ------------------------------------------------------------------ */
 
+const VISIBLE_DEFAULT = 3;
+
 function ServiceCard({
   service,
-  index,
   onLearnMore,
 }: {
   service: (typeof services)[number];
-  index: number;
   onLearnMore: () => void;
 }) {
+  const Icon = service.icon;
+  const [hovered, setHovered] = useState(false);
+  const visibleSubs = hovered ? service.subServices : service.subServices.slice(0, VISIBLE_DEFAULT);
+
   return (
-    <AnimatedItem variant="fade-up" delay={index * 0.06}>
-      <motion.div
-        whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] } }}
-        className="group relative h-full rounded-3xl overflow-hidden cursor-pointer"
+    <div
+      className="od-service-card group relative flex-shrink-0 w-[290px] sm:w-[310px] bg-white rounded-2xl overflow-hidden cursor-pointer border border-gray-100 hover:border-[#0066FF]/20 hover:shadow-2xl hover:shadow-[#0066FF]/10 transition-all duration-400"
+      style={{ boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Blue glowing blob decoration */}
+      <div
+        className="absolute top-4 right-6 w-24 h-24 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
-          background: service.cardGradient,
-          boxShadow: '0 4px 20px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)',
+          background: 'radial-gradient(circle, #0066FF 0%, #338AFF 40%, transparent 70%)',
+          filter: 'blur(18px)',
         }}
-      >
-        {/* Hover glow */}
-        <motion.div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: `radial-gradient(circle at 50% 0%, ${service.glowColor}, transparent 70%)` }}
-        />
-        {/* Shimmer */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden">
-          <div
-            className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)' }}
-          />
+      />
+      {/* Subtle always-visible blob */}
+      <div
+        className="absolute top-6 right-8 w-16 h-16 rounded-full opacity-20 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, #0066FF 0%, transparent 70%)',
+          filter: 'blur(14px)',
+        }}
+      />
+
+      <div className="relative p-7 flex flex-col gap-5 min-h-[280px]">
+        {/* Icon */}
+        <div className="od-service-icon w-12 h-12 rounded-xl bg-[#0066FF]/8 flex items-center justify-center group-hover:bg-[#0066FF] transition-all duration-400">
+          <Icon className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-400" strokeWidth={2} />
         </div>
 
-        <div className="relative p-7 h-full flex flex-col">
-          {/* Icon */}
-          <motion.div
-            whileHover={{ rotate: [0, -10, 10, -10, 0], transition: { duration: 0.5 } }}
-            className="mb-5 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-300"
-            style={{ background: service.iconGradient }}
+        {/* Title */}
+        <div className="headWrap">
+          <h3
+            className="text-xl font-extrabold text-[#0A1628] leading-tight group-hover:text-[#0066FF] transition-colors duration-300"
+            onClick={onLearnMore}
           >
-            <service.icon className="w-6 h-6 text-white" strokeWidth={2} />
-          </motion.div>
-
-          {/* Featured badge */}
-          {service.featured && (
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/60 backdrop-blur-sm border border-white/80 mb-4 w-fit shadow-sm"
-            >
-              <Sparkles className="w-3 h-3" style={{ color: service.accentColor }} />
-              <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: service.accentColor }}>
-                Core Service
-              </span>
-            </motion.div>
-          )}
-
-          {/* Title */}
-          <h3 className="font-bold text-gray-900 tracking-tight mb-3 text-lg">{service.title}</h3>
-
-          {/* Short description */}
-          <p className="text-gray-500 text-sm leading-relaxed mb-5">{service.description}</p>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {service.highlights.map((h) => (
-              <span
-                key={h}
-                className={`inline-flex items-center px-3 py-1.5 rounded-xl text-[11px] font-semibold border ${service.tagBg}`}
-              >
-                {h}
-              </span>
-            ))}
-          </div>
-
-          {/* Learn More CTA */}
-          <div className="mt-auto">
-            <motion.button
-              onClick={onLearnMore}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="group/btn relative flex items-center gap-2.5 overflow-hidden rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-300"
-              style={{
-                background: `linear-gradient(135deg, ${service.accentColor}15, ${service.accentColor}08)`,
-                border: `1px solid ${service.accentColor}30`,
-                color: service.accentColor,
-              }}
-            >
-              <span>Learn More</span>
-              <motion.span
-                className="flex items-center"
-                initial={{ x: 0 }}
-                whileHover={{ x: 3 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-              >
-                <MoveUpRight className="w-3.5 h-3.5" />
-              </motion.span>
-              {/* Fill on hover */}
-              <motion.div
-                className="absolute inset-0 -z-10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 rounded-xl"
-                style={{ background: service.iconGradient }}
-              />
-              <span className="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2.5 text-white font-semibold text-sm">
-                Learn More <MoveUpRight className="w-3.5 h-3.5" />
-              </span>
-            </motion.button>
-          </div>
+            {service.title}
+          </h3>
         </div>
 
-        {/* Bottom accent */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{ background: service.iconGradient }}
-        />
-      </motion.div>
-    </AnimatedItem>
+        {/* Sub-services pills */}
+        <div className="sub-services-container flex flex-wrap gap-2">
+          {visibleSubs.map((sub) => (
+            <button
+              key={sub}
+              onClick={onLearnMore}
+              className="sub-service inline-flex items-center px-3.5 py-1.5 rounded-full border border-gray-200 bg-white hover:border-[#0066FF] hover:text-[#0066FF] text-sm text-gray-600 font-medium transition-all duration-200 hover:shadow-sm"
+            >
+              {sub}
+            </button>
+          ))}
+          {!hovered && service.subServices.length > VISIBLE_DEFAULT && (
+            <span className="inline-flex items-center px-3.5 py-1.5 rounded-full border border-dashed border-gray-200 text-xs text-gray-400 font-medium">
+              +{service.subServices.length - VISIBLE_DEFAULT} more
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -423,61 +332,34 @@ function ServiceCard({
 /*  Main export                                                         */
 /* ------------------------------------------------------------------ */
 
+const marqueeServices = [...services, ...services];
+
 export default function Services() {
   const [activeService, setActiveService] = useState<(typeof services)[number] | null>(null);
 
   return (
     <>
-      <section id="services" className="relative py-20 md:py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/30 to-white" />
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-100/30 rounded-full blur-3xl" />
+      <section id="services" className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-white via-gray-50/30 to-white">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-100/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            label="Our Services"
-            title={<>Everything You Need to <span className="gradient-text">Grow & Automate</span></>}
-            description="A complete done-for-you system covering SEO, automation, content, ads tracking, and monthly strategy — built for clinics, aesthetic labs, dental practices, and growing startups."
+            label="Systems We Build"
+            title={<>Systems We Build</>}
+            description="From visibility to outbound, tracking, automation, and repurposing, everything works together as one engine."
           />
 
-          <AnimatedSection
-            variant="stagger-children"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7"
-          >
-            {services.map((service, index) => (
-              <ServiceCard
-                key={service.title}
-                service={service}
-                index={index}
-                onLearnMore={() => setActiveService(service)}
-              />
-            ))}
-          </AnimatedSection>
-
-          {/* What You Get */}
-          <AnimatedSection variant="fade-up" delay={0.3} className="mt-20">
-            <div className="bg-gradient-to-br from-[#0A1628] to-[#0d1f3c] rounded-3xl p-8 md:p-12">
-              <div className="text-center mb-10">
-                <p className="text-xs font-bold uppercase tracking-widest text-blue-400 mb-3">The Full Picture</p>
-                <h3 className="text-2xl md:text-3xl font-bold text-white">What You Get</h3>
-                <p className="text-gray-400 mt-2 text-sm max-w-xl mx-auto">
-                  Everything bundled into one system — so your clinic or startup can focus on delivering great service while we handle growth.
-                </p>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {whatYouGet.map((item) => (
-                  <motion.div
-                    key={item.label}
-                    whileHover={{ scale: 1.04, y: -2 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    className="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-4 cursor-default transition-colors"
-                  >
-                    <div
-                      className="w-2 h-2 rounded-full shrink-0"
-                      style={{ background: item.color, boxShadow: `0 0 6px ${item.color}` }}
-                    />
-                    <span className="text-sm font-medium text-gray-200 leading-snug">{item.label}</span>
-                  </motion.div>
+          {/* Marquee slider */}
+          <AnimatedSection variant="fade-up" className="relative">
+            <div className="overflow-hidden">
+              <div className="flex w-max animate-services-marquee gap-5 py-4 px-1 hover:[animation-play-state:paused]">
+                {marqueeServices.map((service, index) => (
+                  <ServiceCard
+                    key={`${service.title}-${index}`}
+                    service={service}
+                    onLearnMore={() => setActiveService(service)}
+                  />
                 ))}
               </div>
             </div>

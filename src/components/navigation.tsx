@@ -1,35 +1,30 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import BookingModal from '@/components/booking-modal';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Heart, Cpu, Sprout, Wrench, Microscope, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const navLinks = [
-  { label: 'Services', href: '#services', hasDropdown: true },
+  { label: 'Home', href: '/' },
   { label: 'Industries', href: '#industries' },
+  { label: 'Case Studies', href: '/case-studies' },
   { label: 'Resources', href: '#resources' },
+  { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
 ];
 
-const servicesDropdown = [
-  { icon: Heart, title: 'Healthcare Solutions', description: 'HIPAA-compliant healthcare platforms.' },
-  { icon: Cpu, title: 'Computer Vision', description: 'Image recognition & AI vision systems.' },
-  { icon: Sprout, title: 'Agriculture Technology', description: 'IoT-based precision agriculture.' },
-  { icon: Wrench, title: 'Engineering IoT', description: 'Connected industrial ecosystems.' },
-  { icon: Microscope, title: 'Engineering Tech', description: 'CAD, digital twins & automation.' },
-];
-
 export default function Navigation() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
-  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,18 +44,8 @@ export default function Navigation() {
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
-    setDropdownOpen(false);
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleDropdownEnter = () => {
-    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-    setDropdownOpen(true);
-  };
-
-  const handleDropdownLeave = () => {
-    dropdownTimeoutRef.current = setTimeout(() => setDropdownOpen(false), 150);
   };
 
   return (
@@ -78,21 +63,21 @@ export default function Navigation() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Logo */}
-          <motion.a
-            href="#"
-            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="flex items-center"
-            whileHover={{ scale: 1.02 }}
-          >
-            <Image
-              src="/logo.png"
-              alt="Company Logo"
-              width={160}
-              height={48}
-              className="h-10 w-auto object-contain"
-              priority
-            />
-          </motion.a>
+          <Link href="/">
+            <motion.span
+              className="flex items-center cursor-pointer"
+              whileHover={{ scale: 1.02 }}
+            >
+              <Image
+                src="/logo.png"
+                alt="Company Logo"
+                width={160}
+                height={48}
+                className="h-10 w-auto object-contain"
+                priority
+              />
+            </motion.span>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
@@ -100,62 +85,29 @@ export default function Navigation() {
               <div
                 key={link.href}
                 className="relative"
-                onMouseEnter={link.hasDropdown ? handleDropdownEnter : undefined}
-                onMouseLeave={link.hasDropdown ? handleDropdownLeave : undefined}
               >
-                <button
-                  onClick={() => { if (!link.hasDropdown) scrollTo(link.href); }}
-                  className={`relative px-3.5 py-2 text-sm font-medium rounded-md transition-colors duration-200 flex items-center gap-1 ${
-                    activeSection === link.href.replace('#', '')
-                      ? scrolled ? 'text-[#0066FF]' : 'text-white'
-                      : scrolled ? 'text-gray-600 hover:text-[#0066FF] hover:bg-blue-50' : 'text-white/80 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {link.label}
-                  {link.hasDropdown && (
-                    <svg className={`w-3 h-3 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  )}
-                </button>
-
-                {link.hasDropdown && (
-                  <AnimatePresence>
-                    {dropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 4, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 4, scale: 0.98 }}
-                        transition={{ duration: 0.15 }} // Faster animation
-                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[480px] rounded-xl bg-white shadow-xl border border-gray-100 p-5 z-50"
-                        onMouseEnter={handleDropdownEnter}
-                        onMouseLeave={handleDropdownLeave}
-                      >
-                        <div className="grid grid-cols-1 gap-1">
-                          {servicesDropdown.map((service) => (
-                            <button
-                              key={service.title}
-                              onClick={() => scrollTo('#services')}
-                              className="flex items-start gap-3 p-3 rounded-lg text-left transition-colors duration-200 hover:bg-blue-50 group/item"
-                            >
-                              <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0 group-hover/item:bg-[#0066FF] transition-colors duration-200">
-                                <service.icon className="w-4 h-4 text-[#0066FF] group-hover/item:text-white transition-colors duration-200" />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-[#0A1628] group-hover/item:text-[#0066FF] transition-colors duration-200 leading-tight">{service.title}</p>
-                                <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{service.description}</p>
-                              </div>
-                            </button>
-                          ))}
-                        </div>
-                        <div className="mt-3 pt-3 border-t border-gray-100">
-                          <button onClick={() => scrollTo('#services')} className="flex items-center justify-center gap-2 w-full text-sm font-medium text-[#0066FF] hover:text-[#0052CC] transition-colors py-1">
-                            View All Services <ArrowRight className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                {link.href.startsWith('#') ? (
+                  <button
+                    onClick={() => scrollTo(link.href)}
+                    className={`relative px-3.5 py-2 text-sm font-medium rounded-md transition-colors duration-200 flex items-center gap-1 ${
+                      activeSection === link.href.replace('#', '')
+                        ? scrolled ? 'text-[#0066FF]' : 'text-white'
+                        : scrolled ? 'text-gray-600 hover:text-[#0066FF] hover:bg-blue-50' : 'text-white/80 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className={`relative px-3.5 py-2 text-sm font-medium rounded-md transition-colors duration-200 flex items-center gap-1 ${
+                      (link.href === '/' ? pathname === '/' : pathname.startsWith(link.href))
+                        ? 'text-[#0066FF] bg-blue-50'
+                        : scrolled ? 'text-gray-600 hover:text-[#0066FF] hover:bg-blue-50' : 'text-white/80 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
                 )}
               </div>
             ))}
@@ -197,18 +149,39 @@ export default function Navigation() {
                   <div className="flex-1 px-4 py-6">
                     <div className="flex flex-col gap-1">
                       {navLinks.map((link, i) => (
-                        <motion.button
-                          key={link.href}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.05 }}
-                          onClick={() => scrollTo(link.href)}
-                          className={`text-left px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                            activeSection === link.href.replace('#', '') ? 'bg-blue-50 text-[#0066FF]' : 'text-gray-600 hover:bg-gray-50'
-                          }`}
-                        >
-                          {link.label}
-                        </motion.button>
+                        link.href.startsWith('#') ? (
+                          <motion.button
+                            key={link.href}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.05 }}
+                            onClick={() => scrollTo(link.href)}
+                            className={`text-left px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                              activeSection === link.href.replace('#', '') ? 'bg-blue-50 text-[#0066FF]' : 'text-gray-600 hover:bg-gray-50'
+                            }`}
+                          >
+                            {link.label}
+                          </motion.button>
+                        ) : (
+                          <motion.div
+                            key={link.href}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.05 }}
+                          >
+                            <Link
+                              href={link.href}
+                              onClick={() => setMobileOpen(false)}
+                              className={`block text-left px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                                (link.href === '/' ? pathname === '/' : pathname.startsWith(link.href))
+                                  ? 'bg-blue-50 text-[#0066FF]'
+                                  : 'text-gray-600 hover:bg-gray-50'
+                              }`}
+                            >
+                              {link.label}
+                            </Link>
+                          </motion.div>
+                        )
                       ))}
                     </div>
                   </div>

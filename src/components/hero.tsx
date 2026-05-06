@@ -1,99 +1,55 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import { Phone, ChevronRight, TrendingUp, Settings, Brain } from 'lucide-react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import BookingModal from '@/components/booking-modal';
 
-const heroSlides = [
+const benefits = [
   {
-    image: '/images/hero-bg-1.jpg',
-    heading: 'Engineering Digital Excellence',
-    subheading: 'We build world-class software solutions that transform businesses and drive innovation across industries.',
+    icon: TrendingUp,
+    text: 'More qualified meetings, less manual outreach',
   },
   {
-    image: '/images/hero-bg-2.jpg',
-    heading: 'Powering Innovation with Technology',
-    subheading: 'From healthcare to agriculture, our cutting-edge solutions empower organizations to thrive in the digital age.',
+    icon: Settings,
+    text: 'Fully automated back-office operations',
   },
   {
-    image: '/images/hero-bg-3.jpg',
-    heading: 'Your Trusted Technology Partner',
-    subheading: 'Partner with a team of 200+ experts delivering scalable, reliable, and future-ready solutions.',
-  },
-  {
-    image: '/images/hero-bg-4.jpg',
-    heading: 'Scaling Businesses with AI',
-    subheading: 'Leverage machine learning, computer vision, and intelligent automation to unlock new levels of efficiency and growth.',
-  },
-  {
-    image: '/images/hero-bg-5.jpg',
-    heading: 'End-to-End Product Development',
-    subheading: 'From ideation and design to development and deployment — we handle the full lifecycle so you can focus on what matters most.',
+    icon: Brain,
+    text: 'AI systems that improve over time',
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Hero                                                                */
-/* ------------------------------------------------------------------ */
-
 export default function Hero() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const goToSlide = useCallback((index: number) => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrentSlide(index);
-    // Reduce transition time from 800ms to 500ms
-    setTimeout(() => setIsTransitioning(false), 500);
-  }, [isTransitioning]);
-
-  const nextSlide = useCallback(() => {
-    goToSlide((currentSlide + 1) % heroSlides.length);
-  }, [currentSlide, goToSlide]);
-
-  useEffect(() => {
-    // Increase interval from 6s to 8s to reduce frequency of heavy transitions
-    intervalRef.current = setInterval(nextSlide, 8000);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [nextSlide]);
 
   return (
     <>
       <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Permanent dark base */}
-        <div className="absolute inset-0 z-0 bg-[#0A1628]" />
-
-        {/* Background Image Slider */}
-        <div className="absolute inset-0 z-[1]">
-          <AnimatePresence>
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.6, ease: 'easeInOut' }} // Reduced from 1.0s
-              className="absolute inset-0"
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: `url(${heroSlides[currentSlide].image})` }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628]/95 via-[#0A1628]/80 to-[#0A1628]/60" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-transparent to-[#0A1628]/30" />
-            </motion.div>
-          </AnimatePresence>
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/hero-bg-3.jpg"
+            alt="Hero background"
+            fill
+            priority
+            className="object-cover object-center"
+          />
         </div>
+
+        {/* Dark overlay for contrast */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-br from-[#0A1628]/92 via-[#0d1f3a]/82 to-[#071020]/92" />
+
+        {/* Blue glow top-right */}
+        <div className="absolute top-0 right-0 w-[600px] h-[500px] bg-[#0066FF]/14 rounded-full blur-[120px] z-[1] pointer-events-none" />
+
+        {/* Violet glow bottom-left */}
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-violet-600/10 rounded-full blur-[100px] z-[1] pointer-events-none" />
 
         {/* Grid pattern */}
         <div
-          className="absolute inset-0 z-[2] pointer-events-none opacity-[0.03]"
+          className="absolute inset-0 z-[2] pointer-events-none opacity-[0.04]"
           style={{
             backgroundImage: `
               linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -105,110 +61,63 @@ export default function Hero() {
 
         {/* Main Content */}
         <div className="relative z-[3] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
-          <div className="max-w-2xl">
+          <div className="max-w-3xl">
+
             {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/[0.12] mb-8"
-            >
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/[0.12] mb-8">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
               </span>
-              <span className="text-sm text-blue-100/80 font-medium">Trusted by 50+ companies worldwide</span>
-            </motion.div>
-
-            {/* Headline */}
-            <div className="relative min-h-[5rem] sm:min-h-[6rem] lg:min-h-[7rem] mb-6">
-              <AnimatePresence mode="wait">
-                <motion.h1
-                  key={currentSlide}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-6xl font-bold text-white leading-[1.1] tracking-tight"
-                >
-                  {heroSlides[currentSlide].heading.split(' ').map((word, i) => (
-                    <span key={i}>
-                      {i >= heroSlides[currentSlide].heading.split(' ').length - 2 ? (
-                        <span
-                          className="text-transparent bg-clip-text"
-                          style={{ backgroundImage: 'linear-gradient(135deg, #0066FF 0%, #338AFF 50%, #66B2FF 100%)' }}
-                        >
-                          {word}
-                        </span>
-                      ) : (
-                        <span className="text-white">{word}</span>
-                      )}
-                      {i < heroSlides[currentSlide].heading.split(' ').length - 1 && ' '}
-                    </span>
-                  ))}
-                </motion.h1>
-              </AnimatePresence>
+              <span className="text-sm text-blue-100/80 font-medium">Trusted by 20+ companies worldwide</span>
             </div>
 
-            {/* Subtitle */}
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={`sub-${currentSlide}`}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.5, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="text-base sm:text-lg lg:text-xl text-blue-100/60 max-w-xl mb-10 leading-relaxed font-light"
-              >
-                {heroSlides[currentSlide].subheading}
-              </motion.p>
-            </AnimatePresence>
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.75rem] xl:text-6xl font-bold text-white leading-[1.08] tracking-tight mb-6">
+              Build Automation Engines - Not Just Software
+            </h1>
+
+            {/* Description */}
+            <p className="text-base sm:text-lg lg:text-xl text-blue-100/60 max-w-2xl mb-10 leading-relaxed font-light">
+              We help businesses replace fragmented tools, manual workflows, and guesswork with AI-powered systems
+              that generate revenue, automate operations, and scale predictably.
+            </p>
+
+            {/* Benefit bullets */}
+            <ul className="space-y-3 mb-10">
+              {benefits.map((benefit, i) => {
+                const Icon = benefit.icon;
+                return (
+                  <li
+                    key={i}
+                    className="flex items-center gap-3"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#0066FF]/15 border border-[#0066FF]/25 flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4 text-[#338AFF]" />
+                    </div>
+                    <span className="text-blue-100/75 text-sm sm:text-base">{benefit.text}</span>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* Tagline */}
+            <p className="text-sm text-blue-200/45 italic mb-8">
+              Start with an audit. Leave with a working growth engine.
+            </p>
 
             {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-col sm:flex-row items-start gap-4"
-            >
+            <div className="flex flex-col sm:flex-row items-start gap-4">
               <Button
                 size="lg"
                 onClick={() => setShowBooking(true)}
                 className="bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-lg px-8 h-12 text-base font-semibold shadow-lg shadow-blue-600/25 hover:shadow-xl hover:shadow-blue-600/35 transition-all duration-300 group w-full sm:w-auto"
               >
                 <Phone className="w-4 h-4 mr-2.5" />
-                Book a Free Call
+                Book a Call
                 <ChevronRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
               </Button>
-            </motion.div>
+            </div>
 
-            {/* Slide Indicators */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="flex items-center gap-2 mt-12"
-            >
-              {heroSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className="relative group cursor-pointer"
-                  aria-label={`Go to slide ${index + 1}`}
-                >
-                  <div
-                    className={`h-1 rounded-full transition-all duration-500 ${
-                      index === currentSlide
-                        ? 'w-10 bg-[#0066FF]'
-                        : 'w-5 bg-white/25 hover:bg-white/40'
-                    }`}
-                  />
-                </button>
-              ))}
-              <span className="ml-3 text-xs text-blue-200/40 font-mono">
-                {String(currentSlide + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}
-              </span>
-            </motion.div>
           </div>
         </div>
 

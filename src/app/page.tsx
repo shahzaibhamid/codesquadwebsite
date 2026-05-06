@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import LoadingScreen from '@/components/loading-screen';
 import Navigation from '@/components/navigation';
 import Hero from '@/components/hero';
 
 // Lazy load heavy components for better performance
 const Clients = lazy(() => import('@/components/clients'));
+const About = lazy(() => import('@/components/about'));
 const Services = lazy(() => import('@/components/services'));
-const Process = lazy(() => import('@/components/process'));
+const CaseStudies = lazy(() => import('@/components/case-studies'));
 const Industries = lazy(() => import('@/components/industries'));
 const Resources = lazy(() => import('@/components/resources'));
 const CTASection = lazy(() => import('@/components/cta-section'));
@@ -44,16 +45,19 @@ export default function Home() {
           <Clients />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
+          <About />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
           <Services />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <CaseStudies />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <Industries />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
-          <Process />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Resources />
+          <Resources limit={3} />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <FAQ />

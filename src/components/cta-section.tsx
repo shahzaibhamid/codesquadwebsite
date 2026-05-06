@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -66,10 +65,10 @@ export default function CTASection() {
                 transition={{ duration: 0.6, delay: 0.08 }}
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5 leading-tight tracking-tight"
               >
-                Ready to Transform
+                Stop Managing Tools.
                 <br />
                 <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, #338AFF 0%, #66B2FF 100%)' }}>
-                  Your Business?
+                  Start Running a System.
                 </span>
               </motion.h2>
 
@@ -81,9 +80,8 @@ export default function CTASection() {
                 transition={{ duration: 0.6, delay: 0.15 }}
                 className="text-base sm:text-lg text-blue-100/45 max-w-2xl mx-auto mb-10 leading-relaxed"
               >
-                From concept to deployment, we deliver cutting-edge software solutions
-                that drive real results. Start your digital transformation journey with
-                a free consultation.
+                If your growth depends on manual work, disconnected tools, or guesswork —
+                we fix that. One integrated system. Owned by you.
               </motion.p>
 
               {/* Buttons */}

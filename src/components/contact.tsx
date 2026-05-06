@@ -7,9 +7,6 @@ import {
   Mail,
   Phone,
   Send,
-  Linkedin,
-  Twitter,
-  Github,
   ArrowRight,
   Loader2,
 } from 'lucide-react';
@@ -40,13 +37,6 @@ const contactDetails = [
   { icon: Mail, label: 'Email', value: 'info@codesquad.ai', href: 'mailto:info@codesquad.ai' },
   { icon: Phone, label: 'Phone', value: '+1 (417) 764-5309', href: 'tel:+14177645309' },
   { icon: MapPin, label: 'Office', value: 'Johar Town J2, Lahore Pakistan', href: 'https://maps.app.goo.gl/uhAhYB7Ja5REpc3o9' },
-  { icon: MapPin, label: 'Office US', value: '8 The Green Ste 14681, Dover, DE 19901, United States', href: '#' },
-];
-
-const socialLinks = [
-  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/shahzaibhamid/' },
-  { icon: Twitter, label: 'Twitter', href: '#' },
-  { icon: Github, label: 'GitHub', href: '#' },
 ];
 
 export default function Contact() {
@@ -121,7 +111,7 @@ export default function Contact() {
         <SectionHeader
           label="Contact"
           title="Get in Touch"
-          description="Have a project in mind? We'd love to hear about it. Drop us a message and we'll respond within 2 hours."
+          description="Tell us what you want to build. We&apos;ll reply with the next step."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-6">
@@ -140,8 +130,7 @@ export default function Contact() {
                   </span>
                 </h3>
                 <p className="text-blue-200/50 text-sm leading-relaxed mt-3 mb-10">
-                  Whether you have a detailed brief or just a rough idea, our team is ready to help.
-                  No commitment required.
+                  Whether you have a clear plan or just an idea, we&apos;ll help shape the next move.
                 </p>
 
                 {/* Contact Details */}
@@ -186,26 +175,6 @@ export default function Contact() {
                 {/* Spacer */}
                 <div className="flex-1" />
 
-                {/* Social Links */}
-                <div className="pt-6 border-t border-white/[0.07]">
-                  <p className="text-[11px] text-blue-200/30 uppercase tracking-[0.15em] font-semibold mb-4">
-                    Follow Us
-                  </p>
-                  <div className="flex gap-3">
-                    {socialLinks.map(({ icon: Icon, label, href }) => (
-                      <motion.a
-                        key={label}
-                        href={href}
-                        whileHover={{ y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="w-9 h-9 rounded-lg bg-white/[0.05] border border-white/[0.08] flex items-center justify-center hover:bg-[#0066FF]/20 hover:border-[#0066FF]/30 text-blue-200/30 hover:text-blue-200 transition-all duration-300"
-                        aria-label={label}
-                      >
-                        <Icon className="w-4 h-4" />
-                      </motion.a>
-                    ))}
-                  </div>
-                </div>
               </div>
             </div>
           </AnimatedSection>
@@ -218,10 +187,10 @@ export default function Contact() {
             >
               <div className="mb-8">
                 <h4 className="text-xl font-bold text-[#0A1628] tracking-tight">
-                  Send us a message
+                  Send a message
                 </h4>
                 <p className="text-sm text-gray-400 mt-1">
-                  Fill out the form and we&apos;ll get back to you shortly.
+                  Give us a quick overview and we&apos;ll respond shortly.
                 </p>
               </div>
 

@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useMemo, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useMemo } from 'react';
+import { motion } from 'framer-motion';
 import {
   FileText,
   BookOpen,
@@ -18,7 +18,6 @@ import SectionHeader from '@/components/section-header';
 // ── Types ───────────────────────────────────────────────────────────────────
 
 type ResourceType = 'Article' | 'White Paper' | 'Podcast';
-type FilterTab = 'Articles' | 'White Papers' | 'Podcasts';
 
 interface Resource {
   id: number;
@@ -76,20 +75,6 @@ const typeConfig: Record<
     glowColor: 'rgba(16, 185, 129, 0.08)',
     label: 'Podcast',
   },
-};
-
-const filterTabs: FilterTab[] = ['Articles', 'White Papers']; // Podcasts hidden
-
-const tabToType: Record<FilterTab, ResourceType> = {
-  Articles: 'Article',
-  'White Papers': 'White Paper',
-  Podcasts: 'Podcast',
-};
-
-const tabToHref: Record<FilterTab, string> = {
-  Articles: '/articles',
-  'White Papers': '/white-papers',
-  Podcasts: '/podcasts',
 };
 
 // ── Data ────────────────────────────────────────────────────────────────────
@@ -189,6 +174,10 @@ function getInitials(name: string) {
     .map((n) => n[0])
     .join('')
     .toUpperCase();
+}
+
+interface ResourcesProps {
+  limit?: number;
 }
 
 // ── Resource Card ────────────────────────────────────────────────────────────
@@ -324,19 +313,10 @@ function ResourceCard({ resource }: { resource: Resource }) {
 
 // ── Main Section ─────────────────────────────────────────────────────────────
 
-export default function Resources() {
-  const [activeTab, setActiveTab] = useState<FilterTab>('Articles');
-
-  const handleTabChange = useCallback((tab: FilterTab) => {
-    setActiveTab(tab);
-  }, []);
-
-  const filteredResources = useMemo(() => {
-    const typeFilter = tabToType[activeTab];
-    return resources.filter((r) => r.type === typeFilter);
-  }, [activeTab]);
-
-  const activeConfig = typeConfig[tabToType[activeTab]];
+export default function Resources({ limit }: ResourcesProps) {
+  const visibleResources = useMemo(() => {
+    return typeof limit === 'number' ? resources.slice(0, limit) : resources;
+  }, [limit]);
 
   return (
     <section id="resources" className="relative py-20 md:py-28 overflow-hidden">
@@ -350,66 +330,32 @@ export default function Resources() {
           description="Expert perspectives, in-depth research, and actionable ideas — curated by our team to keep you ahead of the curve."
         />
 
-        {/* ── Filter Tabs ── */}
-        <AnimatedSection variant="fade-up" className="mb-10">
-          <div className="inline-flex items-center gap-1.5 p-1.5 bg-white rounded-2xl border border-gray-200/80 shadow-sm">
-            {filterTabs.map((tab) => {
-              const isActive = activeTab === tab;
-              const tabConfig = typeConfig[tabToType[tab]];
-              return (
-                <button
-                  key={tab}
-                  onClick={() => handleTabChange(tab)}
-                  className={`relative px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? 'text-white shadow-lg'
-                      : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'
-                  }`}
-                  style={
-                    isActive
-                      ? {
-                          background: `linear-gradient(135deg, ${tabConfig.accentFrom}, ${tabConfig.accentTo})`,
-                          boxShadow: `0 4px 14px ${tabConfig.glowColor}`,
-                        }
-                      : {}
-                  }
-                >
-                  {tab}
-                </button>
-              );
-            })}
-          </div>
-        </AnimatedSection>
-
         {/* ── Cards Grid ── */}
-        <div className="relative min-h-[340px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              variants={cardContainerVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7"
-            >
-              {filteredResources.map((resource) => (
-                <ResourceCard key={resource.id} resource={resource} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
+        <div className="relative">
+          <motion.div
+            variants={cardContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7"
+          >
+            {visibleResources.map((resource) => (
+              <ResourceCard key={resource.id} resource={resource} />
+            ))}
+          </motion.div>
         </div>
 
         {/* ── View All CTA ── */}
         <AnimatedSection variant="fade-up" delay={0.1} className="mt-12 text-center">
           <Link
-            href={tabToHref[activeTab]}
+            href="/articles"
             className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-semibold text-sm text-white transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
             style={{
-              background: `linear-gradient(135deg, ${activeConfig.accentFrom}, ${activeConfig.accentTo})`,
-              boxShadow: `0 8px 24px ${activeConfig.glowColor}`,
+              background: `linear-gradient(135deg, ${typeConfig.Article.accentFrom}, ${typeConfig.Article.accentTo})`,
+              boxShadow: `0 8px 24px ${typeConfig.Article.glowColor}`,
             }}
           >
-            View All {activeTab}
+            View All Insights
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </AnimatedSection>

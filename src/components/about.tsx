@@ -1,302 +1,240 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Users, Zap, Globe, TrendingUp, CheckCircle, ArrowRight, Award, Shield, Target, Lightbulb, BookOpen, Heart } from 'lucide-react';
-import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
-import SectionHeader from '@/components/section-header';
+import { motion } from 'framer-motion';
+import { Calendar, ExternalLink, Users, Zap, ShieldCheck } from 'lucide-react';
 
-const features = [
-  {
-    icon: Users,
-    title: 'Expert Team',
-    description: '100+ seasoned engineers with deep expertise across technologies and industries.',
-    accent: 'from-blue-500 to-cyan-500',
-    stat: '100+ Engineers',
-  },
-  {
-    icon: Zap,
-    title: 'Agile Methodology',
-    description: 'Sprint-based delivery with continuous feedback loops for rapid iteration.',
-    accent: 'from-violet-500 to-purple-500',
-    stat: '2x Faster',
-  },
-  {
-    icon: Globe,
-    title: 'Global Delivery',
-    description: '24/7 development support across multiple time zones and geographies.',
-    accent: 'from-emerald-500 to-teal-500',
-    stat: '15+ Countries',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Proven Track Record',
-    description: '99% client satisfaction rate with consistent on-time, on-budget delivery.',
-    accent: 'from-amber-500 to-orange-500',
-    stat: '99% Satisfaction',
-  },
-];
-
-const differentiators = [
-  { icon: Shield, text: 'ISO 27001 Certified' },
-  { icon: Target, text: 'On-Time Delivery' },
-  { icon: Lightbulb, text: 'Innovation-First' },
-  { icon: Award, text: 'Award-Winning Team' },
-];
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.12, ease: 'easeOut' as const },
+  }),
+};
 
 const stats = [
-  { value: 200, suffix: '+', label: 'Projects Delivered', icon: CheckCircle },
-  { value: 50, suffix: '+', label: 'Happy Clients', icon: Users },
-  { value: 8, suffix: '+', label: 'Years Experience', icon: TrendingUp },
-  { value: 15, suffix: '+', label: 'Countries Served', icon: Globe },
+  { icon: Users, value: '20+', label: 'Clients Served' },
+  { icon: Zap, value: '100%', label: 'Brand-Owned Stack' },
+  { icon: ShieldCheck, value: '0', label: 'Hostage Contracts' },
 ];
 
-function easeOutQuad(t: number): number {
-  return t * (2 - t);
-}
 
-function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    if (!isInView || hasAnimated.current) return;
-    hasAnimated.current = true;
-    const startTime = Date.now();
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / 2000, 1);
-      const easedProgress = easeOutQuad(progress);
-      setCount(Math.round(easedProgress * target));
-      if (progress < 1) requestAnimationFrame(animate);
-      else setCount(target);
-    };
-    requestAnimationFrame(animate);
-  }, [isInView, target]);
-
-  return (
-    <span ref={ref}>
-      {count}{suffix}
-    </span>
-  );
-}
+const auditItems = [
+  'SEO & content gaps',
+  'Ad tracking & attribution',
+  'Outreach systems',
+  'Automation opportunities',
+];
 
 export default function About() {
   return (
-    <section id="about" className="relative py-20 md:py-28 bg-white overflow-hidden">
-      {/* Subtle background accent */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-blue-50/50 via-cyan-50/20 to-transparent rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-violet-50/30 to-transparent rounded-full blur-3xl pointer-events-none" />
+    <section id="about" className="relative overflow-hidden">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <SectionHeader
-          label="About CodeSquad"
-          title="Building the Future of Digital Innovation"
-          description="We are a team of passionate engineers, designers, and strategists dedicated to building exceptional digital products that drive measurable results."
-        />
+      {/* ── Top half: dark navy — POSITIONING + TRUST LAYER ── */}
+      <div className="relative bg-gradient-to-br from-[#0A1628] via-[#0d1f3a] to-[#071020] py-20 md:py-28">
+        {/* Grid pattern */}
+        <div className="absolute inset-0 grid-pattern opacity-10 pointer-events-none" />
 
-        {/* Our Story Narrative */}
-        <AnimatedSection variant="fade-up" className="mb-14">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="relative inline-block mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center shadow-lg shadow-blue-500/15 mx-auto">
-                <BookOpen className="w-5 h-5 text-white" />
-              </div>
-            </div>
-            <p className="text-gray-600 text-lg leading-relaxed">
-              Founded in 2017, CodeSquad began with a simple mission: <span className="font-semibold text-[#0A1628]">bridge the gap between ambitious ideas and world-class technology</span>. What started as a small team of 5 engineers has grown into a 100+ strong global workforce delivering transformative solutions across 15+ countries. We believe in transparent partnerships, relentless innovation, and building software that doesn&apos;t just work — it <span className="text-[#0066FF] font-medium">inspires</span>.
-            </p>
-          </div>
-        </AnimatedSection>
+        {/* Blue glow top-right */}
+        <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-[#0066FF]/15 rounded-full blur-[120px] pointer-events-none" />
+        {/* Violet glow bottom-left */}
+        <div className="absolute bottom-0 left-0 w-[350px] h-[300px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Two-Column Layout */}
-        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center mb-20">
-          {/* Left: Visual panel */}
-          <AnimatedItem key="image" variant="fade-right" delay={0.1}>
-            <div className="relative">
-              {/* Main visual — dark card with stats */}
-              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-blue-500/10 bg-gradient-to-br from-[#0A1628] via-[#0d1f3a] to-[#0A1628] aspect-[4/3] relative">
-                <div className="absolute inset-0 grid-pattern opacity-30" />
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066FF]/10 rounded-full blur-[80px]" />
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#338AFF]/8 rounded-full blur-[60px]" />
-                {/* Content inside */}
-                <div className="relative z-10 p-8 h-full flex flex-col justify-between">
-                  <div>
-                    <div className="w-10 h-10 rounded-xl bg-[#0066FF] flex items-center justify-center mb-4">
-                      <BookOpen className="w-5 h-5 text-white" />
-                    </div>
-                    <p className="text-blue-100/60 text-sm leading-relaxed max-w-xs">
-                      Founded in 2017 with a mission to bridge the gap between ambitious ideas and world-class technology.
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    {[{ n: '100+', l: 'Engineers' }, { n: '15+', l: 'Countries' }, { n: '200+', l: 'Projects' }, { n: '8+', l: 'Years' }].map((s) => (
-                      <div key={s.l} className="bg-white/[0.05] border border-white/[0.08] rounded-xl p-3">
-                        <p className="text-2xl font-bold text-white">{s.n}</p>
-                        <p className="text-xs text-blue-200/50 mt-0.5">{s.l}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
 
-              {/* Floating stat card - redesigned */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="absolute -bottom-6 -right-4 sm:-right-6 bg-white rounded-2xl shadow-xl shadow-gray-900/10 border border-gray-100/80 p-4 sm:p-5 premium-card-glow"
+            {/* Left — Positioning */}
+            <div>
+              <motion.p
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0}
+                className="text-[11px] font-semibold uppercase tracking-widest text-[#338AFF] mb-5"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center shadow-md shadow-blue-500/20">
-                    <TrendingUp className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-[#0A1628] leading-none">99%</p>
-                    <p className="text-xs text-gray-500 mt-0.5">Client Satisfaction</p>
-                  </div>
-                </div>
-              </motion.div>
+                Who We Are
+              </motion.p>
 
-              {/* Second floating card - projects count */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.6, duration: 0.5 }}
-                className="absolute -top-4 -left-4 sm:-left-6 bg-white rounded-2xl shadow-xl shadow-gray-900/10 border border-gray-100/80 p-3 sm:p-4 premium-card-glow hidden sm:block"
+              <motion.h2
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-6"
               >
-                <div className="flex items-center gap-2.5">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-md shadow-emerald-500/20">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-xl font-bold text-[#0A1628] leading-none">200+</p>
-                    <p className="text-[11px] text-gray-500 mt-0.5">Projects</p>
-                  </div>
-                </div>
-              </motion.div>
+                Not an Agency.{' '}
+                <span className="text-[#338AFF]">Not SaaS.</span>
+                <br />
+                A System Builder.
+              </motion.h2>
 
-              {/* Floating accent shapes */}
-              <div className="absolute -bottom-3 -left-3 w-14 h-14 bg-gradient-to-br from-[#338AFF]/10 to-blue-400/10 rounded-xl -z-10 -rotate-3" />
+              <motion.p
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
+                className="text-blue-200/60 text-base leading-relaxed max-w-lg mb-5"
+              >
+                We build systems you actually own.
+                <br />
+                Designed for your workflows, integrated into your stack, and built to scale with your business.
+              </motion.p>
 
-              {/* Decorative animated dots */}
-              <div className="absolute top-1/2 -right-10 w-3 h-3 rounded-full bg-[#0066FF]/20 animate-breathe hidden lg:block" />
-              <div className="absolute top-1/3 -left-8 w-2 h-2 rounded-full bg-cyan-400/30 animate-float-delayed hidden lg:block" />
-            </div>
-          </AnimatedItem>
-
-          {/* Right: Features with premium cards */}
-          <AnimatedItem key="features" variant="fade-left" delay={0.2}>
-            <div className="space-y-5">
-              {features.map((feature, idx) => (
-                <motion.div
-                  key={feature.title}
-                  whileHover={{ x: 6, transition: { duration: 0.3 } }}
-                  className="flex gap-5 p-5 rounded-xl bg-white border border-gray-100/80 hover:shadow-lg hover:shadow-blue-500/5 hover:border-blue-200/50 transition-all duration-300 group premium-card-glow"
-                  style={{
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.02)',
-                  }}
-                >
-                  {/* Larger icon with gradient bg */}
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.accent} flex items-center justify-center shrink-0 shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all duration-300`}>
-                    <feature.icon className="w-6 h-6 text-white icon-hover-float" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <h4 className="font-bold text-[#0A1628] text-[15px]">{feature.title}</h4>
-                      <span className="text-[11px] font-bold text-[#0066FF]/70 bg-[#0066FF]/5 px-2.5 py-0.5 rounded-full shrink-0 ml-2">
-                        {feature.stat}
-                      </span>
-                    </div>
-                    <p className="text-gray-500 text-sm leading-relaxed">{feature.description}</p>
-                  </div>
-                </motion.div>
-              ))}
+              <motion.p
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3}
+                className="text-blue-200/60 text-base leading-relaxed max-w-lg mt-5"
+              >
+                We&apos;ve done this for 20+ clients across healthcare, agriculture, fintech, and manufacturing.
+              </motion.p>
             </div>
 
-            {/* CTA */}
+            {/* Right — Stats cards */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="mt-8"
+              variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
+              className="grid grid-cols-1 gap-4"
             >
-              <button
-                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                className="inline-flex items-center gap-2 text-[#0066FF] font-semibold text-sm hover:gap-3 transition-all duration-300 group"
-              >
-                Explore Our Services
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
-            </motion.div>
-          </AnimatedItem>
-        </AnimatedSection>
-
-        {/* Differentiator strip */}
-        <AnimatedSection variant="fade-up" className="mb-20">
-          <div className="bg-gradient-to-r from-[#0A1628] via-[#0d1f35] to-[#0A1628] rounded-2xl p-6 sm:p-8 relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute inset-0 grid-pattern opacity-20" />
-            <div className="absolute top-0 right-0 w-48 h-48 bg-[#0066FF]/5 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-36 h-36 bg-cyan-500/5 rounded-full blur-3xl" />
-
-            <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-              {differentiators.map((item) => (
-                <div key={item.text} className="flex items-center gap-3 justify-center sm:justify-start">
-                  <div className="w-10 h-10 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center shrink-0">
-                    <item.icon className="w-4 h-4 text-blue-300" />
-                  </div>
-                  <span className="text-sm font-medium text-blue-100/80">{item.text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </AnimatedSection>
-
-        {/* Stats Row with improved design */}
-        <AnimatedSection variant="stagger-children">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
-            {stats.map((stat) => (
-              <AnimatedItem key={stat.label} variant="fade-up" delay={0.05}>
+              {stats.map((s, i) => (
                 <motion.div
-                  whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                  className="bg-white rounded-2xl p-6 sm:p-7 text-center overflow-hidden group border border-gray-100/80 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5 hover:border-blue-200/50"
-                  style={{
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.03)',
-                  }}
+                  key={s.label}
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 + i * 0.1, ease: 'easeOut' }}
+                  className="flex items-center gap-5 p-5 rounded-2xl bg-white/[0.04] border border-white/[0.08] hover:border-[#0066FF]/30 hover:bg-white/[0.07] transition-all duration-300 group"
                 >
-                  {/* Animated icon with gradient background */}
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0066FF]/10 to-[#338AFF]/10 flex items-center justify-center mx-auto mb-4 group-hover:from-[#0066FF] group-hover:to-[#0052CC] group-hover:shadow-lg group-hover:shadow-blue-500/20 transition-all duration-400">
-                    <stat.icon className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-400" />
+                  <div className="w-12 h-12 rounded-xl bg-[#0066FF]/10 border border-[#0066FF]/20 flex items-center justify-center shrink-0 group-hover:bg-[#0066FF] group-hover:border-[#0066FF] transition-all duration-300">
+                    <s.icon className="w-5 h-5 text-[#338AFF] group-hover:text-white transition-colors duration-300" />
                   </div>
-                  <div className="text-3xl sm:text-4xl font-bold mb-1.5">
-                    <span className="gradient-text counter-glow">
-                      <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-                    </span>
+                  <div>
+                    <p className="text-2xl font-extrabold text-white leading-none">{s.value}</p>
+                    <p className="text-sm text-blue-200/50 mt-1">{s.label}</p>
                   </div>
-                  <div className="text-sm text-gray-500 font-medium">{stat.label}</div>
                 </motion.div>
-              </AnimatedItem>
-            ))}
-          </div>
-        </AnimatedSection>
+              ))}
 
-        {/* Subtle animated accent element */}
-        <div className="mt-20 flex justify-center">
-          <motion.div
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-2 h-2 rounded-full bg-[#0066FF]/30"
-          />
+              {/* Proof label */}
+              <p className="text-xs text-blue-200/30 font-semibold uppercase tracking-widest text-center mt-2">
+                Proof — Built for real execution
+              </p>
+            </motion.div>
+
+          </div>
         </div>
       </div>
+
+      {/* ── Diagonal divider ── */}
+      <div className="relative h-16 bg-gradient-to-br from-[#071020] to-[#0A1628] overflow-hidden">
+        <svg className="absolute bottom-0 w-full" viewBox="0 0 1440 64" preserveAspectRatio="none" fill="white">
+          <path d="M0,64 L1440,0 L1440,64 Z" />
+        </svg>
+      </div>
+
+      {/* ── Bottom half: white — SOFT CTA ── */}
+      <div className="relative bg-white py-20 md:py-24 overflow-hidden">
+        {/* Soft blue glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#0066FF]/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+            {/* Left — Soft CTA copy */}
+            <div>
+              <motion.p
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0}
+                className="text-[11px] font-semibold uppercase tracking-widest text-[#0066FF] mb-5"
+              >
+                Get Started
+              </motion.p>
+
+              <motion.h2
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
+                className="text-3xl sm:text-4xl font-extrabold text-[#0A1628] leading-tight mb-5"
+              >
+                Start Building -<br />
+                <span className="text-[#0066FF]">Not Planning.</span>
+              </motion.h2>
+
+              <motion.p
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
+                className="text-gray-500 text-base leading-relaxed mb-6"
+              >
+                We analyze your:
+              </motion.p>
+
+              <motion.ul
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3}
+                className="space-y-2.5 mb-8"
+              >
+                {auditItems.map((item) => (
+                  <li key={item} className="flex items-center gap-3 text-gray-600 text-sm">
+                    <div className="w-5 h-5 rounded-full bg-[#0066FF]/10 border border-[#0066FF]/20 flex items-center justify-center shrink-0">
+                      <svg className="w-2.5 h-2.5 text-[#0066FF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    {item}
+                  </li>
+                ))}
+              </motion.ul>
+
+              <motion.p
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={4}
+                className="text-gray-500 text-base mb-8 italic"
+              >
+                Then we build it together.
+              </motion.p>
+
+              <motion.div
+                variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={5}
+              >
+                <a
+                  href="https://calendly.com/code_squad/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 bg-[#0066FF] hover:bg-[#0052CC] text-white font-semibold text-sm px-8 py-4 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/35 transition-all duration-300 group"
+                >
+                  <Calendar className="w-4 h-4" />
+                  Book a Free Call
+                  <ExternalLink className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" />
+                </a>
+              </motion.div>
+            </div>
+
+            {/* Right — guarantee card */}
+            <motion.div
+              variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
+              className="relative rounded-3xl overflow-hidden"
+            >
+              {/* Card background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0A1628] to-[#0d1f3a]" />
+              <div className="absolute inset-0 grid-pattern opacity-10" />
+              <div className="absolute top-0 right-0 w-40 h-40 bg-[#0066FF]/15 rounded-full blur-3xl" />
+
+              <div className="relative p-8 sm:p-10 space-y-6">
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-[#338AFF]">Built for Ownership. Not Lock-in.</p>
+
+                {[
+                  { title: 'Built in YOUR accounts', desc: 'Everything lives on your stack. Not ours.' },
+                  { title: 'If we part ways, the engine stays', desc: 'No hostage. No lock-in. The system is yours.' },
+                  { title: 'Tested on real use first', desc: "If it doesn't work on me, I won't sell it." },
+                ].map((item, i) => (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
+                    className="flex gap-4"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-[#0066FF] flex items-center justify-center shrink-0 mt-0.5">
+                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-white font-semibold text-sm">{item.title}</p>
+                      <p className="text-blue-200/50 text-sm mt-0.5">{item.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </div>
+
     </section>
   );
 }
