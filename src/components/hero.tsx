@@ -1,28 +1,61 @@
 'use client';
 
-import { useState } from 'react';
-import { Phone, ChevronRight, TrendingUp, Settings, Brain } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Phone, ChevronRight, ArrowUpRight, Search, Globe, Workflow, Bot, Headphones } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import BookingModal from '@/components/booking-modal';
 
 const benefits = [
   {
-    icon: TrendingUp,
-    text: 'More qualified meetings, less manual outreach',
+    icon: ArrowUpRight,
+    text: 'Outbound: lead enrichment, ICP gating, and AI cold email.',
   },
   {
-    icon: Settings,
-    text: 'Fully automated back-office operations',
+    icon: Search,
+    text: 'Inbound: SEO content, repurposing, and attribution.',
   },
   {
-    icon: Brain,
-    text: 'AI systems that improve over time',
+    icon: Globe,
+    text: 'AEO: citations in ChatGPT, Perplexity, and Gemini.',
   },
+  {
+    icon: Workflow,
+    text: 'Back office: intake, OCR, RTM, and client care.',
+  },
+  {
+    icon: Headphones,
+    text: 'Customer support: faster replies and smoother handoffs.',
+  },
+  {
+    icon: Bot,
+    text: 'AI agents: research, plan, and act.',
+  },
+];
+
+const rotatingKeywords = [
+  'AEO',
+  'SEO',
+  'Content Repurposing',
+  'GEO',
+  'Ads Tracking',
+  'Content Analysis',
+  'Ads Analysis',
+  'Outreach System',
+  'Customer Support',
 ];
 
 export default function Hero() {
   const [showBooking, setShowBooking] = useState(false);
+  const [keywordIndex, setKeywordIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setKeywordIndex((current) => (current + 1) % rotatingKeywords.length);
+    }, 2200);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   return (
     <>
@@ -61,33 +94,37 @@ export default function Hero() {
 
         {/* Main Content */}
         <div className="relative z-[3] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mx-auto">
 
             {/* Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/[0.12] mb-8">
+            <div className="flex justify-center mb-8">
+              <div className="inline-flex items-center justify-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/[0.12]">
               <span className="relative flex h-2 w-2">
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
               </span>
               <span className="text-sm text-blue-100/80 font-medium">Trusted by 20+ companies worldwide</span>
+              </div>
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.75rem] xl:text-6xl font-bold text-white leading-[1.08] tracking-tight mb-6">
-              Build Automation Engines - Not Just Software
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.25rem] font-bold text-white leading-[1.08] tracking-tight mb-6 text-center mx-auto">
+              <span className="block">Build Automation Engines</span>
+              <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[#66B2FF] via-white to-[#66B2FF] transition-all duration-500">
+                {rotatingKeywords[keywordIndex]}
+              </span>
             </h1>
 
             {/* Description */}
-            <p className="text-base sm:text-lg lg:text-xl text-blue-100/60 max-w-2xl mb-10 leading-relaxed font-light">
-              We help businesses replace fragmented tools, manual workflows, and guesswork with AI-powered systems
-              that generate revenue, automate operations, and scale predictably.
+            <p className="text-base sm:text-lg lg:text-xl text-blue-100/60 max-w-2xl mx-auto mb-10 leading-relaxed font-light text-center">
+              We help businesses automate repetitive manual tasks.
             </p>
 
             {/* Benefit bullets */}
-            <ul className="space-y-3 mb-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-10">
               {benefits.map((benefit, i) => {
                 const Icon = benefit.icon;
                 return (
-                  <li
+                  <div
                     key={i}
                     className="flex items-center gap-3"
                   >
@@ -95,25 +132,20 @@ export default function Hero() {
                       <Icon className="w-4 h-4 text-[#338AFF]" />
                     </div>
                     <span className="text-blue-100/75 text-sm sm:text-base">{benefit.text}</span>
-                  </li>
+                  </div>
                 );
               })}
-            </ul>
-
-            {/* Tagline */}
-            <p className="text-sm text-blue-200/45 italic mb-8">
-              Start with an audit. Leave with a working growth engine.
-            </p>
+            </div>
 
             {/* CTA */}
-            <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="flex justify-center">
               <Button
                 size="lg"
-                onClick={() => setShowBooking(true)}
+                onClick={() => window.open('https://calendly.com/code_squad/30min', '_blank', 'noopener,noreferrer')}
                 className="bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-lg px-8 h-12 text-base font-semibold shadow-lg shadow-blue-600/25 hover:shadow-xl hover:shadow-blue-600/35 transition-all duration-300 group w-full sm:w-auto"
               >
                 <Phone className="w-4 h-4 mr-2.5" />
-                Book a Call
+                Book a Consultation Call
                 <ChevronRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
               </Button>
             </div>

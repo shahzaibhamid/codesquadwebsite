@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatedSection } from '@/components/animated-section';
 
 const clients = [
@@ -12,10 +13,53 @@ const clients = [
   { name: 'SettleIn', src: '/images/settleIn.png' },
 ];
 
-// Double the list for seamless infinite loop
-const doubled = [...clients, ...clients];
-
 export default function Clients() {
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return undefined;
+
+    let frameId = 0;
+    let lastTime = performance.now();
+    let offset = 0;
+    let travelWidth = track.scrollWidth / 2;
+    const speed = 28;
+
+    const updateWidth = () => {
+      travelWidth = track.scrollWidth / 2;
+      if (travelWidth > 0) {
+        offset %= travelWidth;
+        track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(updateWidth);
+    resizeObserver.observe(track);
+
+    const animate = (now: number) => {
+      if (!paused && travelWidth > 0) {
+        const delta = (now - lastTime) / 1000;
+        offset += speed * delta;
+        if (offset >= travelWidth) {
+          offset -= travelWidth;
+        }
+        track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+      }
+
+      lastTime = now;
+      frameId = window.requestAnimationFrame(animate);
+    };
+
+    frameId = window.requestAnimationFrame(animate);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      resizeObserver.disconnect();
+    };
+  }, [paused]);
+
   return (
     <section className="relative py-16 md:py-20 bg-gradient-to-b from-gray-50/60 to-white overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent opacity-60" />
@@ -28,29 +72,30 @@ export default function Clients() {
               Trusted Partners
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 tracking-tight">
-            Trusted by <span className="gradient-text">Industry Leaders</span> Worldwide
-          </h2>
         </AnimatedSection>
       </div>
 
       {/* Marquee */}
-      <div className="overflow-hidden">
-        <div className="flex animate-marquee-slow" style={{ animationDuration: '28s' }}>
-          {doubled.map((client, i) => (
-            <div
-              key={`${client.name}-${i}`}
-              className="flex-shrink-0 flex items-center justify-center mx-8"
-              style={{ width: 120 }}
-            >
-              <Image
-                src={client.src}
-                alt={client.name}
-                width={100}
-                height={60}
-                className="h-14 w-auto max-w-full object-contain"
-                style={{ filter: 'grayscale(100%) brightness(0.55)' }}
-              />
+      <div className="overflow-hidden" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+        <div ref={trackRef} className="flex w-max flex-nowrap gap-16 py-4 px-1 transform-gpu will-change-transform">
+          {[0, 1].map((groupIndex) => (
+            <div key={groupIndex} className="flex flex-nowrap items-center gap-16 shrink-0">
+              {clients.map((client) => (
+                <div
+                  key={`${groupIndex}-${client.name}`}
+                  className="flex-shrink-0 flex items-center justify-center"
+                  style={{ width: 120 }}
+                >
+                  <Image
+                    src={client.src}
+                    alt={client.name}
+                    width={100}
+                    height={60}
+                    className="h-14 w-auto max-w-full object-contain"
+                    style={{ filter: 'grayscale(100%) brightness(0.55)' }}
+                  />
+                </div>
+              ))}
             </div>
           ))}
         </div>

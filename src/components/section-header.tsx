@@ -18,7 +18,7 @@ export default function SectionHeader({
   light = false,
 }: SectionHeaderProps) {
   return (
-    <div className={`mb-10 sm:mb-14 lg:mb-20 ${centered ? 'text-center' : ''}`}>
+    <div className={`mb-10 sm:mb-14 lg:mb-10 ${centered ? 'text-center' : ''}`}>
       {/* Label */}
       <div
         className={`flex items-center mb-4 ${centered ? 'justify-center' : 'justify-start'}`}

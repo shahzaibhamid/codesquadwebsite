@@ -1,35 +1,29 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mail, Phone } from 'lucide-react';
 
-const LinkedInSVG = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-  </svg>
-);
-
-const XSVG = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-    <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
-  </svg>
-);
-
 const socialLinks = [
-  { icon: LinkedInSVG, label: 'LinkedIn', href: 'https://www.linkedin.com/in/shahzaibhamid/' },
-  { icon: XSVG, label: 'X (Twitter)', href: '#' },
-  { icon: Mail, label: 'Mail', href: 'mailto:info@codesquad.ai' },
-];
-
-const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Industries', href: '#industries' },
-  { label: 'Case Studies', href: '/case-studies' },
-  { label: 'Resources', href: '#resources' },
-  { label: 'Contact', href: '#contact' },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/shahzaibhamid/',
+    svg: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'X (Twitter)',
+    href: '#',
+    svg: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+        <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+      </svg>
+    ),
+  },
+  { label: 'Mail', href: 'mailto:info@codesquad.ai', svg: <Mail className="w-4 h-4" /> },
 ];
 
 const toolLogos = [
@@ -99,13 +93,6 @@ const toolLogos = [
   },
 ];
 
-function scrollTo(href: string) {
-  if (href.startsWith('#') && href.length > 1) {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }
-}
-
 export default function Footer() {
   return (
     <footer id="footer" className="relative overflow-hidden">
@@ -114,19 +101,8 @@ export default function Footer() {
       <div className="relative h-px animated-gradient-line" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-
-        {/* Main grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 mb-14">
-
-          {/* Col 1 — Brand */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-1"
-          >
-            {/* Logo */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+          <div>
             <Link href="/" className="inline-block mb-5">
               <Image
                 src="/logo.png"
@@ -137,12 +113,15 @@ export default function Footer() {
               />
             </Link>
 
-            {/* Description */}
             <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-xs">
               We build revenue engines, automation systems, and owned workflows inside your stack.
             </p>
+          </div>
 
-            {/* Contact */}
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-5">
+              Contact
+            </h4>
             <div className="space-y-3 mb-6">
               <a
                 href="tel:+14177645309"
@@ -163,110 +142,58 @@ export default function Footer() {
                 info@codesquad.ai
               </a>
             </div>
-
-            {/* Social */}
             <div className="flex gap-2.5">
-              {socialLinks.map(({ icon: Icon, label, href }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  target={href.startsWith('http') ? '_blank' : undefined}
-                  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
+              {socialLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  aria-label={link.label}
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
+                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                   className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#0066FF] hover:border-[#0066FF] hover:text-white transition-all duration-300"
                 >
-                  <Icon className="w-4 h-4" />
-                </motion.a>
+                  {link.svg}
+                </a>
               ))}
             </div>
-          </motion.div>
 
-          {/* Col 2 — Nav */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-5">
-              Quick Links
-            </h4>
-            <ul className="space-y-3">
-              {navLinks.map((link) => (
-                <motion.li key={link.href} whileHover={{ x: 3 }} transition={{ type: 'spring', stiffness: 400, damping: 25 }}>
-                  {link.href.startsWith('#') ? (
-                    <a
-                      href={link.href}
-                      onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
-                      className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link
-                      href={link.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
-                    >
-                      {link.label}
-                    </Link>
-                  )}
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
+          </div>
 
-          {/* Col 3 — Offices */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <div className="lg:justify-self-end">
             <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-5">
               Offices
             </h4>
             <div className="space-y-5">
-              {/* USA */}
               <div className="flex gap-3">
                 <div className="w-7 h-7 rounded-lg overflow-hidden shrink-0 mt-0.5 border border-white/10">
-                  {/* US Flag SVG */}
                   <svg viewBox="0 0 28 28" className="w-full h-full">
-                    <rect width="28" height="28" fill="#B22234"/>
-                    <rect y="2.154" width="28" height="2.154" fill="#fff"/>
-                    <rect y="6.462" width="28" height="2.154" fill="#fff"/>
-                    <rect y="10.769" width="28" height="2.154" fill="#fff"/>
-                    <rect y="15.077" width="28" height="2.154" fill="#fff"/>
-                    <rect y="19.385" width="28" height="2.154" fill="#fff"/>
-                    <rect y="23.692" width="28" height="2.154" fill="#fff"/>
-                    <rect width="11.2" height="15.077" fill="#3C3B6E"/>
+                    <rect width="28" height="28" fill="#B22234" />
+                    <rect y="2.154" width="28" height="2.154" fill="#fff" />
+                    <rect y="6.462" width="28" height="2.154" fill="#fff" />
+                    <rect y="10.769" width="28" height="2.154" fill="#fff" />
+                    <rect y="15.077" width="28" height="2.154" fill="#fff" />
+                    <rect y="19.385" width="28" height="2.154" fill="#fff" />
+                    <rect y="23.692" width="28" height="2.154" fill="#fff" />
+                    <rect width="11.2" height="15.077" fill="#3C3B6E" />
                   </svg>
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-[#338AFF] uppercase tracking-wider mb-1">USA</p>
-                  <a
-                    href="#"
-                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200 leading-relaxed block"
-                  >
+                  <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-200 leading-relaxed block">
                     8 The Green Ste 14681,<br />Dover, DE 19901
                   </a>
                 </div>
               </div>
 
-              {/* Pakistan */}
               <div className="flex gap-3">
                 <div className="w-7 h-7 rounded-lg overflow-hidden shrink-0 mt-0.5 border border-white/10">
-                  {/* Pakistan Flag SVG */}
                   <svg viewBox="0 0 28 28" className="w-full h-full">
-                    <rect width="28" height="28" fill="#01411C"/>
-                    <rect width="7" height="28" fill="#fff"/>
-                    {/* Crescent */}
-                    <circle cx="17" cy="14" r="5.5" fill="#01411C" stroke="none"/>
-                    <circle cx="18.5" cy="14" r="4.2" fill="#01411C" stroke="none"/>
-                    <circle cx="16.2" cy="14" r="4.8" fill="none" stroke="#fff" strokeWidth="1.5"/>
-                    {/* Star */}
-                    <polygon points="21,11.5 21.6,13.4 23.5,13.4 22,14.6 22.6,16.5 21,15.3 19.4,16.5 20,14.6 18.5,13.4 20.4,13.4" fill="#fff" transform="scale(0.7) translate(12,6)"/>
+                    <rect width="28" height="28" fill="#01411C" />
+                    <rect width="7" height="28" fill="#fff" />
+                    <circle cx="17" cy="14" r="5.5" fill="#01411C" stroke="none" />
+                    <circle cx="18.5" cy="14" r="4.2" fill="#01411C" stroke="none" />
+                    <circle cx="16.2" cy="14" r="4.8" fill="none" stroke="#fff" strokeWidth="1.5" />
+                    <polygon points="21,11.5 21.6,13.4 23.5,13.4 22,14.6 22.6,16.5 21,15.3 19.4,16.5 20,14.6 18.5,13.4 20.4,13.4" fill="#fff" transform="scale(0.7) translate(12,6)" />
                   </svg>
                 </div>
                 <div>
@@ -282,17 +209,10 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Tool/Partner Logos strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.25 }}
-          className="border-t border-white/[0.06] pt-10 mb-10"
-        >
+        <div className="border-t border-white/[0.06] pt-10 mb-10">
           <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mb-5 text-center">
             Tools & Platforms We Work With
           </p>
@@ -300,20 +220,19 @@ export default function Footer() {
             {toolLogos.map((tool) => (
               <div
                 key={tool.name}
-                className="flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-300 group"
+                className="flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity duration-300"
               >
-                <div className="text-white w-8 h-8 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-white text-[10px] font-semibold">
                   {tool.svg}
                 </div>
-                <span className="text-[10px] font-medium text-gray-400 group-hover:text-white transition-colors duration-300 uppercase tracking-wider">
+                <span className="text-[10px] font-medium text-gray-400 uppercase tracking-wider">
                   {tool.name}
                 </span>
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Bottom bar */}
         <div className="border-t border-white/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[11px] text-gray-500">
             &copy; {new Date().getFullYear()} CodeSquad. All rights reserved.

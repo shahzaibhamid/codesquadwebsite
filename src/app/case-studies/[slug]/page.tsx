@@ -26,11 +26,11 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
-            href="/case-studies"
+            href="/#case-studies"
             className="inline-flex items-center gap-2 text-blue-300/70 hover:text-blue-200 text-sm font-medium mb-10 transition-colors duration-200"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to case studies
+            Back to Home
           </Link>
 
           <div className="flex flex-wrap gap-2 mb-5">
