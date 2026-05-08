@@ -212,7 +212,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/[0.06] pt-10 mb-10">
+        <div className="pt-10 mb-10">
           <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mb-5 text-center">
             Tools & Platforms We Work With
           </p>
