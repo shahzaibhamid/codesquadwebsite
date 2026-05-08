@@ -50,6 +50,20 @@ const reviews = [
     company: 'iPromo',
     quote: 'Shahzaib found solutions to hurdles along the way and ultimately we were very satisfied.',
   },
+  {
+    initials: 'FO',
+    name: 'Faraz Siddiqui',
+    company: 'Mama’s Compass',
+    quote:
+      'I highly recommend Shahzaib and Code Squad. They were diligent, prompt and reliable over the course of two projects that I used their service. The project involved UX/Ul, prompt engineering and ML to give incrementally better results. Wish them the best!',
+  },
+  {
+    initials: 'KS',
+    name: 'Kennard Smith',
+    company: 'RTM',
+    quote:
+      'I had the pleasure of working with Shahzaib on developing an AI platform, where he showcased exceptional technical skills, creativity, and professionalism. Shahzaib successfully integrated features like AI-driven feedback and real-time motion tracking, while ensuring a seamless, intuitive user experience. Shahzaib was highly collaborative, communicative, and consistently delivered high-quality work on time. I highly recommend him for any development project.',
+  },
 ];
 
 /* ------------------------------------------------------------------ */
