@@ -124,13 +124,13 @@ export default function Footer() {
             </h4>
             <div className="space-y-3 mb-6">
               <a
-                href="tel:+14177645309"
+                href="tel:+923226428698"
                 className="flex items-center gap-2.5 text-sm text-gray-400 hover:text-white transition-colors duration-200 group"
               >
                 <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#0066FF] group-hover:border-[#0066FF] transition-all duration-300">
                   <Phone className="w-3.5 h-3.5" />
                 </div>
-                +1 (417) 764-5309
+                +92 (322) 6428698
               </a>
               <a
                 href="mailto:info@codesquad.ai"
@@ -180,7 +180,7 @@ export default function Footer() {
                 <div>
                   <p className="text-xs font-semibold text-[#338AFF] uppercase tracking-wider mb-1">USA</p>
                   <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-200 leading-relaxed block">
-                    8 The Green Ste 14681,<br />Dover, DE 19901
+                    312 W 2nd St Unit #A1528,<br />Casper, WY 82601
                   </a>
                 </div>
               </div>
@@ -212,7 +212,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-10 mb-10">
+        <div className="pt-10 mb-0">
           <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-500 mb-5 text-center">
             Tools & Platforms We Work With
           </p>
@@ -233,7 +233,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[11px] text-gray-500">
             &copy; {new Date().getFullYear()} CodeSquad. All rights reserved.
           </p>

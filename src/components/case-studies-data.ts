@@ -114,7 +114,7 @@ export const caseStudies = [
   },
   {
     slug: 'modern-law-lawlabs',
-    title: 'Modern Law / LawLabs',
+    title: 'Modern Law',
     subtitle: 'One Source, Many Outputs',
     headline: 'One source, many outputs',
     summary:
@@ -130,7 +130,7 @@ export const caseStudies = [
       'Reporting dashboard',
     ],
     pills: ['Content Ops', 'Multi-Brand Automation'],
-    brand: 'Modern Law / LawLabs',
+    brand: 'Modern Law',
     brandMark: 'ML',
     testimonialLabel: 'WATCH TESTIMONIAL',
     testimonialQuote:

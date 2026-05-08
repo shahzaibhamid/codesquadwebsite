@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { Quote, Star } from 'lucide-react';
-import SectionHeader from '@/components/section-header';
 import { AnimatedSection } from '@/components/animated-section';
 
 /* ------------------------------------------------------------------ */
@@ -15,7 +14,7 @@ const reviews = [
     name: 'Lou',
     company: 'Signal Law',
     quote:
-      'I worked with Shah on a number of projects and was consistently impressed by his ability to break down complex problems into tractable pieces and drive them to completion.',
+      'I worked with Shah on a number of projects and was consistently impressed by his ability to break down complex problems into tractable pieces.',
   },
   {
     initials: 'JI',
@@ -55,14 +54,14 @@ const reviews = [
     name: 'Faraz Siddiqui',
     company: 'Mama’s Compass',
     quote:
-      'I highly recommend Shahzaib and Code Squad. They were diligent, prompt and reliable over the course of two projects that I used their service. The project involved UX/Ul, prompt engineering and ML to give incrementally better results. Wish them the best!',
+      'I highly recommend Shahzaib and Code Squad.The project involved UX/Ul, prompt engineering and ML to give incrementally better results. Wish them the best!',
   },
   {
     initials: 'KS',
     name: 'Kennard Smith',
     company: 'RTM',
     quote:
-      'I had the pleasure of working with Shahzaib on developing an AI platform, where he showcased exceptional technical skills, creativity, and professionalism. Shahzaib successfully integrated features like AI-driven feedback and real-time motion tracking, while ensuring a seamless, intuitive user experience. Shahzaib was highly collaborative, communicative, and consistently delivered high-quality work on time. I highly recommend him for any development project.',
+      'I had the pleasure of working with Shahzaib on developing an AI platform, where he showcased exceptional technical skills, creativity, and professionalism.',
   },
 ];
 
@@ -110,12 +109,17 @@ export default function Services() {
     <>
       <section id="services" className="relative py-20 md:py-28 overflow-hidden bg-white">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            label="Reviews"
-            title={<>What Clients Say</>}
-            description="Real feedback from clients across legal, healthcare, CRM, and AI projects."
-          />
-
+                   <div
+                      className={`flex items-center mb-4 justify-center`}
+                    >
+                      <div className={`w-4 sm:w-6 h-px mr-2 sm:mr-3 shrink-0 bg-[#0066FF]/40`} />
+                      <span
+                        className={`text-[11px] font-semibold uppercase tracking-widest text-[#0066FF]`}
+                      >
+                        Reviews
+                      </span>
+                      <div className={`w-4 sm:w-6 h-px ml-2 sm:ml-3 shrink-0 bg-[#0066FF]/40`} />
+                    </div>
           {/* Marquee slider */}
           <AnimatedSection variant="fade-up" className="relative">
             <div className="overflow-hidden">

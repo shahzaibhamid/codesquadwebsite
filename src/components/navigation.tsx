@@ -77,7 +77,7 @@ export default function Navigation() {
           </div>
 
           {/* Mobile Menu */}
-          <div className="lg:hidden">
+          <div className="lg:hidden justify-self-end">
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <button className="p-2 rounded-lg text-gray-700 transition-colors">

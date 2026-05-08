@@ -93,11 +93,11 @@ export default function Hero() {
         />
 
         {/* Main Content */}
-        <div className="relative z-[3] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
+        <div className="relative z-[3] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8 w-full">
           <div className="max-w-3xl mx-auto">
 
             {/* Badge */}
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center mb-2">
               <div className="inline-flex items-center justify-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/[0.12]">
               <span className="relative flex h-2 w-2">
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
@@ -107,7 +107,7 @@ export default function Hero() {
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.25rem] font-bold text-white leading-[1.08] tracking-tight mb-6 text-center mx-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.25rem] font-bold text-white leading-[1.08] tracking-tight mb-5 text-center mx-auto">
               <span className="block">Build Automation Engines</span>
               <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[#66B2FF] via-white to-[#66B2FF] transition-all duration-500">
                 {rotatingKeywords[keywordIndex]}
@@ -115,12 +115,12 @@ export default function Hero() {
             </h1>
 
             {/* Description */}
-            <p className="text-base sm:text-lg lg:text-xl text-blue-100/60 max-w-2xl mx-auto mb-10 leading-relaxed font-light text-center">
+            <p className="text-base sm:text-lg lg:text-xl text-blue-100/60 max-w-2xl mx-auto mb-5 leading-relaxed font-light text-center">
               We help businesses automate repetitive manual tasks.
             </p>
 
             {/* Benefit bullets */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
               {benefits.map((benefit, i) => {
                 const Icon = benefit.icon;
                 return (

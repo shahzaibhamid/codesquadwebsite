@@ -15,7 +15,6 @@ const clients = [
 
 export default function Clients() {
   const trackRef = useRef<HTMLDivElement | null>(null);
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -39,7 +38,7 @@ export default function Clients() {
     resizeObserver.observe(track);
 
     const animate = (now: number) => {
-      if (!paused && travelWidth > 0) {
+      if (travelWidth > 0) {
         const delta = (now - lastTime) / 1000;
         offset += speed * delta;
         if (offset >= travelWidth) {
@@ -58,14 +57,14 @@ export default function Clients() {
       window.cancelAnimationFrame(frameId);
       resizeObserver.disconnect();
     };
-  }, [paused]);
+  }, []);
 
   return (
-    <section className="relative py-16 md:py-20 bg-gradient-to-b from-gray-50/60 to-white overflow-hidden">
+    <section className="relative py-8 md:py-8 bg-gradient-to-b from-gray-50/60 to-white overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent opacity-60" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection variant="fade-up" className="text-center mb-10">
+        <AnimatedSection variant="fade-up" className="text-center mb-0">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
             <span className="text-xs font-medium text-blue-600 tracking-wide uppercase">
@@ -76,7 +75,7 @@ export default function Clients() {
       </div>
 
       {/* Marquee */}
-      <div className="overflow-hidden" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+      <div className="overflow-hidden">
         <div ref={trackRef} className="flex w-max flex-nowrap gap-16 py-4 px-1 transform-gpu will-change-transform">
           {[0, 1].map((groupIndex) => (
             <div key={groupIndex} className="flex flex-nowrap items-center gap-16 shrink-0">
