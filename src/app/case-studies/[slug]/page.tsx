@@ -71,10 +71,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl border border-gray-200 bg-white p-6 sm:p-8 shadow-sm">
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#0066FF] mb-5">
-              Key Points
+              Highlights
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {study.points.slice(0, 4).map((point) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {study.points.map((point) => (
                 <div key={point} className="flex items-start gap-3 rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3">
                   <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#0066FF] shrink-0" />
                   <span className="text-sm sm:text-[15px] text-gray-700 leading-relaxed">{point}</span>
@@ -83,10 +83,26 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             </div>
           </div>
 
+          <div className="mt-8 rounded-3xl border border-gray-200 bg-white p-6 sm:p-8 shadow-sm">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#0066FF] mb-4">
+              Key Metrics
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {study.metrics.map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-3.5 py-1.5 text-xs sm:text-sm text-gray-600"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#0066FF] mb-2">Next Step</p>
-              <p className="text-lg font-medium text-[#0A1628]">If you want this inside your stack, we&apos;ll build it with you.</p>
+              <p className="text-lg font-medium text-[#0A1628]">If you want this inside your stack, we&apos;ll start building it with you.</p>
             </div>
             <a
               href="https://calendly.com/code_squad/30min"
