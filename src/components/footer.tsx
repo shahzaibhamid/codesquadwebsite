@@ -124,13 +124,13 @@ export default function Footer() {
             </h4>
             <div className="space-y-3 mb-6">
               <a
-                href="tel:+923226428698"
+                href="tel:+13073964945"
                 className="flex items-center gap-2.5 text-sm text-gray-400 hover:text-white transition-colors duration-200 group"
               >
                 <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#0066FF] group-hover:border-[#0066FF] transition-all duration-300">
                   <Phone className="w-3.5 h-3.5" />
                 </div>
-                +92 (322) 6428698
+                +1 (307) 396-4945
               </a>
               <a
                 href="mailto:info@codesquad.ai"
@@ -190,10 +190,9 @@ export default function Footer() {
                   <svg viewBox="0 0 28 28" className="w-full h-full">
                     <rect width="28" height="28" fill="#01411C" />
                     <rect width="7" height="28" fill="#fff" />
-                    <circle cx="17" cy="14" r="5.5" fill="#01411C" stroke="none" />
-                    <circle cx="18.5" cy="14" r="4.2" fill="#01411C" stroke="none" />
-                    <circle cx="16.2" cy="14" r="4.8" fill="none" stroke="#fff" strokeWidth="1.5" />
-                    <polygon points="21,11.5 21.6,13.4 23.5,13.4 22,14.6 22.6,16.5 21,15.3 19.4,16.5 20,14.6 18.5,13.4 20.4,13.4" fill="#fff" transform="scale(0.7) translate(12,6)" />
+                    <circle cx="16.5" cy="14" r="5" fill="#fff" />
+                    <circle cx="18" cy="13.2" r="4.3" fill="#01411C" />
+                    <polygon fill="#fff" points="21.5,9.5 21.97,10.85 23.4,10.88 22.26,11.75 22.68,13.12 21.5,12.3 20.32,13.12 20.74,11.75 19.6,10.88 21.03,10.85" />
                   </svg>
                 </div>
                 <div>

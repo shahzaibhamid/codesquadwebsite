@@ -35,7 +35,7 @@ const serviceOptions = [
 
 const contactDetails = [
   { icon: Mail, label: 'Email', value: 'info@codesquad.ai', href: 'mailto:info@codesquad.ai' },
-  { icon: Phone, label: 'Phone', value: '+1 (417) 764-5309', href: 'tel:+14177645309' },
+  { icon: Phone, label: 'Phone', value: '+1 (307) 396-4945', href: 'tel:+13073964945' },
   { icon: MapPin, label: 'Office', value: 'Johar Town J2, Lahore Pakistan', href: 'https://maps.app.goo.gl/uhAhYB7Ja5REpc3o9' },
 ];
 

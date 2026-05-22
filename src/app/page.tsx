@@ -8,6 +8,7 @@ import Hero from '@/components/hero';
 const Clients = lazy(() => import('@/components/clients'));
 const Services = lazy(() => import('@/components/services'));
 const CaseStudies = lazy(() => import('@/components/case-studies'));
+const Team = lazy(() => import('@/components/team'));
 const GetStartedSection = lazy(() => import('@/components/get-started-section'));
 const Footer = lazy(() => import('@/components/footer'));
 const CookieConsent = lazy(() => import('@/components/cookie-consent'));
@@ -33,6 +34,9 @@ export default function Home() {
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <Services />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Team />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <GetStartedSection />
