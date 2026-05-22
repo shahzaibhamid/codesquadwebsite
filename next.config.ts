@@ -1,23 +1,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
   /* Performance optimizations */
   typescript: {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
   allowedDevOrigins: ['*.space.z.ai'],
-  
+
   // Performance optimizations
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
-  
-  // Image optimization
+
+  // Image optimization — long TTL + WebP only to minimize Vercel edge requests
   images: {
-    formats: ['image/webp', 'image/avif'],
-    minimumCacheTTL: 60,
+    formats: ['image/webp'],
+    minimumCacheTTL: 2678400,
   },
   
   // Compiler optimizations

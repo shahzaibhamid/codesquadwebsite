@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { Phone, ChevronRight, ArrowUpRight, Search, Globe, Workflow, Bot, Headphones } from 'lucide-react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import BookingModal from '@/components/booking-modal';
 
@@ -62,12 +61,10 @@ export default function Hero() {
       <section id="hero" className="relative min-h-[85vh] flex items-center overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
-          <Image
+          <img
             src="/images/hero-bg-3.jpg"
-            alt="Hero background"
-            fill
-            priority
-            className="object-cover object-center"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-center"
           />
         </div>
 

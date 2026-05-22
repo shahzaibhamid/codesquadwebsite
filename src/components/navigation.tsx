@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { Menu } from 'lucide-react';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle } from '@/components/ui/sheet';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -36,13 +35,12 @@ export default function Navigation() {
           {/* Logo */}
           <Link href="/">
             <span className="flex items-center cursor-pointer">
-              <Image
+              <img
                 src="/logo.png"
                 alt="Company Logo"
                 width={160}
                 height={48}
                 className="h-10 w-auto object-contain"
-                priority
               />
             </span>
           </Link>
@@ -89,7 +87,7 @@ export default function Navigation() {
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
                     <div className="flex items-center">
-                      <Image
+                      <img
                         src="/logo.png"
                         alt="Company Logo"
                         width={140}

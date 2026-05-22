@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatedSection } from '@/components/animated-section';
 
@@ -85,11 +84,12 @@ export default function Clients() {
                   className="flex-shrink-0 flex items-center justify-center"
                   style={{ width: 120 }}
                 >
-                  <Image
+                  <img
                     src={client.src}
                     alt={client.name}
                     width={100}
                     height={60}
+                    loading="lazy"
                     className="h-14 w-auto max-w-full object-contain"
                     style={{ filter: 'grayscale(100%) brightness(0.55)' }}
                   />

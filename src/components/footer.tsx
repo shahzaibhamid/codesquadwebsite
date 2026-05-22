@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { Mail, Phone } from 'lucide-react';
 
 const socialLinks = [
@@ -104,7 +103,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
           <div>
             <Link href="/" className="inline-block mb-5">
-              <Image
+              <img
                 src="/logo.png"
                 alt="CodeSquad"
                 width={160}
