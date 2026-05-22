@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MapPin } from 'lucide-react';
+import { MapPin, Linkedin } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
 
@@ -12,7 +12,8 @@ const teamMembers = [
     name: 'Shahzaib Hamid',
     title: 'Founder & CEO',
     location: 'Lahore, PK',
-    image: '/team/shahzaib.png',
+    image: '/team/shahzaib.jpeg',
+    linkedin: 'https://www.linkedin.com/in/shahzaibhamid/',
   },
   {
     name: 'Saad Khalid',
@@ -28,6 +29,14 @@ const teamMembers = [
   },
 ];
 
+type TeamMember = {
+  name: string;
+  title: string;
+  location: string;
+  image: string;
+  linkedin?: string;
+};
+
 export default function Team() {
   return (
     <section id="team" className="relative py-20 md:py-28 overflow-hidden">
@@ -42,7 +51,7 @@ export default function Team() {
         />
 
         <AnimatedSection variant="stagger-children" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {teamMembers.map((member, idx) => (
+          {(teamMembers as TeamMember[]).map((member, idx) => (
             <AnimatedItem key={member.name} variant="fade-up" delay={idx * 0.08}>
               <motion.div
                 whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
@@ -62,10 +71,25 @@ export default function Team() {
 
                 {/* Info */}
                 <div className="p-5">
-                  <h3 className="text-base font-bold text-[#0A1628] group-hover:text-[#0066FF] transition-colors duration-300">
-                    {member.name}
-                  </h3>
-                  <p className="text-xs font-semibold text-[#0066FF]/70 mt-1">{member.title}</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <h3 className="text-base font-bold text-[#0A1628] group-hover:text-[#0066FF] transition-colors duration-300">
+                        {member.name}
+                      </h3>
+                      <p className="text-xs font-semibold text-[#0066FF]/70 mt-1">{member.title}</p>
+                    </div>
+                    {member.linkedin && (
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${member.name} on LinkedIn`}
+                        className="shrink-0 w-8 h-8 rounded-lg bg-[#0066FF]/5 border border-[#0066FF]/10 flex items-center justify-center text-[#0066FF] hover:bg-[#0066FF] hover:text-white hover:border-[#0066FF] transition-colors duration-200"
+                      >
+                        <Linkedin className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
                   <div className="flex items-center gap-1.5 mt-2">
                     <MapPin className="w-3 h-3 text-gray-400" />
                     <span className="text-xs font-medium text-gray-500">{member.location}</span>

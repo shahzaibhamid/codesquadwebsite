@@ -10,13 +10,6 @@ import { AnimatedSection } from '@/components/animated-section';
 
 const reviews = [
   {
-    initials: 'LS',
-    name: 'Lou',
-    company: 'Signal Law',
-    quote:
-      'I worked with Shah on a number of projects and was consistently impressed by his ability to break down complex problems into tractable pieces.',
-  },
-  {
     initials: 'JI',
     name: 'John',
     company: 'iPromo',
