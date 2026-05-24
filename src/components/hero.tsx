@@ -58,36 +58,9 @@ export default function Hero() {
 
   return (
     <>
-      <section id="hero" className="relative min-h-[85vh] flex items-center overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/images/hero-bg-3.jpg"
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover object-center"
-          />
-        </div>
-
-        {/* Dark overlay for contrast */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-br from-[#0A1628]/92 via-[#0d1f3a]/82 to-[#071020]/92" />
-
-        {/* Blue glow top-right */}
-        <div className="absolute top-0 right-0 w-[600px] h-[500px] bg-[#0066FF]/14 rounded-full blur-[120px] z-[1] pointer-events-none" />
-
-        {/* Violet glow bottom-left */}
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-violet-600/10 rounded-full blur-[100px] z-[1] pointer-events-none" />
-
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 z-[2] pointer-events-none opacity-[0.04]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '80px 80px',
-          }}
-        />
+      <section id="hero" className="relative min-h-[85vh] flex items-center overflow-hidden bg-[#0A1628]">
+        {/* Calm subtle gradient */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#0A1628] via-[#0d1a30] to-[#0A1628]" />
 
         {/* Main Content */}
         <div className="relative z-[3] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8 w-full">
@@ -106,7 +79,7 @@ export default function Hero() {
             {/* Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.25rem] font-bold text-white leading-[1.08] tracking-tight mb-5 text-center mx-auto">
               <span className="block">Build Automation Engines</span>
-              <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-[#66B2FF] via-white to-[#66B2FF] transition-all duration-500">
+              <span className="block mt-2 text-[#66B2FF] transition-all duration-500">
                 {rotatingKeywords[keywordIndex]}
               </span>
             </h1>
@@ -150,8 +123,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Bottom gradient line */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0066FF]/30 to-transparent z-[4]" />
       </section>
 
       {showBooking && <BookingModal onClose={() => setShowBooking(false)} />}

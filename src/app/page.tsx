@@ -5,7 +5,6 @@ import Navigation from '@/components/navigation';
 import Hero from '@/components/hero';
 
 // Lazy load heavy components for better performance
-const Clients = lazy(() => import('@/components/clients'));
 const Services = lazy(() => import('@/components/services'));
 const CaseStudies = lazy(() => import('@/components/case-studies'));
 const Team = lazy(() => import('@/components/team'));
@@ -26,9 +25,6 @@ export default function Home() {
       <Navigation />
       <main className="flex-1 pb-4">
         <Hero />
-        <Suspense fallback={<SectionFallback />}>
-          <Clients />
-        </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <CaseStudies />
         </Suspense>

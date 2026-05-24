@@ -6,10 +6,7 @@ import { Sheet, SheetTrigger, SheetContent, SheetTitle } from '@/components/ui/s
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Industries', href: '/industries' },
-];
+const navLinks: { label: string; href: string }[] = [];
 
 export default function Navigation() {
   const pathname = usePathname();
