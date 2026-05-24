@@ -22,7 +22,7 @@ function StudyCard({ study }: { study: CaseStudy }) {
       </h3>
 
       <div className="mt-auto pt-7">
-        <div className="flex flex-wrap justify-center gap-2">
+        <div className="flex flex-col items-center gap-2">
           {study.tags.map((tag) => (
             <span
               key={tag}
