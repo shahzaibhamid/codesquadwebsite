@@ -5,9 +5,9 @@ import Navigation from '@/components/navigation';
 import Hero from '@/components/hero';
 
 // Lazy load heavy components for better performance
-const Services = lazy(() => import('@/components/services'));
 const CaseStudies = lazy(() => import('@/components/case-studies'));
 const Team = lazy(() => import('@/components/team'));
+const Reviews = lazy(() => import('@/components/reviews'));
 const GetStartedSection = lazy(() => import('@/components/get-started-section'));
 const Footer = lazy(() => import('@/components/footer'));
 const CookieConsent = lazy(() => import('@/components/cookie-consent'));
@@ -29,10 +29,10 @@ export default function Home() {
           <CaseStudies />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
-          <Services />
+          <Team />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
-          <Team />
+          <Reviews />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <GetStartedSection />

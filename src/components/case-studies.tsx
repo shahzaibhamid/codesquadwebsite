@@ -1,322 +1,67 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
-import { caseStudies } from '@/components/case-studies-data';
+import { ArrowUpRight } from 'lucide-react';
+import { caseStudies, type CaseStudy } from '@/components/case-studies-data';
 
-const previewCaseStudies = caseStudies;
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: i * 0.1, ease: 'easeOut' as const },
-  }),
-};
-
-type Mode = 'preview' | 'full';
-
-function StudyCard({
-  study,
-  mode,
-}: {
-  study: (typeof caseStudies)[number];
-  mode: Mode;
-}) {
-  const isFull = mode === 'full';
-  const leftPoints = study.points.filter((_, index) => index % 2 === 0);
-  const rightPoints = study.points.filter((_, index) => index % 2 === 1);
-
-  if (!isFull) {
-    return (
-      <motion.article
-        whileHover={{ y: -4, transition: { duration: 0.25, ease: 'easeOut' } }}
-        className="group relative block h-full min-h-[400px] rounded-[28px] border border-[#DCE3EE] bg-white shadow-none overflow-hidden flex flex-col transition-shadow duration-300"
-      >
-        <div
-          aria-hidden="true"
-          className="absolute top-4 right-5 h-28 w-28 rounded-full pointer-events-none opacity-0 scale-95 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:scale-100 group-hover:translate-x-1 group-hover:-translate-y-1"
-          style={{
-            background: 'radial-gradient(circle, #1E3A5F 0%, #1E3A5F 40%, transparent 72%)',
-            filter: 'blur(20px)',
-          }}
-        />
-        <div className="p-3.5 sm:p-4 lg:p-5">
-          <div className="grid grid-cols-1 gap-5 items-start">
-            <div className="flex flex-col min-h-[100px]">
-              <h3 className="text-[22px] sm:text-[25px] lg:text-[30px] font-semibold leading-[1.05] tracking-tight text-[#1F2937] max-w-[15ch] transition-all duration-300 group-hover:text-[#1E3A5F] group-hover:translate-y-[-1px]">
-                {study.title}
-              </h3>
-
-              <div className="mt-3.5 flex flex-wrap gap-2">
-                {study.pills.map((pill, index) => (
-                  <span
-                    key={pill}
-                    className={`inline-flex items-center rounded-full px-3.5 py-1.25 text-[12px] font-medium border ${
-                      index === 0
-                        ? 'bg-white text-[#0F172A] border-[#D9DEE7]'
-                        : 'bg-[#DDE8FF] text-[#1D4ED8] border-[#DDE8FF]'
-                    }`}
-                  >
-                    {pill}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-auto pt-7">
-                <p className="text-[9px] font-semibold uppercase tracking-[0.24em] text-[#6B7280] mb-2.5">
-                  {study.badge}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-[#E5E7EB]" />
-
-        <div className="p-3.5 sm:p-4 lg:p-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4">
-            {[leftPoints, rightPoints].map((points, columnIndex) => (
-              <div key={columnIndex} className="space-y-2">
-                {points.map((point) => (
-                  <div key={point} className="flex items-start gap-2.5 text-[13px] sm:text-sm leading-relaxed text-[#1F2937] transition-colors duration-300 group-hover:text-[#1A1A1A]">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#1E3A5F] shrink-0" />
-                    <span>{point}</span>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.article>
-    );
-  }
-
+function StudyCard({ study }: { study: CaseStudy }) {
   return (
-    <motion.article
-      whileHover={{ y: -4, transition: { duration: 0.25, ease: 'easeOut' } }}
-      className="group relative block h-full rounded-[28px] border border-gray-200 bg-white shadow-none overflow-hidden flex flex-col"
+    <a
+      href={study.companyUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex h-full flex-col rounded-2xl border border-[#E5E7EB] bg-white p-7 sm:p-8 transition-colors duration-200 hover:border-[#1E3A5F]/40"
     >
-      <div className="p-6 sm:p-8 lg:p-10">
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-wrap gap-2">
-            {study.pills.map((pill, index) => (
-              <span
-                key={pill}
-                className={`inline-flex items-center rounded-full px-3.5 py-1.5 text-[13px] font-medium border ${
-                  index === 0
-                    ? 'bg-white text-[#0F172A] border-gray-200'
-                    : 'bg-[#DCE8FF] text-[#1D4ED8] border-[#DCE8FF]'
-                }`}
-              >
-                {pill}
-              </span>
-            ))}
-          </div>
-
-          <h3 className="text-2xl sm:text-[2.15rem] font-bold leading-[1.12] tracking-tight text-[#1F2937] max-w-3xl">
-            {study.title}
-          </h3>
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#6B7280] mb-2">
-                {study.badge}
-              </p>
-            </div>
-
-            <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#2563EB]">
-              {study.subtitle}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="border-t border-gray-200" />
-
-      <div className="p-6 sm:p-8 lg:p-10">
-        <div className="space-y-2.5">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#6B7280]">
-            Highlights
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4">
-            {[leftPoints, rightPoints].map((points, columnIndex) => (
-              <div key={columnIndex} className="space-y-2.5">
-                {points.map((point) => (
-                  <div key={point} className="flex items-start gap-2.5 text-sm sm:text-[15px] leading-relaxed text-[#1F2937]">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#2563EB] shrink-0" />
-                    <span>{point}</span>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {isFull && (
-          <div className="pt-6 mt-6 border-t border-gray-200">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="rounded-2xl bg-gray-50 border border-gray-100 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6B7280] mb-3">
-                  Situation
-                </p>
-                <ul className="space-y-2">
-                  {study.situation.slice(0, 2).map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-xs sm:text-sm leading-relaxed text-gray-600">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#2563EB] shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="rounded-2xl bg-gray-50 border border-gray-100 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6B7280] mb-3">
-                  Built
-                </p>
-                <ul className="space-y-2">
-                  {study.built.slice(0, 2).map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-xs sm:text-sm leading-relaxed text-gray-600">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#2563EB] shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="rounded-2xl bg-gray-50 border border-gray-100 p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6B7280] mb-3">
-                  Results
-                </p>
-                <ul className="space-y-2">
-                  {study.results.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-xs sm:text-sm leading-relaxed text-gray-600">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div className="absolute bottom-5 right-5 opacity-0 translate-y-2 transition-all duration-200 ease-out pointer-events-none group-hover:opacity-100 group-hover:translate-y-0">
-        <span className="inline-flex items-center gap-2 rounded-full bg-[#1D4ED8] px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-blue-500/25 hover:bg-[#1746c7] transition-colors duration-200">
-          View case study
-          <span className="text-sm leading-none">→</span>
+      <div className="flex h-14 items-center justify-center">
+        <span className="text-lg font-semibold tracking-tight text-[#1A1A1A]">
+          {study.company}
         </span>
       </div>
-    </motion.article>
+
+      <h3 className="mt-2 text-center text-[18px] font-semibold leading-relaxed tracking-tight text-[#1A1A1A]">
+        {study.title}
+      </h3>
+
+      <div className="mt-auto pt-7">
+        <div className="flex flex-wrap justify-center gap-2">
+          {study.tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full bg-[#F1F3F7] px-2.5 py-1 text-[11px] font-medium text-[#4B5563]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <div className="-mx-7 sm:-mx-8 mt-5 border-t border-[#F0F1F4]" />
+        <div className="mt-4 flex items-center justify-between text-[12.5px] font-medium text-[#6B7280] transition-colors duration-200 group-hover:text-[#1E3A5F]">
+          <span>Visit site</span>
+          <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+        </div>
+      </div>
+    </a>
   );
 }
 
-export default function CaseStudies({ mode = 'preview' }: { mode?: Mode }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [cardsPerView, setCardsPerView] = useState(1);
-  const maxStartIndex = Math.max(previewCaseStudies.length - Math.ceil(cardsPerView), 0);
-  const safeActiveIndex = Math.min(activeIndex, maxStartIndex);
-
-  useEffect(() => {
-    const updateCardsPerView = () => {
-      setCardsPerView(window.innerWidth >= 1024 ? 2.5 : 1);
-    };
-
-    updateCardsPerView();
-    window.addEventListener('resize', updateCardsPerView);
-    return () => window.removeEventListener('resize', updateCardsPerView);
-  }, []);
-
-  if (mode === 'full') {
-    return (
-      <section className="py-16 md:py-24 bg-[#F7F8FA]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0}
-            className="mb-12"
-          >
-            <h2 className="text-xl sm:text-2xl font-bold text-[#1A1A1A]">Production case studies</h2>
-          </motion.div>
-
-          <div className="space-y-8">
-            {caseStudies.map((study, i) => (
-              <AnimatedItem key={study.title} variant="fade-up" delay={i * 0.08}>
-                <StudyCard study={study} mode="full" />
-              </AnimatedItem>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
+export default function CaseStudies() {
   return (
-      <section id="case-studies" className="relative py-16 md:py-20 overflow-hidden bg-white">
-
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="mb-10 sm:mb-14 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#1A1A1A] leading-[1.12] tracking-tight">
+    <section id="case-studies" className="relative bg-white py-16 md:py-24">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 text-center sm:mb-16">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-[#6B7280]">
+            Selected work
+          </p>
+          <h2 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#1A1A1A]">
             Case studies
           </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base text-[#6B7280]">
+            Production systems built for healthcare, legal, and e-commerce teams
+            designed around their needs.
+          </p>
         </div>
 
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setActiveIndex((current) => (current - 1 + (maxStartIndex + 1)) % (maxStartIndex + 1))}
-            className="absolute left-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#D9DEE7] bg-white text-[#1F2937] shadow-[0_8px_20px_rgba(15,23,42,0.06)] transition-all duration-200 hover:border-[#1E3A5F] hover:text-[#1E3A5F]"
-            aria-label="Previous case study"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveIndex((current) => (current + 1) % (maxStartIndex + 1))}
-            className="absolute right-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#D9DEE7] bg-white text-[#1F2937] shadow-[0_8px_20px_rgba(15,23,42,0.06)] transition-all duration-200 hover:border-[#1E3A5F] hover:text-[#1E3A5F]"
-            aria-label="Next case study"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-
-        <div className="overflow-hidden">
-          <motion.div
-            animate={{
-              x:
-                cardsPerView === 1
-                  ? `-${safeActiveIndex * 100}%`
-                  : `calc(-${safeActiveIndex} * (40% + 1.5rem))`,
-            }}
-            transition={{ duration: 0.45, ease: 'easeInOut' }}
-            className="flex"
-          >
-            {previewCaseStudies.map((study) => (
-              <div key={study.slug} className="min-w-full lg:min-w-[40%] lg:px-3 box-border">
-                <StudyCard study={study} mode="preview" />
-              </div>
-            ))}
-          </motion.div>
-        </div>
-        </div>
-
-        <div className="mt-6 flex items-center justify-center gap-2">
-          {previewCaseStudies.slice(0, Math.max(previewCaseStudies.length - cardsPerView + 1, 1)).map((study, index) => (
-            <button
-              key={study.slug}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              className={`h-2.5 rounded-full transition-all duration-200 ${
-                index === safeActiveIndex ? 'w-8 bg-[#1E3A5F]' : 'w-2.5 bg-[#CBD5E1]'
-              }`}
-              aria-label={`Go to case study ${index + 1}`}
-            />
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {caseStudies.map((study) => (
+            <StudyCard key={study.slug} study={study} />
           ))}
         </div>
       </div>
