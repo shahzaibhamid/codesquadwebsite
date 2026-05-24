@@ -1,21 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Phone, ChevronRight, ArrowUpRight, Search, Globe, Workflow, Bot, Headphones, BarChart3, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import BookingModal from '@/components/booking-modal';
-
-const rotatingKeywords = [
-  'AI Agents',
-  'AEO',
-  'SEO',
-  'GEO',
-  'Content Repurposing',
-  'Ads Tracking',
-  'Outreach Systems',
-  'Customer Support',
-  'Back Office',
-];
 
 const benefits = [
   { icon: ArrowUpRight, text: 'Outbound' },
@@ -30,15 +18,6 @@ const benefits = [
 
 export default function Hero() {
   const [showBooking, setShowBooking] = useState(false);
-  const [keywordIndex, setKeywordIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setKeywordIndex((current) => (current + 1) % rotatingKeywords.length);
-    }, 2200);
-
-    return () => window.clearInterval(timer);
-  }, []);
 
   return (
     <>
@@ -58,10 +37,7 @@ export default function Hero() {
 
             {/* Headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.25rem] font-bold text-[#1A1A1A] leading-[1.08] tracking-tight mb-5 text-center mx-auto">
-              <span className="block">Build Automation Engines</span>
-              <span className="block mt-2 text-[#1E3A5F] transition-all duration-500">
-                {rotatingKeywords[keywordIndex]}
-              </span>
+              Build Automation Engines
             </h1>
 
             {/* Description */}
