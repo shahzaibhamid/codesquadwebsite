@@ -64,18 +64,18 @@ const reviews = [
 
 function ReviewCard({ review }: { review: (typeof reviews)[number] }) {
   return (
-    <div className="group relative flex-shrink-0 w-[290px] sm:w-[310px] bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#0066FF]/20 transition-all duration-300">
+    <div className="group relative flex-shrink-0 w-[290px] sm:w-[310px] bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#1E3A5F]/20 transition-all duration-300">
       <div
         className="absolute top-4 right-6 w-24 h-24 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, #0066FF 0%, #338AFF 40%, transparent 70%)',
+          background: 'radial-gradient(circle, #1E3A5F 0%, #1E3A5F 40%, transparent 70%)',
           filter: 'blur(18px)',
         }}
       />
 
       <div className="relative p-7 flex flex-col gap-5 min-h-[280px]">
-        <div className="w-12 h-12 rounded-xl bg-[#0066FF]/8 flex items-center justify-center group-hover:bg-[#0066FF] transition-all duration-400">
-          <Quote className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-400" strokeWidth={2} />
+        <div className="w-12 h-12 rounded-xl bg-[#1E3A5F]/8 flex items-center justify-center group-hover:bg-[#1E3A5F] transition-all duration-400">
+          <Quote className="w-5 h-5 text-[#1E3A5F] group-hover:text-white transition-colors duration-400" strokeWidth={2} />
         </div>
 
         <blockquote className="text-sm sm:text-[15px] text-[#1F2937] leading-relaxed">
@@ -83,7 +83,7 @@ function ReviewCard({ review }: { review: (typeof reviews)[number] }) {
         </blockquote>
 
         <div className="mt-auto pt-4 border-t border-gray-100">
-          <p className="text-sm font-bold text-[#0A1628]">{review.name}</p>
+          <p className="text-sm font-bold text-[#1A1A1A]">{review.name}</p>
           <p className="text-sm text-gray-500">{review.company}</p>
         </div>
       </div>
@@ -100,19 +100,13 @@ const marqueeReviews = [...reviews, ...reviews];
 export default function Services() {
   return (
     <>
-      <section id="services" className="relative py-20 md:py-28 overflow-hidden bg-white">
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                   <div
-                      className={`flex items-center mb-4 justify-center`}
-                    >
-                      <div className={`w-4 sm:w-6 h-px mr-2 sm:mr-3 shrink-0 bg-[#0066FF]/40`} />
-                      <span
-                        className={`text-[11px] font-semibold uppercase tracking-widest text-[#0066FF]`}
-                      >
-                        Reviews
-                      </span>
-                      <div className={`w-4 sm:w-6 h-px ml-2 sm:ml-3 shrink-0 bg-[#0066FF]/40`} />
-                    </div>
+      <section id="services" className="relative py-16 md:py-20 overflow-hidden bg-white">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="mb-10 sm:mb-14 text-center">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#1A1A1A] leading-[1.12] tracking-tight">
+              What clients say
+            </h2>
+          </div>
           {/* Marquee slider */}
           <AnimatedSection variant="fade-up" className="relative">
             <div className="overflow-hidden">

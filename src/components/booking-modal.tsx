@@ -55,8 +55,8 @@ export default function BookingModal({ onClose }: Props) {
 
   const inputWrap = (hasError: boolean) =>
     `flex items-center gap-3 px-4 py-3 rounded-xl border bg-gray-50 transition-all duration-200
-     focus-within:bg-white focus-within:shadow-[0_0_0_2px_#0066FF]
-     ${hasError ? 'border-red-300 bg-red-50 shadow-[0_0_0_1px_#FCA5A5]' : 'border-gray-200 focus-within:border-[#0066FF]'}`;
+     focus-within:bg-white focus-within:shadow-[0_0_0_2px_#1E3A5F]
+     ${hasError ? 'border-red-300 bg-red-50 shadow-[0_0_0_1px_#FCA5A5]' : 'border-gray-200 focus-within:border-[#1E3A5F]'}`;
 
   return (
     <AnimatePresence>
@@ -76,7 +76,7 @@ export default function BookingModal({ onClose }: Props) {
           onClick={e => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-gradient-to-br from-[#0A1628] to-[#0d2040] px-8 pt-8 pb-6">
+          <div className="bg-gradient-to-br from-[#1A1A1A] to-[#0d2040] px-8 pt-8 pb-6">
             <button
               onClick={onClose}
               className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all"
@@ -84,7 +84,7 @@ export default function BookingModal({ onClose }: Props) {
               <X className="w-4 h-4 text-white/80" />
             </button>
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-xl bg-[#0066FF] flex items-center justify-center shadow-lg">
+              <div className="w-10 h-10 rounded-xl bg-[#1E3A5F] flex items-center justify-center shadow-lg">
                 <Phone className="w-4 h-4 text-white" />
               </div>
               <div>
@@ -179,7 +179,7 @@ export default function BookingModal({ onClose }: Props) {
               whileHover={!submitting ? { scale: 1.02 } : {}}
               whileTap={!submitting ? { scale: 0.98 } : {}}
               className="w-full py-3.5 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 disabled:opacity-70 transition-all"
-              style={{ background: 'linear-gradient(135deg, #0066FF, #338AFF)' }}
+              style={{ background: 'linear-gradient(135deg, #1E3A5F, #1E3A5F)' }}
             >
               {submitting ? (
                 <>

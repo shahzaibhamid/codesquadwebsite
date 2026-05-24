@@ -50,8 +50,8 @@ export default function Navigation() {
                 href={link.href}
                 className={`relative px-3.5 py-2 text-sm font-medium rounded-md transition-colors duration-200 flex items-center gap-1 ${
                   (link.href === '/' ? pathname === '/' : pathname.startsWith(link.href))
-                    ? 'text-[#0066FF] bg-blue-50'
-                    : 'text-gray-600 hover:text-[#0066FF] hover:bg-blue-50'
+                    ? 'text-[#1E3A5F] bg-blue-50'
+                    : 'text-gray-600 hover:text-[#1E3A5F] hover:bg-blue-50'
                 }`}
               >
                 {link.label}
@@ -65,7 +65,7 @@ export default function Navigation() {
               href="https://calendly.com/code_squad/30min"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0066FF] px-5 h-9 text-sm font-medium text-white shadow-md shadow-blue-500/20 hover:bg-[#0052CC] hover:shadow-lg transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-[#1E3A5F] px-5 h-9 text-sm font-medium text-white shadow-md shadow-blue-500/20 hover:bg-[#15293F] hover:shadow-lg transition-all duration-300"
             >
               Book a Free Call
             </a>
@@ -102,7 +102,7 @@ export default function Navigation() {
                           onClick={() => setMobileOpen(false)}
                           className={`block text-left px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                             (link.href === '/' ? pathname === '/' : pathname.startsWith(link.href))
-                              ? 'bg-blue-50 text-[#0066FF]'
+                              ? 'bg-blue-50 text-[#1E3A5F]'
                               : 'text-gray-600 hover:bg-gray-50'
                           }`}
                         >

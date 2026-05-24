@@ -107,7 +107,7 @@ export default function ScheduleCallModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg p-0 overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#0066FF] to-[#0052CC] px-6 py-8 text-white">
+        <div className="bg-gradient-to-r from-[#1E3A5F] to-[#15293F] px-6 py-8 text-white">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
               <Phone className="w-5 h-5" />
@@ -123,7 +123,7 @@ export default function ScheduleCallModal({
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-[#0A1628]">
+              <Label className="text-sm font-medium text-[#1A1A1A]">
                 Full Name <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
@@ -132,12 +132,12 @@ export default function ScheduleCallModal({
                   placeholder="John Doe"
                   value={formData.name}
                   onChange={(e) => handleChange('name', e.target.value)}
-                  className="pl-9 h-10 rounded-xl bg-gray-50 border-gray-200 focus:border-[#0066FF]"
+                  className="pl-9 h-10 rounded-xl bg-gray-50 border-gray-200 focus:border-[#1E3A5F]"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-[#0A1628]">
+              <Label className="text-sm font-medium text-[#1A1A1A]">
                 Email <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
@@ -147,7 +147,7 @@ export default function ScheduleCallModal({
                   placeholder="john@company.com"
                   value={formData.email}
                   onChange={(e) => handleChange('email', e.target.value)}
-                  className="pl-9 h-10 rounded-xl bg-gray-50 border-gray-200 focus:border-[#0066FF]"
+                  className="pl-9 h-10 rounded-xl bg-gray-50 border-gray-200 focus:border-[#1E3A5F]"
                 />
               </div>
             </div>
@@ -155,7 +155,7 @@ export default function ScheduleCallModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-[#0A1628]">
+              <Label className="text-sm font-medium text-[#1A1A1A]">
                 Phone <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
@@ -164,12 +164,12 @@ export default function ScheduleCallModal({
                   placeholder="+1 (555) 000-0000"
                   value={formData.phone}
                   onChange={(e) => handleChange('phone', e.target.value)}
-                  className="pl-9 h-10 rounded-xl bg-gray-50 border-gray-200 focus:border-[#0066FF]"
+                  className="pl-9 h-10 rounded-xl bg-gray-50 border-gray-200 focus:border-[#1E3A5F]"
                 />
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-[#0A1628]">
+              <Label className="text-sm font-medium text-[#1A1A1A]">
                 Topic
               </Label>
               <Select value={formData.topic} onValueChange={(v) => handleChange('topic', v)}>
@@ -186,7 +186,7 @@ export default function ScheduleCallModal({
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm font-medium text-[#0A1628]">
+            <Label className="text-sm font-medium text-[#1A1A1A]">
               Preferred Date
             </Label>
             <div className="relative">
@@ -195,13 +195,13 @@ export default function ScheduleCallModal({
                 type="date"
                 value={formData.date}
                 onChange={(e) => handleChange('date', e.target.value)}
-                className="pl-9 h-10 rounded-xl bg-gray-50 border-gray-200 focus:border-[#0066FF]"
+                className="pl-9 h-10 rounded-xl bg-gray-50 border-gray-200 focus:border-[#1E3A5F]"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label className="text-sm font-medium text-[#0A1628]">
+            <Label className="text-sm font-medium text-[#1A1A1A]">
               Message <span className="text-xs text-gray-400 font-normal">(optional)</span>
             </Label>
             <Textarea
@@ -209,14 +209,14 @@ export default function ScheduleCallModal({
               rows={3}
               value={formData.message}
               onChange={(e) => handleChange('message', e.target.value)}
-              className="rounded-xl bg-gray-50 border-gray-200 focus:border-[#0066FF] resize-none"
+              className="rounded-xl bg-gray-50 border-gray-200 focus:border-[#1E3A5F] resize-none"
             />
           </div>
 
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-xl h-11 font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+            className="w-full bg-[#1E3A5F] hover:bg-[#15293F] text-white rounded-xl h-11 font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
           >
             {isSubmitting ? (
               <span className="flex items-center gap-2">

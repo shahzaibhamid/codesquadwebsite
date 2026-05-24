@@ -41,9 +41,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-cs-blue: #0066FF;
+  --color-cs-blue: #1E3A5F;
   --color-cs-blue-dark: #0052CC;
-  --color-cs-blue-light: #338AFF;
+  --color-cs-blue-light: #3D5E85;
   --color-cs-navy: #0A1628;
   --color-cs-navy-light: #132240;
 }
@@ -360,7 +360,7 @@
   transform: translateX(-50%);
   width: 80px;
   height: 2px;
-  background: linear-gradient(90deg, #0066FF, #338AFF);
+  background: linear-gradient(90deg, #1E3A5F, #3D5E85);
   border-radius: 0 0 2px 2px;
 }
 
@@ -378,7 +378,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #0066FF;
+  background: #1E3A5F;
   box-shadow: 0 0 0 3px rgba(0,102,255,0.15), 0 0 12px rgba(0,102,255,0.3);
 }
 
@@ -407,7 +407,7 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, #0066FF, #338AFF);
+  background: linear-gradient(90deg, #1E3A5F, #3D5E85);
   border-radius: 1px;
   transform: scaleX(0);
   transform-origin: left;
@@ -494,7 +494,7 @@ hr.gradient-hr {
 
 /* Gradient text utility */
 .gradient-text {
-  background: linear-gradient(135deg, #0066FF, #338AFF);
+  background: linear-gradient(135deg, #1E3A5F, #3D5E85);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -552,7 +552,7 @@ hr.gradient-hr {
 .typewriter-cursor::after {
   content: '|';
   animation: blink-cursor 1s step-end infinite;
-  color: #338AFF;
+  color: #3D5E85;
   font-weight: 300;
   margin-left: 2px;
 }
@@ -570,7 +570,7 @@ hr.gradient-hr {
   left: 0;
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, #0066FF, #338AFF);
+  background: linear-gradient(90deg, #1E3A5F, #3D5E85);
   transition: width 0.3s ease;
 }
 
@@ -606,7 +606,7 @@ hr.gradient-hr {
 }
 
 .animated-gradient-line {
-  background: linear-gradient(90deg, #0066FF, #338AFF, #66B2FF, #338AFF, #0066FF);
+  background: linear-gradient(90deg, #1E3A5F, #3D5E85, #66B2FF, #3D5E85, #1E3A5F);
   background-size: 200% 100%;
   animation: gradient-line 3s ease infinite;
 }
@@ -686,7 +686,7 @@ a:focus-visible {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #0066FF, #338AFF);
+  background: linear-gradient(90deg, #1E3A5F, #3D5E85);
   border-radius: 1px;
   transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -791,7 +791,7 @@ img {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, #0066FF, #338AFF, #66B2FF);
+  background: linear-gradient(135deg, #1E3A5F, #3D5E85, #66B2FF);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -877,7 +877,7 @@ img {
 
 /* Enhanced focus ring for inputs */
 .input-focus-ring:focus {
-  border-color: #0066FF;
+  border-color: #1E3A5F;
   box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
 }
 
@@ -1039,7 +1039,7 @@ img {
 
 /* Gradient text in blue tones */
 .text-gradient-blue {
-  background: linear-gradient(135deg, #0052CC 0%, #0066FF 35%, #338AFF 65%, #0052CC 100%);
+  background: linear-gradient(135deg, #0052CC 0%, #1E3A5F 35%, #3D5E85 65%, #0052CC 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1139,7 +1139,7 @@ img {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0066FF, #338AFF);
+  background: linear-gradient(135deg, #1E3A5F, #3D5E85);
   box-shadow: 0 0 8px rgba(0, 102, 255, 0.3);
 }
 

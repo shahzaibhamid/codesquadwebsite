@@ -95,7 +95,7 @@ const toolLogos = [
 export default function Footer() {
   return (
     <footer id="footer" className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#071020] via-[#0A1628] to-[#071020]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#071020] via-[#1A1A1A] to-[#071020]" />
       <div className="absolute inset-0 grid-pattern opacity-15" />
       <div className="relative h-px animated-gradient-line" />
 
@@ -126,7 +126,7 @@ export default function Footer() {
                 href="tel:+13073964945"
                 className="flex items-center gap-2.5 text-sm text-gray-400 hover:text-white transition-colors duration-200 group"
               >
-                <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#0066FF] group-hover:border-[#0066FF] transition-all duration-300">
+                <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#1E3A5F] group-hover:border-[#1E3A5F] transition-all duration-300">
                   <Phone className="w-3.5 h-3.5" />
                 </div>
                 +1 (307) 396-4945
@@ -135,7 +135,7 @@ export default function Footer() {
                 href="mailto:info@codesquad.ai"
                 className="flex items-center gap-2.5 text-sm text-gray-400 hover:text-white transition-colors duration-200 group"
               >
-                <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#0066FF] group-hover:border-[#0066FF] transition-all duration-300">
+                <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#1E3A5F] group-hover:border-[#1E3A5F] transition-all duration-300">
                   <Mail className="w-3.5 h-3.5" />
                 </div>
                 info@codesquad.ai
@@ -149,7 +149,7 @@ export default function Footer() {
                   aria-label={link.label}
                   target={link.href.startsWith('http') ? '_blank' : undefined}
                   rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#0066FF] hover:border-[#0066FF] hover:text-white transition-all duration-300"
+                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-[#1E3A5F] hover:border-[#1E3A5F] hover:text-white transition-all duration-300"
                 >
                   {link.svg}
                 </a>
@@ -177,7 +177,7 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-[#338AFF] uppercase tracking-wider mb-1">USA</p>
+                  <p className="text-xs font-semibold text-[#1E3A5F] uppercase tracking-wider mb-1">USA</p>
                   <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-200 leading-relaxed block">
                     312 W 2nd St Unit #A1528,<br />Casper, WY 82601
                   </a>
@@ -195,7 +195,7 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-[#338AFF] uppercase tracking-wider mb-1">Pakistan</p>
+                  <p className="text-xs font-semibold text-[#1E3A5F] uppercase tracking-wider mb-1">Pakistan</p>
                   <a
                     href="https://maps.app.goo.gl/uhAhYB7Ja5REpc3o9"
                     target="_blank"

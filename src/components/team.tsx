@@ -73,10 +73,10 @@ export default function Team() {
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <h3 className="text-base font-bold text-[#0A1628] group-hover:text-[#0066FF] transition-colors duration-300">
+                      <h3 className="text-base font-bold text-[#1A1A1A] group-hover:text-[#1E3A5F] transition-colors duration-300">
                         {member.name}
                       </h3>
-                      <p className="text-xs font-semibold text-[#0066FF]/70 mt-1">{member.title}</p>
+                      <p className="text-xs font-semibold text-[#1E3A5F]/70 mt-1">{member.title}</p>
                     </div>
                     {member.linkedin && (
                       <a
@@ -84,7 +84,7 @@ export default function Team() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`${member.name} on LinkedIn`}
-                        className="shrink-0 w-8 h-8 rounded-lg bg-[#0066FF]/5 border border-[#0066FF]/10 flex items-center justify-center text-[#0066FF] hover:bg-[#0066FF] hover:text-white hover:border-[#0066FF] transition-colors duration-200"
+                        className="shrink-0 w-8 h-8 rounded-lg bg-[#1E3A5F]/5 border border-[#1E3A5F]/10 flex items-center justify-center text-[#1E3A5F] hover:bg-[#1E3A5F] hover:text-white hover:border-[#1E3A5F] transition-colors duration-200"
                       >
                         <Linkedin className="w-4 h-4" />
                       </a>

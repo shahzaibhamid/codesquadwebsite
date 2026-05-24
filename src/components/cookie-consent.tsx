@@ -46,8 +46,8 @@ export default function CookieConsent() {
           <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/10 border border-gray-200/60 p-4">
             <div className="flex items-start gap-3">
               {/* Cookie icon */}
-              <div className="w-9 h-9 rounded-xl bg-[#0066FF]/10 flex items-center justify-center shrink-0 mt-0.5">
-                <Cookie className="w-5 h-5 text-[#0066FF]" />
+              <div className="w-9 h-9 rounded-xl bg-[#1E3A5F]/10 flex items-center justify-center shrink-0 mt-0.5">
+                <Cookie className="w-5 h-5 text-[#1E3A5F]" />
               </div>
 
               {/* Text content */}
@@ -57,7 +57,7 @@ export default function CookieConsent() {
                   traffic.{' '}
                   <a
                     href="#"
-                    className="text-[#0066FF] font-medium hover:underline"
+                    className="text-[#1E3A5F] font-medium hover:underline"
                   >
                     Learn more
                   </a>
@@ -77,7 +77,7 @@ export default function CookieConsent() {
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                     onClick={handleAccept}
-                    className="text-xs font-medium text-white bg-[#0066FF] hover:bg-[#0052CC] px-4 py-2 rounded-lg shadow-sm shadow-blue-500/20 transition-colors duration-200"
+                    className="text-xs font-medium text-white bg-[#1E3A5F] hover:bg-[#15293F] px-4 py-2 rounded-lg shadow-sm shadow-blue-500/20 transition-colors duration-200"
                   >
                     Accept
                   </motion.button>

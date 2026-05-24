@@ -40,14 +40,14 @@ function StudyCard({
           aria-hidden="true"
           className="absolute top-4 right-5 h-28 w-28 rounded-full pointer-events-none opacity-0 scale-95 transition-all duration-300 ease-out group-hover:opacity-100 group-hover:scale-100 group-hover:translate-x-1 group-hover:-translate-y-1"
           style={{
-            background: 'radial-gradient(circle, #0066FF 0%, #338AFF 40%, transparent 72%)',
+            background: 'radial-gradient(circle, #1E3A5F 0%, #1E3A5F 40%, transparent 72%)',
             filter: 'blur(20px)',
           }}
         />
         <div className="p-3.5 sm:p-4 lg:p-5">
           <div className="grid grid-cols-1 gap-5 items-start">
             <div className="flex flex-col min-h-[100px]">
-              <h3 className="text-[22px] sm:text-[25px] lg:text-[30px] font-semibold leading-[1.05] tracking-tight text-[#1F2937] max-w-[15ch] transition-all duration-300 group-hover:text-[#0066FF] group-hover:translate-y-[-1px]">
+              <h3 className="text-[22px] sm:text-[25px] lg:text-[30px] font-semibold leading-[1.05] tracking-tight text-[#1F2937] max-w-[15ch] transition-all duration-300 group-hover:text-[#1E3A5F] group-hover:translate-y-[-1px]">
                 {study.title}
               </h3>
 
@@ -82,8 +82,8 @@ function StudyCard({
             {[leftPoints, rightPoints].map((points, columnIndex) => (
               <div key={columnIndex} className="space-y-2">
                 {points.map((point) => (
-                  <div key={point} className="flex items-start gap-2.5 text-[13px] sm:text-sm leading-relaxed text-[#1F2937] transition-colors duration-300 group-hover:text-[#0A1628]">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#0066FF] shrink-0" />
+                  <div key={point} className="flex items-start gap-2.5 text-[13px] sm:text-sm leading-relaxed text-[#1F2937] transition-colors duration-300 group-hover:text-[#1A1A1A]">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#1E3A5F] shrink-0" />
                     <span>{point}</span>
                   </div>
                 ))}
@@ -243,7 +243,7 @@ export default function CaseStudies({ mode = 'preview' }: { mode?: Mode }) {
             custom={0}
             className="mb-12"
           >
-            <h2 className="text-xl sm:text-2xl font-bold text-[#0A1628]">Production case studies</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-[#1A1A1A]">Production case studies</h2>
           </motion.div>
 
           <div className="space-y-8">
@@ -259,34 +259,20 @@ export default function CaseStudies({ mode = 'preview' }: { mode?: Mode }) {
   }
 
   return (
-      <section id="case-studies" className="relative pt-10 md:pt-14 overflow-hidden bg-white">
+      <section id="case-studies" className="relative py-16 md:py-20 overflow-hidden bg-white">
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-6 md:gap-8 mb-5">
-          {/* <SectionHeader
-            label="Case Studies"
-            title={<>Selected <span className="gradient-text">Production Wins</span></>}
-            description="A clean showcase of the systems we've built."
-          /> */}
-          
-          <div
-            className={`flex items-center mb-4 justify-center`}
-          >
-            <div className={`w-4 sm:w-6 h-px mr-2 sm:mr-3 shrink-0 bg-[#0066FF]/40`} />
-            <span
-              className={`text-[11px] font-semibold uppercase tracking-widest text-[#0066FF]`}
-            >
-              Case Studies
-            </span>
-            <div className={`w-4 sm:w-6 h-px ml-2 sm:ml-3 shrink-0 bg-[#0066FF]/40`} />
-          </div>
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="mb-10 sm:mb-14 text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#1A1A1A] leading-[1.12] tracking-tight">
+            Case studies
+          </h2>
         </div>
 
         <div className="relative">
           <button
             type="button"
             onClick={() => setActiveIndex((current) => (current - 1 + (maxStartIndex + 1)) % (maxStartIndex + 1))}
-            className="absolute left-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#D9DEE7] bg-white text-[#1F2937] shadow-[0_8px_20px_rgba(15,23,42,0.06)] transition-all duration-200 hover:border-[#0066FF] hover:text-[#0066FF]"
+            className="absolute left-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#D9DEE7] bg-white text-[#1F2937] shadow-[0_8px_20px_rgba(15,23,42,0.06)] transition-all duration-200 hover:border-[#1E3A5F] hover:text-[#1E3A5F]"
             aria-label="Previous case study"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -294,7 +280,7 @@ export default function CaseStudies({ mode = 'preview' }: { mode?: Mode }) {
           <button
             type="button"
             onClick={() => setActiveIndex((current) => (current + 1) % (maxStartIndex + 1))}
-            className="absolute right-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#D9DEE7] bg-white text-[#1F2937] shadow-[0_8px_20px_rgba(15,23,42,0.06)] transition-all duration-200 hover:border-[#0066FF] hover:text-[#0066FF]"
+            className="absolute right-0 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#D9DEE7] bg-white text-[#1F2937] shadow-[0_8px_20px_rgba(15,23,42,0.06)] transition-all duration-200 hover:border-[#1E3A5F] hover:text-[#1E3A5F]"
             aria-label="Next case study"
           >
             <ChevronRight className="h-5 w-5" />
@@ -327,7 +313,7 @@ export default function CaseStudies({ mode = 'preview' }: { mode?: Mode }) {
               type="button"
               onClick={() => setActiveIndex(index)}
               className={`h-2.5 rounded-full transition-all duration-200 ${
-                index === safeActiveIndex ? 'w-8 bg-[#0066FF]' : 'w-2.5 bg-[#CBD5E1]'
+                index === safeActiveIndex ? 'w-8 bg-[#1E3A5F]' : 'w-2.5 bg-[#CBD5E1]'
               }`}
               aria-label={`Go to case study ${index + 1}`}
             />
