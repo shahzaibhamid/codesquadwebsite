@@ -36,7 +36,7 @@ export default function Hero() {
             </div>
 
             {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.25rem] font-bold text-[#1A1A1A] leading-[1.08] tracking-tight mb-5 text-center mx-auto">
+            <h1 className="text-4xl sm:text-5xl md:text-[3.5rem] lg:text-[3.75rem] xl:text-[3.75rem] font-semibold text-[#1A1A1A] leading-[1.05] tracking-[-0.035em] mb-5 text-center mx-auto">
               Build Automation Engines
             </h1>
 

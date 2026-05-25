@@ -12,12 +12,12 @@ function StudyCard({ study }: { study: CaseStudy }) {
       className="group flex h-full flex-col rounded-2xl border border-[#E5E7EB] bg-white p-7 sm:p-8 transition-colors duration-200 hover:border-[#1E3A5F]/40"
     >
       <div className="flex h-14 items-center justify-center">
-        <span className="text-lg font-semibold tracking-tight text-[#1A1A1A]">
+        <span className="text-[19px] font-semibold tracking-[-0.02em] text-[#1A1A1A]">
           {study.company}
         </span>
       </div>
 
-      <h3 className="mt-2 text-center text-[18px] font-semibold leading-relaxed tracking-tight text-[#1A1A1A]">
+      <h3 className="mt-2 text-center text-[18px] font-medium leading-[1.45] tracking-[-0.01em] text-[#1A1A1A]">
         {study.title}
       </h3>
 
@@ -47,10 +47,10 @@ export default function CaseStudies() {
     <section id="case-studies" className="relative bg-white py-16 md:py-24">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center sm:mb-16">
-          <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-[#6B7280]">
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-[#6B7280]">
             Selected work
           </p>
-          <h2 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#1A1A1A]">
+          <h2 className="mt-3 text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-semibold leading-[1.08] tracking-[-0.03em] text-[#1A1A1A]">
             Case studies
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base text-[#6B7280]">

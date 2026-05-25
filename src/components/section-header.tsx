@@ -19,7 +19,7 @@ export default function SectionHeader({
   return (
     <div className={`mb-10 sm:mb-14 lg:mb-12 ${centered ? 'text-center' : ''}`}>
       <h2
-        className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.12] tracking-tight mb-4 sm:mb-5 ${
+        className={`text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-semibold leading-[1.08] tracking-[-0.03em] mb-4 sm:mb-5 ${
           light ? 'text-white' : 'text-[#1A1A1A]'
         }`}
       >

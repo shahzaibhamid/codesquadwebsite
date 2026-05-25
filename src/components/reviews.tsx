@@ -31,7 +31,7 @@ function QuoteTile({ quote }: { quote: ClientQuote }) {
       rel="noopener noreferrer"
       className="group flex h-full flex-col rounded-2xl border border-[#E5E7EB] bg-white p-6 sm:p-7 transition-colors duration-200 hover:border-[#1E3A5F]/40"
     >
-      <blockquote className="text-[14.5px] leading-relaxed text-[#374151]">
+      <blockquote className="text-[15.5px] leading-[1.65] tracking-[-0.005em] text-[#1F2937]">
         “{quote.quote}”
       </blockquote>
       <div className="mt-auto flex items-end justify-between gap-3 border-t border-[#F0F1F4] pt-5">
@@ -40,7 +40,9 @@ function QuoteTile({ quote }: { quote: ClientQuote }) {
             {initials(quote.name)}
           </div>
           <div>
-            <p className="text-[13px] font-semibold text-[#1A1A1A]">{quote.name}</p>
+            <p className="text-[13.5px] font-semibold tracking-[-0.01em] text-[#1A1A1A]">
+              {quote.name}
+            </p>
             <p className="text-[12px] text-[#6B7280]">
               {quote.title} · {quote.company}
             </p>
@@ -60,9 +62,9 @@ export default function Reviews() {
     <section id="reviews" className="relative bg-[#FAFBFC] py-16 md:py-24">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center sm:mb-14">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#1A1A1A]">
-            What clients say
-          </h2>
+          <p className="font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-[#6B7280]">
+            Testimonials
+          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
