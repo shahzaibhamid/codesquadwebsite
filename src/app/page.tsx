@@ -6,7 +6,8 @@ import Hero from '@/components/hero';
 
 // Lazy load heavy components for better performance
 const CaseStudies = lazy(() => import('@/components/case-studies'));
-const Team = lazy(() => import('@/components/team'));
+const HowWeWork = lazy(() => import('@/components/how-we-work'));
+const Founder = lazy(() => import('@/components/founder'));
 const Reviews = lazy(() => import('@/components/reviews'));
 const GetStartedSection = lazy(() => import('@/components/get-started-section'));
 const Footer = lazy(() => import('@/components/footer'));
@@ -29,7 +30,10 @@ export default function Home() {
           <CaseStudies />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
-          <Team />
+          <Founder />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <HowWeWork />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <Reviews />
