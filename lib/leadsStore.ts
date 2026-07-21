@@ -3,21 +3,32 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { randomUUID } from 'crypto';
 import type { Lead } from '@/types';
+import { getSupabaseAdmin } from '@/lib/supabaseAdmin';
 
 /**
- * File-based leads store — captures AI Basecamp / AI Audit / Contact form
- * submissions. Persists to `content/leads.json` (created on first write), so
- * lead capture works locally with zero setup.
- *
- * NOTE: A serverless host with a read-only filesystem (e.g. Vercel) won't
- * persist writes — that's when you switch this layer to Supabase (schema in
- * supabase/schema.sql, admin client in lib/supabaseAdmin.ts). Only lib/leads.ts
- * and this file change; the forms and dashboard stay the same.
+ * Leads store — captures AI Basecamp / Growth Club / AI Audit / Contact form
+ * submissions. Uses Supabase (public.leads) when configured — the source of
+ * truth in production, since Vercel's filesystem is read-only. Falls back to
+ * a local JSON file (content/leads.json) when Supabase isn't configured.
  */
+
+function rowToLead(row: Record<string, unknown>): Lead {
+  return {
+    id: row.id as string,
+    name: row.name as string,
+    email: row.email as string,
+    company: (row.company as string) || undefined,
+    message: (row.message as string) || undefined,
+    role: (row.role as string) || undefined,
+    tools: (row.tools as string) || undefined,
+    source: row.source as Lead['source'],
+    createdAt: row.created_at as string,
+  };
+}
 
 const FILE = path.join(process.cwd(), 'content', 'leads.json');
 
-async function load(): Promise<Lead[]> {
+async function fileLoad(): Promise<Lead[]> {
   try {
     return JSON.parse(await fs.readFile(FILE, 'utf8')) as Lead[];
   } catch {
@@ -25,20 +36,45 @@ async function load(): Promise<Lead[]> {
   }
 }
 
-async function save(leads: Lead[]): Promise<void> {
+async function fileSave(leads: Lead[]): Promise<void> {
   await fs.mkdir(path.dirname(FILE), { recursive: true });
   await fs.writeFile(FILE, JSON.stringify(leads, null, 2), 'utf8');
 }
 
 export async function readAllLeads(): Promise<Lead[]> {
-  const leads = await load();
-  return leads.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  const db = getSupabaseAdmin();
+  if (!db) {
+    const leads = await fileLoad();
+    return leads.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }
+  const { data, error } = await db.from('leads').select('*').order('created_at', { ascending: false });
+  if (error) throw error;
+  return (data ?? []).map(rowToLead);
 }
 
 export async function createLeadStore(lead: Omit<Lead, 'id' | 'createdAt'>): Promise<Lead> {
-  const leads = await load();
-  const record: Lead = { ...lead, id: randomUUID(), createdAt: new Date().toISOString() };
-  leads.push(record);
-  await save(leads);
-  return record;
+  const db = getSupabaseAdmin();
+  if (!db) {
+    const leads = await fileLoad();
+    const record: Lead = { ...lead, id: randomUUID(), createdAt: new Date().toISOString() };
+    leads.push(record);
+    await fileSave(leads);
+    return record;
+  }
+
+  const { data, error } = await db
+    .from('leads')
+    .insert({
+      name: lead.name,
+      email: lead.email,
+      company: lead.company || null,
+      message: lead.message || null,
+      role: lead.role || null,
+      tools: lead.tools || null,
+      source: lead.source,
+    })
+    .select('*')
+    .single();
+  if (error) throw error;
+  return rowToLead(data);
 }

@@ -99,9 +99,14 @@ create table if not exists public.leads (
   email       text not null,
   company     text,
   message     text,
-  source      text not null default 'contact',   -- 'ai-basecamp' | 'ai-audit' | 'contact'
+  role        text,
+  tools       text,
+  source      text not null default 'contact',   -- 'growth-club' | 'ai-basecamp' | 'ai-audit' | 'contact'
   created_at  timestamptz not null default now()
 );
+
+alter table public.leads add column if not exists role text;
+alter table public.leads add column if not exists tools text;
 
 -- ---------------------------------------------------------------------------
 -- ROW LEVEL SECURITY
