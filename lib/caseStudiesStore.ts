@@ -26,7 +26,11 @@ async function load(): Promise<CaseStudy[]> {
     return JSON.parse(await fs.readFile(FILE, 'utf8')) as CaseStudy[];
   } catch {
     const items = seededCases();
-    await save(items);
+    try {
+      await save(items);
+    } catch {
+      // read-only filesystem (e.g. Vercel) — serve the seed without persisting
+    }
     return items;
   }
 }

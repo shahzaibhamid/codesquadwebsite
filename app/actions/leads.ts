@@ -29,15 +29,20 @@ export async function submitLead(input: SubmitLeadInput): Promise<SubmitLeadResu
     return { ok: false, error: 'Please provide a valid name and email.' };
   }
 
-  await createLeadStore({
-    name,
-    email,
-    company: input.company?.trim() || undefined,
-    message: input.message?.trim() || undefined,
-    role: input.role?.trim() || undefined,
-    tools: input.tools?.trim() || undefined,
-    source: input.source,
-  });
+  try {
+    await createLeadStore({
+      name,
+      email,
+      company: input.company?.trim() || undefined,
+      message: input.message?.trim() || undefined,
+      role: input.role?.trim() || undefined,
+      tools: input.tools?.trim() || undefined,
+      source: input.source,
+    });
+  } catch (err) {
+    console.error('submitLead: failed to persist lead', err);
+    return { ok: false, error: 'Something went wrong submitting your info. Please try again or email us directly.' };
+  }
 
   revalidatePath('/dashboard/leads');
   return { ok: true };

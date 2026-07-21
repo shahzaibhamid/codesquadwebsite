@@ -22,7 +22,11 @@ async function load(): Promise<BlogPost[]> {
   try {
     return JSON.parse(await fs.readFile(FILE, 'utf8')) as BlogPost[];
   } catch {
-    await save([...seed]); // first run — seed from static content
+    try {
+      await save([...seed]); // first run — seed from static content
+    } catch {
+      // read-only filesystem (e.g. Vercel) — serve the seed without persisting
+    }
     return [...seed];
   }
 }

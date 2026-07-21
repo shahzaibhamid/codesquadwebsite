@@ -27,9 +27,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Local dashboard blog store (seeded from data/blog.ts)
-/content/posts.json
-
 # Local lead-capture store (AI Basecamp / AI Audit / Contact submissions)
 /content/leads.json
 
