@@ -1,64 +1,41 @@
-import type { Config } from "tailwindcss";
-import tailwindcssAnimate from "tailwindcss-animate";
+import type { Config } from 'tailwindcss';
 
+/**
+ * Tailwind is available for future work, but PREFLIGHT IS DISABLED on purpose:
+ * the exact visual design lives in `app/globals.css` (ported 1:1 from the
+ * WordPress theme). Disabling preflight prevents Tailwind's CSS reset from
+ * fighting that design system, so the clone stays pixel-faithful. The brand
+ * tokens below mirror the CSS variables so you can also use utilities like
+ * `text-cs-cyan` when adding new UI.
+ */
 const config: Config = {
-    darkMode: "class",
-    content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  content: [
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './data/**/*.{ts,tsx}',
   ],
-  theme: {
-  	extend: {
-  		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
-  			},
-  			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
-  			},
-  			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
-  			},
-  			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
-  			},
-  			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
-  			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			}
-  		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
-  	}
+  corePlugins: {
+    preflight: false,
   },
-  plugins: [tailwindcssAnimate],
+  theme: {
+    extend: {
+      colors: {
+        'cs-bg': '#05060c',
+        'cs-panel': 'rgba(255,255,255,0.04)',
+        'cs-text': '#e7ebf5',
+        'cs-heading': '#ffffff',
+        'cs-muted': '#94a1bd',
+        'cs-cyan': '#22d3ee',
+        'cs-blue': '#3b82f6',
+        'cs-purple': '#a855f7',
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-grotesk)', 'var(--font-inter)', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
 };
+
 export default config;

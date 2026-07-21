@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Modern Law",
+    "url": "https://mymodernlaw.com",
+    "category": "Family Law",
+    "services": "Content Automation",
+    "desc": "Turned a four-brand law firm into a self-publishing content engine that creates blogs, social posts, and images automatically.",
+    "slug": "modern-law",
+    "published": true,
+    "sortOrder": 1
+  },
+  {
+    "name": "iPromo",
+    "url": "https://www.ipromo.com",
+    "category": "B2B E-commerce",
+    "services": "Image Automation · Salesforce",
+    "desc": "Built an automated product-of-the-month image pipeline integrated with Salesforce and email, plus enrichment and analysis for a 25-year-old promotional products company.",
+    "slug": "ipromo",
+    "published": true,
+    "sortOrder": 2
+  },
+  {
+    "name": "GengyveUSA",
+    "url": "https://gengyveusa.com",
+    "category": "Healthcare E-commerce",
+    "services": "SEO · Ads · Content",
+    "desc": "Unified SEO, paid ads, and review analysis into one automation layer for a veteran-owned oral care brand.",
+    "slug": "gengyveusa",
+    "published": true,
+    "sortOrder": 3
+  },
+  {
+    "name": "ENERGYbits",
+    "url": "https://energybits.com",
+    "category": "DTC Wellness",
+    "services": "Marketing Intelligence",
+    "desc": "Built a complete marketing intelligence platform analyzing 15+ connected ad and content platforms, with blog generation pipelines and SEO, AEO, and GEO scoring before publish.",
+    "slug": "energybits",
+    "published": true,
+    "sortOrder": 4
+  },
+  {
+    "slug": "harmony-medspa-patient-growth-automation",
+    "name": "Harmony MedSpa",
+    "url": "https://www.harmonymedspafl.com/",
+    "category": "Medical Aesthetics",
+    "services": "automation . SEO",
+    "desc": "CodeSquad built a patient growth system that captures leads, responds in about 60 seconds, follows up automatically, and tracks everything in one dashboard.",
+    "published": true,
+    "sortOrder": 1,
+    "kicker": "Patient Growth Automation for Medical Spas",
+    "headline": "How Harmony MedSpa Built a 24/7 Patient Growth and Follow-Up System",
+    "challenge": "Harmony MedSpa delivered excellent patient care, but its lead-management process depended heavily on manual follow-up.\r\n\r\nNew enquiries arrived throughout the day and night through website forms, phone calls, Google Ads, and other marketing channels. Because the inbox was checked manually between patient appointments, potential patients could wait several hours before receiving a response.\r\n#IMAGE#\r\nThere was also no structured follow-up sequence for people who enquired but did not immediately book. Once a lead went cold, they were often never contacted again. Past patients were not being systematically re-engaged, rebooking reminders were handled inconsistently, and referrals were not tracked from beginning to end.\r\n\r\nManagement also lacked a single place to view new leads, communication activity, follow-up status, and marketing performance.\r\n\r\nThe clinical experience was strong. The operational challenge was speed, consistency, and visibility.",
+    "solution": "CodeSquad developed a connected patient growth system around Harmony MedSpa’s existing operation.\r\n\r\nCodeSquad connected the website, Make.com, Airtable, SMS, email, PatientNow, and a live dashboard.\r\n\r\nThe system now captures every lead, responds instantly, follows up automatically, and gives the team full visibility.",
+    "implementation": "The implementation was divided into four coordinated systems, with each system solving a specific gap in Harmony MedSpa’s patient journey.\r\n\r\nThe first system focused on speed-to-lead. When someone submits an enquiry, the system creates a lead record, sends a personalized SMS and email, alerts the team, and displays the enquiry on the management dashboard.\r\n\r\nThe second system introduced a 14-day nurturing programme. Leads who do not book immediately receive five planned messages containing the booking link, treatment information, current promotions, patient reviews, and a final courtesy reminder. The sequence stops when a patient replies, allowing the staff to take over personally.\r\n\r\nThe third system supports patient reactivation. Dormant patients can receive targeted SMS and email campaigns based on their previous treatments and interests.\r\n\r\nThe fourth system manages rebooking and referrals. Treatment reminders are aligned with expected treatment cycles, while the referral workflow records who referred each new patient.\r\n\r\nThe complete workflow connects the website, Make.com, Airtable, Mandrill, Mailchimp, PatientNow, and a custom dashboard.",
+    "results": "#IMAGE#\r\n≈ 60 sec | First response to new leads\r\n24/7 | Automated lead capture and follow-up\r\n5 touches | Follow-up over 14 days\r\n1 dashboard | Live lead and campaign visibility\r\n4 systems | One connected growth pipeline",
+    "conclusion": "Harmony MedSpa’s main challenge was not the quality of its treatments or patient care. The missing piece was a reliable system for responding, following up, re-engaging, and tracking every patient opportunity.\r\n\r\nCodeSquad created that system without replacing the clinic’s existing booking process.\r\n\r\nHarmony MedSpa now has a connected growth engine that responds to new leads in approximately 60 seconds, follows up with non-bookers, reactivates past patients, supports repeat bookings, and gives management clear visibility from one dashboard.\r\n\r\nThe same architecture can also be adapted for other appointment-based service businesses that need faster lead response, better follow-up, and stronger customer retention.",
+    "metrics": "≈ 60 sec | First response to every new lead\r\n24/7 | Automated lead capture and communication\r\n4 systems | One connected patient growth pipeline\r\n5 touches | Structured follow-up for non-booking leads\r\n14 days | Automated lead nurturing period\r\n1 dashboard | Live visibility across leads and follow-up activity",
+    "capabilities": "Website | Lead forms, Service pages, Booking integration\r\nAutomation | Make.com workflows, Lead routing, Status updates\r\nCRM | Airtable database, Lead tracking, Message logs\r\nCommunication | SMS automation, Email automation, Staff alerts\r\nGrowth | Lead nurture, Patient reactivation, Rebooking reminders\r\nDashboard | Lead monitoring, Campaign tracking, Delivery status",
+    "mediaLinks": [],
+    "coverImage": "/uploads/case-studies/1784631472981-8bebf9c7-e78b-4388-9e37-0593ea24c024.jpg",
+    "challengeMedia": [
+      "/uploads/case-studies/1784635482087-6ff7a791-6841-4d3c-83fb-bc50f0571f9b.jpg"
+    ],
+    "solutionMedia": [
+      "/uploads/case-studies/1784630722044-33b29c03-44d2-4b2e-9381-b91b37e4f7a7.jpg"
+    ],
+    "implementationMedia": [],
+    "resultsMedia": [
+      "/uploads/case-studies/1784630722047-f1b66bf1-2c8a-48bc-97d4-da923dc1ad83.jpg"
+    ],
+    "conclusionMedia": [],
+    "challengeMediaPlacement": "inline",
+    "solutionMediaPlacement": "inline",
+    "implementationMediaPlacement": "end",
+    "resultsMediaPlacement": "inline",
+    "conclusionMediaPlacement": "inline"
+  }
+]

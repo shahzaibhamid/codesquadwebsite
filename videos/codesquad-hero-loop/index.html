@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>CodeSquad SME Hero Loop</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; margin: 0; overflow: hidden; background: #071020; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+      .clip { position: absolute; inset: 0; overflow: hidden; }
+      .scene-image { position: absolute; inset: -32px; width: calc(100% + 64px); height: calc(100% + 64px); object-fit: cover; transform-origin: 58% 48%; }
+      .hero-image { filter: saturate(.88) contrast(1.03); }
+      .navy-grade { position: absolute; inset: 0; background: rgba(7, 16, 32, .42); }
+      .copy-shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 17% 46%, rgba(5, 11, 23, .7) 0%, rgba(5, 11, 23, .44) 35%, rgba(5, 11, 23, .08) 73%); }
+      .window-bloom { position: absolute; left: -180px; top: -170px; width: 820px; height: 820px; border-radius: 50%; background: radial-gradient(circle, rgba(250, 224, 180, .24), rgba(250, 224, 180, 0) 68%); mix-blend-mode: screen; }
+      .vignette { position: absolute; inset: 0; box-shadow: inset 0 0 220px 42px rgba(3, 8, 18, .5); }
+      .grain { position: absolute; inset: 0; opacity: .12; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"); mix-blend-mode: soft-light; }
+      .edge-rule { position: absolute; left: 64px; width: 1px; height: 154px; background: rgba(255,255,255,.16); }
+      .edge-rule.top { top: 62px; }
+      .edge-rule.bottom { bottom: 62px; }
+      .safe-mark { position: absolute; left: 88px; bottom: 66px; width: 44px; height: 2px; background: rgba(255,255,255,.32); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="9" data-width="1920" data-height="1080">
+      <section id="hero-loop" class="clip" data-start="0" data-duration="9" data-track-index="1">
+        <img id="hero-image" class="scene-image hero-image" data-layout-allow-overflow src="assets/codesquad-sme-workspace.png" alt="South Asian business owner working in a fulfillment office" />
+        <div class="navy-grade"></div>
+        <div class="copy-shade"></div>
+        <div id="window-bloom" class="window-bloom" data-layout-allow-overflow></div>
+        <div class="vignette"></div>
+        <div id="grain" class="grain"></div>
+        <div class="edge-rule top"></div>
+        <div class="edge-rule bottom"></div>
+        <div class="safe-mark"></div>
+      </section>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true, defaults: { ease: "sine.inOut" } });
+      tl.to("#hero-image", { scale: 1.035, x: -12, y: -5, duration: 4.5 }, 0)
+        .to("#hero-image", { scale: 1, x: 0, y: 0, duration: 4.5 }, 4.5)
+        .to("#window-bloom", { scale: 1.12, opacity: .74, duration: 4.5 }, 0)
+        .to("#window-bloom", { scale: 1, opacity: 1, duration: 4.5 }, 4.5)
+        .to("#grain", { x: 5, y: -4, duration: 3, ease: "none", repeat: 2 }, 0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
