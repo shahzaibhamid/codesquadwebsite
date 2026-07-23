@@ -5,6 +5,8 @@ import Icon from '@/components/ui/Icon';
 import { getCaseStudies, getCaseStudy } from '@/lib/caseStudies';
 import { site } from '@/data/site';
 import CaseStudyHero from '@/components/sections/CaseStudyHero';
+import CaseStudyMediaItem from '@/components/sections/CaseStudyMediaItem';
+import { classifyMedia, fetchVimeoThumbnail } from '@/lib/media';
 
 type PageProps = { params: { slug: string } };
 
@@ -34,28 +36,6 @@ function markerCount(value?: string): number {
   return value?.match(/#IMAGE#/gi)?.length || 0;
 }
 
-function youtubeEmbed(url: string): string | undefined {
-  try {
-    const parsed = new URL(url);
-    const id = parsed.hostname.includes('youtu.be') ? parsed.pathname.slice(1) : parsed.searchParams.get('v');
-    return id ? `https://www.youtube.com/embed/${encodeURIComponent(id)}` : undefined;
-  } catch { return undefined; }
-}
-
-function mediaHost(url: string): string {
-  try { return new URL(url, 'https://codesquad.ai').hostname.replace(/^www\./, '') || 'Project resource'; }
-  catch { return 'Project resource'; }
-}
-
-function MediaItem({ url, name }: { url: string; name: string }) {
-  const embed = youtubeEmbed(url);
-  const clean = url.split('?')[0].toLowerCase();
-  if (embed) return <iframe src={embed} title={`${name} video`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />;
-  if (/\.(mp4|webm|ogg)$/.test(clean)) return <video src={url} controls preload="metadata" />;
-  if (/\.(png|jpe?g|webp|gif|svg|avif)$/.test(clean)) return <img src={url} alt={`${name} project media`} loading="lazy" />;
-  return <a className="cs-study-media__link" href={url} target="_blank" rel="noopener noreferrer"><span className="cs-study-media__link-copy"><small>External resource</small><strong>Open project media</strong><em>{mediaHost(url)}</em></span><span className="cs-study-media__link-arrow"><Icon name="arrow-ur" /></span></a>;
-}
-
 function narrativeParagraphs(text: string, hasMedia: boolean): string[] {
   const explicit = text.split(/\n\s*\n/).map((value) => value.trim()).filter(Boolean);
   if (explicit.length > 1 || !hasMedia) return explicit;
@@ -63,22 +43,6 @@ function narrativeParagraphs(text: string, hasMedia: boolean): string[] {
   if (sentences.length < 2) return explicit;
   const middle = Math.ceil(sentences.length / 2);
   return [sentences.slice(0, middle).join(' '), sentences.slice(middle).join(' ')];
-}
-
-function NarrativeWithMedia({ text, links, name, dark = false }: { text: string; links?: string[]; name: string; dark?: boolean }) {
-  if (links?.length && text.toUpperCase().includes('#IMAGE#')) {
-    const segments = text.split(/#IMAGE#/gi);
-    return <div className={`cs-study-narrative${dark ? ' cs-study-narrative--dark' : ''}`}>{segments.map((segment, index) => <div key={`${index}-${segment.slice(0, 18)}`}>{segment.trim() && segment.trim().split(/\n\s*\n/).map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph.trim()}</p>)}{index < segments.length - 1 && links[index] && <div className="cs-study-inline-media"><MediaItem url={links[index]} name={name} /></div>}</div>)}{links.slice(segments.length - 1).map((url) => <div className="cs-study-inline-media" key={url}><MediaItem url={url} name={name} /></div>)}</div>;
-  }
-  const paragraphs = narrativeParagraphs(text, !!links?.length);
-  return <div className={`cs-study-narrative${dark ? ' cs-study-narrative--dark' : ''}`}>{paragraphs.map((paragraph, index) => <div key={`${index}-${paragraph.slice(0, 18)}`}><p>{paragraph}</p>{links?.[index] && <div className="cs-study-inline-media"><MediaItem url={links[index]} name={name} /></div>}</div>)}{links?.slice(paragraphs.length).map((url) => <div className="cs-study-inline-media" key={url}><MediaItem url={url} name={name} /></div>)}</div>;
-}
-
-function MediaGrid({ links, name, dark = false }: { links?: string[]; name: string; dark?: boolean }) {
-  if (!links?.length) return null;
-  return <div className={`cs-study-media__grid${links.length === 1 ? ' cs-study-media__grid--single' : ''}${dark ? ' cs-study-media__grid--dark' : ''}`}>{links.map((url) => {
-    return <MediaItem key={url} url={url} name={name} />;
-  })}</div>;
 }
 
 const details: Record<string, {
@@ -150,6 +114,42 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CaseStudyPage({ params }: PageProps) {
   const item = await getCaseStudy(params.slug);
   if (!item?.published) notFound();
+
+  // Vimeo has no predictable thumbnail URL, so resolve it once per unique
+  // link via oEmbed before render. A failed/slow lookup just falls back to
+  // the link card in CaseStudyMediaItem — it never blocks the page.
+  const allMediaLinks = [
+    ...(item.mediaLinks || []),
+    ...(item.challengeMedia || []),
+    ...(item.solutionMedia || []),
+    ...(item.implementationMedia || []),
+    ...(item.resultsMedia || []),
+    ...(item.conclusionMedia || []),
+  ];
+  const vimeoUrls = Array.from(new Set(allMediaLinks.filter((url) => classifyMedia(url).kind === 'vimeo')));
+  const vimeoThumbs = new Map(
+    await Promise.all(vimeoUrls.map(async (url) => [url, await fetchVimeoThumbnail(url)] as const)),
+  );
+
+  const caseStudyName = item.name;
+  function Media({ url }: { url: string }) {
+    return <CaseStudyMediaItem url={url} name={caseStudyName} vimeoThumb={vimeoThumbs.get(url)} />;
+  }
+
+  function MediaGrid({ links, dark = false }: { links?: string[]; dark?: boolean }) {
+    if (!links?.length) return null;
+    return <div className={`cs-study-media__grid${links.length === 1 ? ' cs-study-media__grid--single' : ''}${dark ? ' cs-study-media__grid--dark' : ''}`}>{links.map((url) => <Media key={url} url={url} />)}</div>;
+  }
+
+  function NarrativeWithMedia({ text, links, dark = false }: { text: string; links?: string[]; dark?: boolean }) {
+    if (links?.length && text.toUpperCase().includes('#IMAGE#')) {
+      const segments = text.split(/#IMAGE#/gi);
+      return <div className={`cs-study-narrative${dark ? ' cs-study-narrative--dark' : ''}`}>{segments.map((segment, index) => <div key={`${index}-${segment.slice(0, 18)}`}>{segment.trim() && segment.trim().split(/\n\s*\n/).map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph.trim()}</p>)}{index < segments.length - 1 && links[index] && <div className="cs-study-inline-media"><Media url={links[index]} /></div>}</div>)}{links.slice(segments.length - 1).map((url) => <div className="cs-study-inline-media" key={url}><Media url={url} /></div>)}</div>;
+    }
+    const paragraphs = narrativeParagraphs(text, !!links?.length);
+    return <div className={`cs-study-narrative${dark ? ' cs-study-narrative--dark' : ''}`}>{paragraphs.map((paragraph, index) => <div key={`${index}-${paragraph.slice(0, 18)}`}><p>{paragraph}</p>{links?.[index] && <div className="cs-study-inline-media"><Media url={links[index]} /></div>}</div>)}{links?.slice(paragraphs.length).map((url) => <div className="cs-study-inline-media" key={url}><Media url={url} /></div>)}</div>;
+  }
+
   const preset = details[item.slug];
   const customMetrics = pairs(item.metrics);
   const customImplementation = pairs(item.implementation);
@@ -199,23 +199,23 @@ export default async function CaseStudyPage({ params }: PageProps) {
       </section>}
 
       <section className="cs-study-section">
-        {challengePlacement === 'start' && <div className="cs-container cs-study-section-media--start"><MediaGrid links={item.challengeMedia} name={item.name} /></div>}
+        {challengePlacement === 'start' && <div className="cs-container cs-study-section-media--start"><MediaGrid links={item.challengeMedia} /></div>}
         <div className={`cs-container cs-study-split${item.challengeMedia?.length ? ' cs-study-split--media' : ''}`}>
           <div className="cs-study-heading"><span>The challenge</span><h2>{detail.headline}</h2></div>
-          <div className="cs-study-copy"><NarrativeWithMedia text={detail.challenge} links={challengeInline ? item.challengeMedia : undefined} name={item.name} />{detail.challengePoints.map(([title, body]) => <div className="cs-study-point" key={title}><b>{title}</b><p>{body}</p></div>)}</div>
+          <div className="cs-study-copy"><NarrativeWithMedia text={detail.challenge} links={challengeInline ? item.challengeMedia : undefined} />{detail.challengePoints.map(([title, body]) => <div className="cs-study-point" key={title}><b>{title}</b><p>{body}</p></div>)}</div>
         </div>
-        {challengePlacement === 'end' && <div className="cs-container"><MediaGrid links={item.challengeMedia} name={item.name} /></div>}
+        {challengePlacement === 'end' && <div className="cs-container"><MediaGrid links={item.challengeMedia} /></div>}
       </section>
 
       <section className="cs-study-section cs-study-section--ink">
         <div className="cs-container">
-          {solutionPlacement === 'start' && <div className="cs-study-section-media--start"><MediaGrid links={item.solutionMedia} name={item.name} dark /></div>}
-          <div className="cs-study-heading cs-study-heading--wide"><span>The solution</span><h2>A connected system designed around the way the team actually works.</h2><NarrativeWithMedia text={detail.solution} links={solutionInline ? item.solutionMedia : undefined} name={item.name} dark /></div>
-          {implementationPlacement === 'start' && <div className="cs-study-section-media--start"><MediaGrid links={item.implementationMedia} name={item.name} dark /></div>}
-          {implementationInline && markerMedia(item.implementation, item.implementationMedia, 0) && <div className="cs-study-inline-media"><MediaItem url={markerMedia(item.implementation, item.implementationMedia, 0)!} name={item.name} /></div>}
-          {!!detail.solutionPoints.length && <div className="cs-study-cards">{detail.solutionPoints.map(([title, body], index) => { const media = implementationMarkers ? markerMedia(item.implementation, item.implementationMedia, index + 1) : item.implementationMedia?.[index]; return <div className="cs-study-card" key={`${title}-${index}`}><em>{String(index + 1).padStart(2, '0')}</em><h3>{title}</h3>{body && <p>{body}</p>}{implementationInline && media && <div className="cs-study-inline-media"><MediaItem url={media} name={item.name} /></div>}</div>; })}</div>}
-          {solutionPlacement === 'end' && <MediaGrid links={item.solutionMedia} name={item.name} dark />}
-          {implementationInline ? <MediaGrid links={item.implementationMedia?.slice(implementationMarkers || detail.solutionPoints.length)} name={item.name} dark /> : implementationPlacement === 'end' ? <MediaGrid links={item.implementationMedia} name={item.name} dark /> : null}
+          {solutionPlacement === 'start' && <div className="cs-study-section-media--start"><MediaGrid links={item.solutionMedia} dark /></div>}
+          <div className="cs-study-heading cs-study-heading--wide"><span>The solution</span><h2>A connected system designed around the way the team actually works.</h2><NarrativeWithMedia text={detail.solution} links={solutionInline ? item.solutionMedia : undefined} dark /></div>
+          {implementationPlacement === 'start' && <div className="cs-study-section-media--start"><MediaGrid links={item.implementationMedia} dark /></div>}
+          {implementationInline && markerMedia(item.implementation, item.implementationMedia, 0) && <div className="cs-study-inline-media"><Media url={markerMedia(item.implementation, item.implementationMedia, 0)!} /></div>}
+          {!!detail.solutionPoints.length && <div className="cs-study-cards">{detail.solutionPoints.map(([title, body], index) => { const media = implementationMarkers ? markerMedia(item.implementation, item.implementationMedia, index + 1) : item.implementationMedia?.[index]; return <div className="cs-study-card" key={`${title}-${index}`}><em>{String(index + 1).padStart(2, '0')}</em><h3>{title}</h3>{body && <p>{body}</p>}{implementationInline && media && <div className="cs-study-inline-media"><Media url={media} /></div>}</div>; })}</div>}
+          {solutionPlacement === 'end' && <MediaGrid links={item.solutionMedia} dark />}
+          {implementationInline ? <MediaGrid links={item.implementationMedia?.slice(implementationMarkers || detail.solutionPoints.length)} dark /> : implementationPlacement === 'end' ? <MediaGrid links={item.implementationMedia} dark /> : null}
         </div>
       </section>
 
@@ -227,17 +227,17 @@ export default async function CaseStudyPage({ params }: PageProps) {
       </section>}
 
       {(detail.results.length > 0 || !!item.resultsMedia?.length) && <section className="cs-study-section cs-study-section--soft">
-        {resultsPlacement === 'start' && <div className="cs-container cs-study-section-media--start"><MediaGrid links={item.resultsMedia} name={item.name} /></div>}
+        {resultsPlacement === 'start' && <div className="cs-container cs-study-section-media--start"><MediaGrid links={item.resultsMedia} /></div>}
         <div className={`cs-container cs-study-split${item.resultsMedia?.length ? ' cs-study-split--media' : ''}`}>
           <div className="cs-study-heading"><span>Results & impact</span><h2>From fragmented work to a repeatable operation.</h2></div>
-          <div className="cs-study-results">{resultsInline && markerMedia(item.results, item.resultsMedia, 0) && <div className="cs-study-inline-media"><MediaItem url={markerMedia(item.results, item.resultsMedia, 0)!} name={item.name} /></div>}{detail.results.map(([title, body], index) => { const media = resultsMarkers ? markerMedia(item.results, item.resultsMedia, index + 1) : item.resultsMedia?.[index]; return <div className="cs-study-results__group" key={`${title}-${index}`}><div className="cs-study-results__item"><Icon name="check" /><div><h3>{title}</h3><p>{body}</p></div></div>{resultsInline && media && <div className="cs-study-inline-media"><MediaItem url={media} name={item.name} /></div>}</div>; })}{resultsInline && item.resultsMedia?.slice(resultsMarkers || detail.results.length).map((url) => <div className="cs-study-inline-media" key={url}><MediaItem url={url} name={item.name} /></div>)}</div>
+          <div className="cs-study-results">{resultsInline && markerMedia(item.results, item.resultsMedia, 0) && <div className="cs-study-inline-media"><Media url={markerMedia(item.results, item.resultsMedia, 0)!} /></div>}{detail.results.map(([title, body], index) => { const media = resultsMarkers ? markerMedia(item.results, item.resultsMedia, index + 1) : item.resultsMedia?.[index]; return <div className="cs-study-results__group" key={`${title}-${index}`}><div className="cs-study-results__item"><Icon name="check" /><div><h3>{title}</h3><p>{body}</p></div></div>{resultsInline && media && <div className="cs-study-inline-media"><Media url={media} /></div>}</div>; })}{resultsInline && item.resultsMedia?.slice(resultsMarkers || detail.results.length).map((url) => <div className="cs-study-inline-media" key={url}><Media url={url} /></div>)}</div>
         </div>
-        {resultsPlacement === 'end' && <div className="cs-container"><MediaGrid links={item.resultsMedia} name={item.name} /></div>}
+        {resultsPlacement === 'end' && <div className="cs-container"><MediaGrid links={item.resultsMedia} /></div>}
       </section>}
 
-      {!!item.mediaLinks?.length && <section className="cs-study-section cs-study-media"><div className="cs-container"><div className="cs-study-heading cs-study-heading--wide"><span>Project media</span><h2>See the system in action.</h2></div><MediaGrid links={item.mediaLinks} name={item.name} /></div></section>}
+      {!!item.mediaLinks?.length && <section className="cs-study-section cs-study-media"><div className="cs-container"><div className="cs-study-heading cs-study-heading--wide"><span>Project media</span><h2>See the system in action.</h2></div><MediaGrid links={item.mediaLinks} /></div></section>}
 
-      {(item.testimonial || item.conclusion || item.conclusionMedia?.length) && <section className="cs-study-section cs-study-quote"><div className="cs-container">{conclusionPlacement === 'start' && <div className="cs-study-section-media--start"><MediaGrid links={item.conclusionMedia} name={item.name} dark /></div>}{item.testimonial && <blockquote>“{item.testimonial}”{item.testimonialAuthor && <cite>— {item.testimonialAuthor}</cite>}</blockquote>}{item.conclusion && <div className="cs-study-conclusion"><span>Conclusion</span><NarrativeWithMedia text={item.conclusion} links={conclusionInline ? item.conclusionMedia : undefined} name={item.name} dark /></div>}{(conclusionPlacement === 'end' || (!item.conclusion && conclusionPlacement === 'inline')) && <MediaGrid links={item.conclusionMedia} name={item.name} dark />}</div></section>}
+      {(item.testimonial || item.conclusion || item.conclusionMedia?.length) && <section className="cs-study-section cs-study-quote"><div className="cs-container">{conclusionPlacement === 'start' && <div className="cs-study-section-media--start"><MediaGrid links={item.conclusionMedia} dark /></div>}{item.testimonial && <blockquote>“{item.testimonial}”{item.testimonialAuthor && <cite>— {item.testimonialAuthor}</cite>}</blockquote>}{item.conclusion && <div className="cs-study-conclusion"><span>Conclusion</span><NarrativeWithMedia text={item.conclusion} links={conclusionInline ? item.conclusionMedia : undefined} dark /></div>}{(conclusionPlacement === 'end' || (!item.conclusion && conclusionPlacement === 'inline')) && <MediaGrid links={item.conclusionMedia} dark />}</div></section>}
 
       <section className="cs-study-cta"><div className="cs-container"><p>Have an idea worth building?</p><h2>Let’s turn your workflow into a system that scales.</h2><a className="cs-btn cs-btn--primary" href={site.calendly} target="_blank" rel="noopener noreferrer">Book a free call <Icon name="arrow-ur" /></a></div></section>
     </article>

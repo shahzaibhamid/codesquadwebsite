@@ -2,35 +2,18 @@
 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { promises as fs } from 'fs';
-import path from 'path';
-import { randomUUID } from 'crypto';
 import type { CaseStudy } from '@/types';
 import { slugify } from '@/lib/utils';
+import { uploadCaseStudyFile } from '@/lib/mediaStorage';
 import {
   createCaseStudyStore,
   deleteCaseStudyStore,
   updateCaseStudyStore,
 } from '@/lib/caseStudiesStore';
 
-const mediaTypes: Record<string, string> = {
-  'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif',
-  'image/svg+xml': 'svg', 'image/avif': 'avif', 'video/mp4': 'mp4',
-  'video/webm': 'webm', 'video/ogg': 'ogg',
-};
-
 async function saveUploads(formData: FormData, field: string, imageOnly = false): Promise<string[]> {
   const files = formData.getAll(field).filter((value): value is File => value instanceof File && value.size > 0);
-  const destination = path.join(process.cwd(), 'public', 'uploads', 'case-studies');
-  if (files.length) await fs.mkdir(destination, { recursive: true });
-  return Promise.all(files.map(async (file) => {
-    const extension = mediaTypes[file.type];
-    if (!extension || (imageOnly && !file.type.startsWith('image/'))) throw new Error(`Unsupported media type: ${file.type || file.name}`);
-    if (file.size > 25 * 1024 * 1024) throw new Error(`${file.name} is larger than the 25 MB upload limit.`);
-    const filename = `${Date.now()}-${randomUUID()}.${extension}`;
-    await fs.writeFile(path.join(destination, filename), Buffer.from(await file.arrayBuffer()));
-    return `/uploads/case-studies/${filename}`;
-  }));
+  return Promise.all(files.map((file) => uploadCaseStudyFile(file, imageOnly)));
 }
 
 function urls(formData: FormData, field: string): string[] {
@@ -103,27 +86,34 @@ async function caseStudyFromForm(formData: FormData): Promise<CaseStudy> {
   };
 }
 
-function revalidateCaseStudies() {
+/** Revalidate every route that renders case studies. The generic `[slug]`
+ * template invalidation isn't reliable on its own for dynamic-param
+ * fallback pages, so the concrete resolved path(s) are revalidated too —
+ * mirrors the working pattern in app/dashboard/actions.ts (revalidatePosts). */
+function revalidateCaseStudies(...slugs: string[]) {
   revalidatePath('/');
   revalidatePath('/dashboard/case-studies');
   revalidatePath('/case-studies/[slug]', 'page');
+  for (const slug of slugs) if (slug) revalidatePath(`/case-studies/${slug}`);
 }
 
 export async function createCaseStudy(formData: FormData) {
-  await createCaseStudyStore(await caseStudyFromForm(formData));
-  revalidateCaseStudies();
+  const slug = await createCaseStudyStore(await caseStudyFromForm(formData));
+  revalidateCaseStudies(slug);
   redirect('/dashboard/case-studies?ok=created');
 }
 
 export async function updateCaseStudy(formData: FormData) {
   const originalSlug = String(formData.get('original_slug') || '');
-  await updateCaseStudyStore(originalSlug, await caseStudyFromForm(formData));
-  revalidateCaseStudies();
+  const item = await caseStudyFromForm(formData);
+  await updateCaseStudyStore(originalSlug, item);
+  revalidateCaseStudies(originalSlug, item.slug);
   redirect('/dashboard/case-studies?ok=updated');
 }
 
 export async function deleteCaseStudy(formData: FormData) {
-  await deleteCaseStudyStore(String(formData.get('slug') || ''));
-  revalidateCaseStudies();
+  const slug = String(formData.get('slug') || '');
+  await deleteCaseStudyStore(slug);
+  revalidateCaseStudies(slug);
   redirect('/dashboard/case-studies?ok=deleted');
 }

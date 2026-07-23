@@ -91,6 +91,24 @@ alter table public.case_studies add column if not exists testimonial text;
 alter table public.case_studies add column if not exists testimonial_author text;
 
 -- ---------------------------------------------------------------------------
+-- CASE STUDY MEDIA — public Storage bucket
+-- Dashboard uploads (cover image, section media) go here via the service-role
+-- key (server-only). The bucket is public so uploaded images/videos load
+-- directly on the case-study pages without extra signed-URL handling.
+-- ---------------------------------------------------------------------------
+insert into storage.buckets (id, name, public, file_size_limit)
+values ('case-study-media', 'case-study-media', true, 26214400)
+on conflict (id) do update set public = true, file_size_limit = 26214400;
+
+drop policy if exists "case study media is public readable" on storage.objects;
+create policy "case study media is public readable"
+  on storage.objects for select
+  using (bucket_id = 'case-study-media');
+
+-- No public insert/update/delete policy: all writes happen server-side with
+-- the service-role key (dashboard uploads), which bypasses RLS entirely.
+
+-- ---------------------------------------------------------------------------
 -- LEADS (AI Basecamp / AI Audit / Contact form submissions)
 -- ---------------------------------------------------------------------------
 create table if not exists public.leads (

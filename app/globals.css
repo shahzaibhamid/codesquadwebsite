@@ -321,6 +321,13 @@ body.cs-body {
 .cs-study-media__grid--dark .cs-study-media__link-copy strong { color: #fff; }
 .cs-study-media__grid--dark .cs-study-media__link-copy small, .cs-study-media__grid--dark .cs-study-media__link-copy em { color: #afc3d8; }
 .cs-study-media__grid--dark .cs-study-media__link-arrow { background: #dcecff; color: #17314f; }
+.cs-study-media__thumb { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; text-align: left; }
+.cs-study-media__thumb img { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border-radius: 12px; object-fit: cover; background: #eef1f4; transition: transform .3s ease; }
+.cs-study-media__thumb:hover img { transform: scale(1.02); }
+.cs-study-media__thumb:focus-visible { outline: 2px solid #4a90d9; outline-offset: 3px; border-radius: 12px; }
+.cs-study-media__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; background: rgba(5, 6, 12, .6); border: 1px solid rgba(255, 255, 255, .45); display: grid; place-items: center; backdrop-filter: blur(2px); transition: transform .2s ease, background .2s ease; pointer-events: none; }
+.cs-study-media__play::before { content: ""; width: 0; height: 0; margin-left: 5px; border-left: 20px solid #fff; border-top: 13px solid transparent; border-bottom: 13px solid transparent; }
+.cs-study-media__thumb:hover .cs-study-media__play { transform: translate(-50%, -50%) scale(1.08); background: rgba(5, 6, 12, .75); }
 .cs-study-quote { padding-top: 68px; padding-bottom: 68px; background: #17314f; color: #fff; }
 .cs-study-quote blockquote { max-width: 900px; margin: 0 auto; color: #fff; font-size: clamp(30px, 5vw, 58px); line-height: 1.12; letter-spacing: -.04em; text-align: center; }
 .cs-study-quote cite { display: block; margin-top: 28px; color: #bdd0e4; font-size: 16px; font-style: normal; letter-spacing: 0; }
@@ -393,6 +400,8 @@ body.cs-body {
   .cs-study-card { padding: 20px; }
   .cs-study-media__link { padding: 20px; gap: 14px; }
   .cs-study-media__link-arrow { flex-basis: 42px; width: 42px; height: 42px; }
+  .cs-study-media__play { width: 48px; height: 48px; }
+  .cs-study-media__play::before { border-left-width: 15px; border-top-width: 10px; border-bottom-width: 10px; }
 }
 
 /* Services cinematic hero */
