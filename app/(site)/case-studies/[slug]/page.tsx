@@ -214,6 +214,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <p className="cs-study-kicker">{detail.kicker}</p>
           <p className="cs-study-intro">{item.desc}</p>
           <div className="cs-study-meta"><span>Services</span><strong>{item.services}</strong></div>
+          {item.vertical === 'Healthcare & Clinics' && (
+            <div className="cs-study-hero__cta">
+              <Link className="cs-btn cs-btn--primary" href="/pricing">See pricing <Icon name="arrow-ur" /></Link>
+            </div>
+          )}
         </div>
       </CaseStudyHero>
 
