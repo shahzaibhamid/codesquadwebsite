@@ -245,6 +245,38 @@ body.cs-body {
 .cs-study-kicker { max-width: 820px; margin: 42px 0 18px; color: #18202a; font-size: clamp(24px, 2.8vw, 40px); font-weight: 500; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; }
 .cs-study-intro { max-width: 720px; margin: 0; font-size: 18px; line-height: 1.65; }
 .cs-study-hero__cta { margin-top: 30px; }
+
+/* Split hero (no cover photo) — text + illustrative mockup card */
+.cs-study-hero--split { padding: 156px 0 96px; }
+.cs-study-hero__split-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+.cs-study-hero--split h1 { font-size: clamp(44px, 5.6vw, 78px); }
+.cs-study-hero--split .cs-study-kicker { font-size: clamp(20px, 2.2vw, 28px); }
+.cs-study-hero--split .cs-study-meta { margin-top: 36px; }
+.cs-study-hero__visual { display: flex; justify-content: center; }
+
+.cs-mockup { width: 100%; max-width: 440px; border-radius: 18px; overflow: hidden; background: #0d1724; box-shadow: 0 30px 70px rgba(7, 18, 31, .28); border: 1px solid rgba(255, 255, 255, .08); }
+.cs-mockup__bar { display: flex; gap: 7px; padding: 16px 18px; background: rgba(255, 255, 255, .04); }
+.cs-mockup__bar span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, .18); }
+.cs-mockup__body { padding: 28px 28px 32px; }
+.cs-mockup__eyebrow { margin: 0 0 10px; color: var(--cs-mockup-accent, #4a90d9); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.cs-mockup .cs-mockup__title { margin: 0 0 24px; color: #fff; font-size: clamp(21px, 2.3vw, 27px); line-height: 1.22; letter-spacing: -.02em; }
+.cs-mockup__stats { display: flex; gap: 22px; margin-bottom: 24px; padding-bottom: 22px; border-bottom: 1px solid rgba(255, 255, 255, .1); }
+.cs-mockup__stat strong { display: block; color: #fff; font-size: 25px; font-weight: 700; }
+.cs-mockup__stat span { display: block; margin-top: 4px; color: #9fb1c4; font-size: 12px; }
+.cs-mockup__rows { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 13px; }
+.cs-mockup__rows li { display: flex; align-items: center; gap: 11px; color: #d7e0ea; font-size: 14px; line-height: 1.35; }
+.cs-mockup__check { flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; background: color-mix(in srgb, var(--cs-mockup-accent, #4a90d9) 22%, transparent); position: relative; }
+.cs-mockup__check::after { content: ""; position: absolute; top: 50%; left: 50%; width: 7px; height: 4px; border-left: 2px solid var(--cs-mockup-accent, #4a90d9); border-bottom: 2px solid var(--cs-mockup-accent, #4a90d9); transform: translate(-50%, -65%) rotate(-45deg); }
+
+@media (max-width: 900px) {
+  .cs-study-hero--split { padding: 130px 0 64px; }
+  .cs-study-hero__split-inner { grid-template-columns: 1fr; gap: 44px; }
+  .cs-study-hero__visual { order: -1; }
+}
+@media (max-width: 480px) {
+  .cs-study-hero--split { padding: 108px 0 48px; }
+  .cs-mockup__stats { gap: 16px; }
+}
 .cs-study-meta { display: flex; gap: 30px; margin-top: 52px; padding-top: 22px; border-top: 1px solid #ccc9c1; font-size: 14px; }
 .cs-study-meta span { color: #7a8087; }
 .cs-study-meta strong { color: #20262e; font-weight: 600; }

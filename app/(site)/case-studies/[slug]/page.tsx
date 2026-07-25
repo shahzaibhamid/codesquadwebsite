@@ -8,6 +8,7 @@ import CaseStudyHero from '@/components/sections/CaseStudyHero';
 import CaseStudyMediaItem from '@/components/sections/CaseStudyMediaItem';
 import IconHighlights from '@/components/sections/IconHighlights';
 import BeforeAfterTable from '@/components/sections/BeforeAfterTable';
+import CaseStudyMockup, { type CaseStudyMockupProps } from '@/components/sections/CaseStudyMockup';
 import Faq from '@/components/sections/Faq';
 import { classifyMedia, fetchVimeoThumbnail } from '@/lib/media';
 import type { IconName } from '@/types';
@@ -127,6 +128,40 @@ const details: Record<string, {
   },
 };
 
+/** Illustrative hero mockup shown for case studies with no uploaded cover
+ *  photo — original artwork describing the delivered system, not a
+ *  screenshot of the client's actual site or product. */
+const mockups: Record<string, CaseStudyMockupProps> = {
+  'modern-law': {
+    eyebrow: 'Content operations',
+    title: '4 brands. One publishing engine.',
+    stats: [{ value: '4', label: 'Brands connected' }, { value: '1', label: 'Unified workflow' }],
+    rows: ['Brief approved', 'Draft generated per brand voice', 'Social variants created', 'Queued for review'],
+    accent: '#8a6d3b',
+  },
+  ipromo: {
+    eyebrow: 'Campaign pipeline',
+    title: 'Product-of-the-month, automated.',
+    stats: [{ value: '25+', label: 'Years in business' }, { value: '1', label: 'Connected pipeline' }],
+    rows: ['Product image generated', 'Salesforce record enriched', 'Campaign email queued', 'Analysis report ready'],
+    accent: '#2f6fae',
+  },
+  gengyveusa: {
+    eyebrow: 'Marketing intelligence',
+    title: 'SEO, ads, and reviews — one view.',
+    stats: [{ value: '3', label: 'Channels unified' }, { value: '2,674+', label: 'Reviews analyzed' }],
+    rows: ['Keyword rankings synced', 'Ad spend pulled from Meta & Google', 'Review sentiment tagged', 'Content brief generated'],
+    accent: '#3f8f6e',
+  },
+  energybits: {
+    eyebrow: 'Content & search intelligence',
+    title: '15+ platforms. One publishing brain.',
+    stats: [{ value: '15+', label: 'Platforms connected' }, { value: '3', label: 'Search scores' }],
+    rows: ['Platform signals ingested', 'Draft scored for SEO · AEO · GEO', 'Editorial queue updated', 'Post scheduled'],
+    accent: '#1e3a5f',
+  },
+};
+
 export async function generateStaticParams() {
   return (await getCaseStudies()).map(({ slug }) => ({ slug }));
 }
@@ -204,23 +239,42 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const implementationMarkers = markerCount(item.implementation);
   const resultsMarkers = markerCount(item.results);
 
+  const mockup = mockups[item.slug];
+
+  const study = item;
+
+  function HeroCopy() {
+    return (
+      <>
+        <Link className="cs-study-back" href="/#case-studies">← All case studies</Link>
+        <p className="cs-study-label">{study.category} · Case study</p>
+        <h1>{study.name}</h1>
+        <p className="cs-study-kicker">{detail.kicker}</p>
+        <p className="cs-study-intro">{study.desc}</p>
+        <div className="cs-study-meta"><span>Services</span><strong>{study.services}</strong></div>
+        {study.vertical === 'Healthcare & Clinics' && (
+          <div className="cs-study-hero__cta">
+            <Link className="cs-btn cs-btn--primary" href="/pricing">See pricing <Icon name="arrow-ur" /></Link>
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
     <article className="cs-study">
-      <CaseStudyHero cover={item.coverImage} alt={`${item.name} case study cover`}>
-        <div className="cs-container">
-          <Link className="cs-study-back" href="/#case-studies">← All case studies</Link>
-          <p className="cs-study-label">{item.category} · Case study</p>
-          <h1>{item.name}</h1>
-          <p className="cs-study-kicker">{detail.kicker}</p>
-          <p className="cs-study-intro">{item.desc}</p>
-          <div className="cs-study-meta"><span>Services</span><strong>{item.services}</strong></div>
-          {item.vertical === 'Healthcare & Clinics' && (
-            <div className="cs-study-hero__cta">
-              <Link className="cs-btn cs-btn--primary" href="/pricing">See pricing <Icon name="arrow-ur" /></Link>
-            </div>
-          )}
-        </div>
-      </CaseStudyHero>
+      {item.coverImage ? (
+        <CaseStudyHero cover={item.coverImage} alt={`${item.name} case study cover`}>
+          <div className="cs-container"><HeroCopy /></div>
+        </CaseStudyHero>
+      ) : (
+        <header className="cs-study-hero cs-study-hero--split">
+          <div className="cs-container cs-study-hero__split-inner">
+            <div className="cs-study-hero__copy"><HeroCopy /></div>
+            {mockup && <div className="cs-study-hero__visual"><CaseStudyMockup {...mockup} /></div>}
+          </div>
+        </header>
+      )}
 
       {!!detail.metrics.length && <section className="cs-study-metrics" aria-label="Project highlights">
         <div className="cs-container cs-study-metrics__grid">
