@@ -605,6 +605,7 @@ body.cs-body {
 .cs-case h3 { font-size: 18px; font-weight: 600; line-height: 1.45; }
 .cs-case__services { color: var(--cs-cyan); font-size: 13.5px; font-weight: 500; margin: 14px 0 0; }
 .cs-case-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.cs-case-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .cs-case-section .cs-heading { max-width: 672px; margin-bottom: 64px; }
 .cs-case-section .cs-heading .cs-eyebrow { padding: 0; border: 0; border-radius: 0; background: none; color: #6b7280; font: 500 11px/1 ui-monospace, monospace; letter-spacing: .22em; }
 .cs-case-section .cs-heading .cs-eyebrow::before { display: none; }

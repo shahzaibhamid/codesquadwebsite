@@ -1,14 +1,21 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Button from '@/components/ui/Button';
+import Icon from '@/components/ui/Icon';
 import SectionHeading from '@/components/sections/SectionHeading';
 import HeroVideo from '@/components/layout/HeroVideo';
-import CaseStudiesGrid from '@/components/sections/CaseStudiesGrid';
 import { site } from '@/data/site';
 import { hero, partners, founder, howWeWork } from '@/data/home';
 import { getCaseStudies } from '@/lib/caseStudies';
 
+/** Curated homepage picks, in display order. Update as featured work changes. */
+const HOMEPAGE_CASE_SLUGS = ['harmony-medspa-patient-growth-automation', 'energybits', 'ipromo'];
+
 export default async function HomePage() {
-  const caseStudies = (await getCaseStudies()).filter((item) => item.vertical);
+  const allCaseStudies = await getCaseStudies();
+  const caseStudies = HOMEPAGE_CASE_SLUGS
+    .map((slug) => allCaseStudies.find((item) => item.slug === slug))
+    .filter((item): item is NonNullable<typeof item> => Boolean(item));
   return (
     <>
       {/* HERO */}
@@ -76,7 +83,18 @@ export default async function HomePage() {
             title="Case studies"
             sub="Production systems built for healthcare, legal, and e-commerce teams designed around their needs."
           />
-          <CaseStudiesGrid items={caseStudies} />
+          <div className="cs-case-grid cs-case-grid--3">
+            {caseStudies.map((c) => (
+              <Link className="cs-case" href={`/case-studies/${c.slug}`} key={c.slug}>
+                <div className="cs-case__brand">{c.name}</div>
+                <h3>{c.desc}</h3>
+                <div className="cs-case__bottom">
+                  <div className="cs-case__pills"><span>{c.category}</span><span>{c.services}</span></div>
+                  <div className="cs-case__visit"><span>Read case study</span><Icon name="arrow" /></div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
