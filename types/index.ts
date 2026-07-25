@@ -52,6 +52,18 @@ export interface CaseStudy {
   conclusionMediaPlacement?: 'start' | 'inline' | 'end';
   testimonial?: string;
   testimonialAuthor?: string;
+  /** Category group used by the case-studies filter tabs. Leave unset to keep
+   *  a case study out of the curated homepage grid while still appearing
+   *  under "All" on the /case-studies index. */
+  vertical?: 'Healthcare & Clinics' | 'E-commerce';
+  /** Short stat shown on case-study cards, e.g. "60 sec response". */
+  headlineMetric?: string;
+  /** Pipe-delimited `Question | Answer`, one per line. */
+  faq?: string;
+  /** Pipe-delimited `icon-keyword | Title | Description`, one per line (up to 3). */
+  iconHighlights?: string;
+  /** Pipe-delimited `Metric | Before | After`, one per line. */
+  beforeAfter?: string;
 }
 
 export interface Testimonial {

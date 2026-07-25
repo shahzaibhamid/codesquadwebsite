@@ -6,7 +6,11 @@ import { getCaseStudies, getCaseStudy } from '@/lib/caseStudies';
 import { site } from '@/data/site';
 import CaseStudyHero from '@/components/sections/CaseStudyHero';
 import CaseStudyMediaItem from '@/components/sections/CaseStudyMediaItem';
+import IconHighlights from '@/components/sections/IconHighlights';
+import BeforeAfterTable from '@/components/sections/BeforeAfterTable';
+import Faq from '@/components/sections/Faq';
 import { classifyMedia, fetchVimeoThumbnail } from '@/lib/media';
+import type { IconName } from '@/types';
 
 type PageProps = { params: { slug: string } };
 
@@ -34,6 +38,27 @@ function markerMedia(value: string | undefined, links: string[] | undefined, pos
 
 function markerCount(value?: string): number {
   return value?.match(/#IMAGE#/gi)?.length || 0;
+}
+
+const KNOWN_ICONS = new Set<IconName>(['bolt', 'robot', 'reply', 'chart', 'search', 'code', 'target', 'headset', 'layers', 'workflow', 'shield', 'rocket', 'check', 'x', 'arrow', 'arrow-ur', 'sun', 'moon', 'phone', 'mail', 'eye', 'eye-off']);
+
+function iconHighlightItems(value?: string): Array<{ icon: IconName; title: string; description: string }> {
+  return (value || '').split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => {
+    const [iconRaw, title, ...rest] = line.split('|').map((part) => part.trim());
+    const icon = KNOWN_ICONS.has(iconRaw as IconName) ? (iconRaw as IconName) : 'bolt';
+    return { icon, title: title || '', description: rest.join('|').trim() };
+  }).filter((item) => item.title);
+}
+
+function beforeAfterRows(value?: string): Array<{ metric: string; before: string; after: string }> {
+  return (value || '').split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => {
+    const [metric, before, after] = line.split('|').map((part) => part.trim());
+    return { metric: metric || '', before: before || '', after: after || '' };
+  }).filter((row) => row.metric);
+}
+
+function faqItems(value?: string): Array<{ question: string; answer: string }> {
+  return pairs(value).map(([question, answer]) => ({ question, answer }));
 }
 
 function narrativeParagraphs(text: string, hasMedia: boolean): string[] {
@@ -226,6 +251,13 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </div>
       </section>}
 
+      {!!iconHighlightItems(item.iconHighlights).length && <section className="cs-study-section">
+        <div className="cs-container">
+          <div className="cs-study-heading cs-study-heading--wide"><span>Key capabilities</span><h2>What the system does.</h2></div>
+          <IconHighlights items={iconHighlightItems(item.iconHighlights)} />
+        </div>
+      </section>}
+
       {(detail.results.length > 0 || !!item.resultsMedia?.length) && <section className="cs-study-section cs-study-section--soft">
         {resultsPlacement === 'start' && <div className="cs-container cs-study-section-media--start"><MediaGrid links={item.resultsMedia} /></div>}
         <div className={`cs-container cs-study-split${item.resultsMedia?.length ? ' cs-study-split--media' : ''}`}>
@@ -235,11 +267,34 @@ export default async function CaseStudyPage({ params }: PageProps) {
         {resultsPlacement === 'end' && <div className="cs-container"><MediaGrid links={item.resultsMedia} /></div>}
       </section>}
 
+      {!!beforeAfterRows(item.beforeAfter).length && <section className="cs-study-section cs-study-section--soft">
+        <div className="cs-container">
+          <div className="cs-study-heading cs-study-heading--wide"><span>Before &amp; after</span><h2>What changed.</h2></div>
+          <BeforeAfterTable rows={beforeAfterRows(item.beforeAfter)} />
+        </div>
+      </section>}
+
       {!!item.mediaLinks?.length && <section className="cs-study-section cs-study-media"><div className="cs-container"><div className="cs-study-heading cs-study-heading--wide"><span>Project media</span><h2>See the system in action.</h2></div><MediaGrid links={item.mediaLinks} /></div></section>}
 
       {(item.testimonial || item.conclusion || item.conclusionMedia?.length) && <section className="cs-study-section cs-study-quote"><div className="cs-container">{conclusionPlacement === 'start' && <div className="cs-study-section-media--start"><MediaGrid links={item.conclusionMedia} dark /></div>}{item.testimonial && <blockquote>“{item.testimonial}”{item.testimonialAuthor && <cite>— {item.testimonialAuthor}</cite>}</blockquote>}{item.conclusion && <div className="cs-study-conclusion"><span>Conclusion</span><NarrativeWithMedia text={item.conclusion} links={conclusionInline ? item.conclusionMedia : undefined} dark /></div>}{(conclusionPlacement === 'end' || (!item.conclusion && conclusionPlacement === 'inline')) && <MediaGrid links={item.conclusionMedia} dark />}</div></section>}
 
-      <section className="cs-study-cta"><div className="cs-container"><p>Have an idea worth building?</p><h2>Let’s turn your workflow into a system that scales.</h2><a className="cs-btn cs-btn--primary" href={site.calendly} target="_blank" rel="noopener noreferrer">Book a free call <Icon name="arrow-ur" /></a></div></section>
+      {!!faqItems(item.faq).length && <section className="cs-study-section">
+        <div className="cs-container">
+          <div className="cs-study-heading cs-study-heading--wide"><span>FAQ</span><h2>Common questions.</h2></div>
+          <Faq items={faqItems(item.faq)} />
+        </div>
+      </section>}
+
+      <section className="cs-study-cta">
+        <div className="cs-container">
+          <p>Have an idea worth building?</p>
+          <h2>Let’s turn your workflow into a system that scales.</h2>
+          <div className="cs-study-cta__actions">
+            <Link className="cs-btn cs-btn--primary" href="/pricing">See pricing <Icon name="arrow-ur" /></Link>
+            <a className="cs-btn cs-btn--ghost" href={site.calendly} target="_blank" rel="noopener noreferrer">Book a free call</a>
+          </div>
+        </div>
+      </section>
     </article>
   );
 }

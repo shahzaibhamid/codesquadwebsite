@@ -46,6 +46,11 @@ function rowToCaseStudy(row: Record<string, unknown>): CaseStudy {
     conclusionMediaPlacement: (row.conclusion_media_placement as CaseStudy['conclusionMediaPlacement']) || 'inline',
     testimonial: (row.testimonial as string) || undefined,
     testimonialAuthor: (row.testimonial_author as string) || undefined,
+    vertical: (row.vertical as CaseStudy['vertical']) || undefined,
+    headlineMetric: (row.headline_metric as string) || undefined,
+    faq: (row.faq as string) || undefined,
+    iconHighlights: (row.icon_highlights as string) || undefined,
+    beforeAfter: (row.before_after as string) || undefined,
   };
 }
 
@@ -82,6 +87,11 @@ function caseStudyToRow(item: CaseStudy): Record<string, unknown> {
     conclusion_media_placement: item.conclusionMediaPlacement || 'inline',
     testimonial: item.testimonial || null,
     testimonial_author: item.testimonialAuthor || null,
+    vertical: item.vertical || null,
+    headline_metric: item.headlineMetric || null,
+    faq: item.faq || null,
+    icon_highlights: item.iconHighlights || null,
+    before_after: item.beforeAfter || null,
   };
 }
 

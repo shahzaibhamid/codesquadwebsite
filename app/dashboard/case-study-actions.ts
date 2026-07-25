@@ -83,6 +83,11 @@ async function caseStudyFromForm(formData: FormData): Promise<CaseStudy> {
     conclusionMediaPlacement: placement('conclusion_media_placement'),
     testimonial: text('testimonial') || undefined,
     testimonialAuthor: text('testimonial_author') || undefined,
+    vertical: (text('vertical') || undefined) as CaseStudy['vertical'],
+    headlineMetric: text('headline_metric') || undefined,
+    faq: text('faq') || undefined,
+    iconHighlights: text('icon_highlights') || undefined,
+    beforeAfter: text('before_after') || undefined,
   };
 }
 

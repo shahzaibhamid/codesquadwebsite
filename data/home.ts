@@ -11,8 +11,8 @@ export const hero = {
     'SEO · AEO · GEO',
     'Content Automation',
     'Ads',
-    'Customer Support',
-    'Back Office',
+    'Dashboards',
+    'Patient Growth',
     'AI Agents',
   ],
   ctaLabel: 'Book a Consultation Call',
@@ -78,6 +78,7 @@ export const founder = {
   bio: [
     'I build AI systems that help small and medium businesses grow, with automation that lives inside your stack and becomes yours to run.',
     'At CodeSquad, my team and I turn those capabilities into systems that actually move the needle: more pipeline, more booked revenue, fewer hours lost to manual work. We don’t just automate tasks; we build the engine that drives growth and then hand it over. It lives in your stack, your team runs it, and it holds up under real workload.',
+    'Focused on patient growth systems for clinics and marketing intelligence for e-commerce.',
   ],
 };
 

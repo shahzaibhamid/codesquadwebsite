@@ -3,8 +3,7 @@ import Image from 'next/image';
 import Icon from '@/components/ui/Icon';
 import FlagIcon from '@/components/ui/FlagIcon';
 import PlatformIcon from '@/components/ui/PlatformIcon';
-import { site, nav, offices, platforms } from '@/data/site';
-import { services } from '@/data/services';
+import { site, nav, offices, platforms, footerServices } from '@/data/site';
 
 /** Footer — ported from footer.php. */
 export default function Footer() {
@@ -36,9 +35,9 @@ export default function Footer() {
           <div>
             <h4>Services</h4>
             <ul>
-              {services.slice(0, 6).map((s) => (
-                <li key={s.title}>
-                  <Link href="/services">{s.title}</Link>
+              {footerServices.map((label) => (
+                <li key={label}>
+                  <Link href="/services">{label}</Link>
                 </li>
               ))}
             </ul>

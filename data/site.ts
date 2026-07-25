@@ -40,14 +40,23 @@ export const platforms = [
 
 export type PlatformCode = (typeof platforms)[number]['code'];
 
-/** Primary navigation. AI Basecamp + AI Audit are reference features modeled on
- *  cogentlabs.co, adapted for CodeSquad. "Contact" is Next-only (WP had none). */
+/** Primary navigation. Base Camp (/ai-basecamp) and AI Audit (/ai-audit) stay
+ *  live as standalone pages but are unlinked from nav. */
 export const nav = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/services' },
-  { label: 'Case Studies', href: '/#case-studies' },
+  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Pricing', href: '/pricing' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Base Camp', href: '/ai-basecamp' },
-  { label: 'AI Audit', href: '/ai-audit' },
   { label: 'Contact', href: '/contact' },
+] as const;
+
+/** Footer "Services" column — independent from data/services.ts so the
+ *  /services page copy isn't affected by footer label changes. */
+export const footerServices = [
+  'Patient Growth Systems',
+  'Dashboards & Reporting',
+  'Ads (Google + Meta)',
+  'SEO · AEO · GEO',
+  'Marketing Intelligence (E-commerce)',
 ] as const;

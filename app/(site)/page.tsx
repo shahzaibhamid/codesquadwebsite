@@ -1,15 +1,14 @@
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
-import Icon from '@/components/ui/Icon';
-import Link from 'next/link';
 import SectionHeading from '@/components/sections/SectionHeading';
 import HeroVideo from '@/components/layout/HeroVideo';
+import CaseStudiesGrid from '@/components/sections/CaseStudiesGrid';
 import { site } from '@/data/site';
 import { hero, partners, founder, howWeWork } from '@/data/home';
 import { getCaseStudies } from '@/lib/caseStudies';
 
 export default async function HomePage() {
-  const caseStudies = await getCaseStudies();
+  const caseStudies = (await getCaseStudies()).filter((item) => item.vertical);
   return (
     <>
       {/* HERO */}
@@ -19,7 +18,7 @@ export default async function HomePage() {
         <div className="cs-container cs-hero__inner">
           <span className="cs-eyebrow">{hero.badge}</span>
           <h1>
-            Build <span className="cs-gradient-text">Automation Engines</span>
+            Growth systems for <span className="cs-gradient-text">clinics and marketing teams</span>
           </h1>
           <p className="cs-hero__sub">{hero.sub}</p>
 
@@ -77,18 +76,7 @@ export default async function HomePage() {
             title="Case studies"
             sub="Production systems built for healthcare, legal, and e-commerce teams designed around their needs."
           />
-          <div className="cs-case-grid">
-            {caseStudies.map((c) => (
-              <Link className="cs-case" href={`/case-studies/${c.slug}`} key={c.name}>
-                <div className="cs-case__brand">{c.name}</div>
-                <h3>{c.desc}</h3>
-                <div className="cs-case__bottom">
-                  <div className="cs-case__pills"><span>{c.category}</span><span>{c.services}</span></div>
-                  <div className="cs-case__visit"><span>Read case study</span><Icon name="arrow" /></div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <CaseStudiesGrid items={caseStudies} />
         </div>
       </section>
 
@@ -145,9 +133,10 @@ export default async function HomePage() {
             Most clients keep us on after launch as their ongoing AI partner. Monthly strategy sessions,
             evolving systems, and continued support as the business grows.
           </p>
-          <Button href={site.calendly} variant="primary" icon="phone" external>
-            Free audit call
-          </Button>
+          <div className="cs-ready__actions">
+            <Button href="/pricing" variant="primary">See pricing</Button>
+            <Button href={site.calendly} variant="ghost" icon="phone" external>Book a Free Call</Button>
+          </div>
         </div>
       </section>
 

@@ -57,6 +57,11 @@ create table if not exists public.case_studies (
   conclusion_media_placement text not null default 'inline',
   testimonial text,
   testimonial_author text,
+  vertical    text,
+  headline_metric text,
+  faq         text,
+  icon_highlights text,
+  before_after text,
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
@@ -89,6 +94,11 @@ alter table public.case_studies add column if not exists results_media_placement
 alter table public.case_studies add column if not exists conclusion_media_placement text not null default 'inline';
 alter table public.case_studies add column if not exists testimonial text;
 alter table public.case_studies add column if not exists testimonial_author text;
+alter table public.case_studies add column if not exists vertical text;
+alter table public.case_studies add column if not exists headline_metric text;
+alter table public.case_studies add column if not exists faq text;
+alter table public.case_studies add column if not exists icon_highlights text;
+alter table public.case_studies add column if not exists before_after text;
 
 -- ---------------------------------------------------------------------------
 -- CASE STUDY MEDIA — public Storage bucket
