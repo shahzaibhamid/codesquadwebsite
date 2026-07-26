@@ -342,11 +342,11 @@ body.cs-body {
 .cs-study-media__play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; background: rgba(5, 6, 12, .6); border: 1px solid rgba(255, 255, 255, .45); display: grid; place-items: center; backdrop-filter: blur(2px); transition: transform .2s ease, background .2s ease; pointer-events: none; }
 .cs-study-media__play::before { content: ""; width: 0; height: 0; margin-left: 5px; border-left: 20px solid #fff; border-top: 13px solid transparent; border-bottom: 13px solid transparent; }
 .cs-study-media__thumb:hover .cs-study-media__play { transform: translate(-50%, -50%) scale(1.08); background: rgba(5, 6, 12, .75); }
-.cs-study-quote { padding-top: 68px; padding-bottom: 68px; background: #17314f; color: #fff; }
-.cs-study-quote blockquote { max-width: 900px; margin: 0 auto; color: #fff; font-size: clamp(30px, 5vw, 58px); line-height: 1.12; letter-spacing: -.04em; text-align: center; }
+.cs-study-quote { padding-top: 56px; padding-bottom: 56px; background: #17314f; color: #fff; }
+.cs-study-quote blockquote { max-width: 720px; margin: 0 auto; color: #fff; font-size: clamp(17px, 1.6vw, 21px); line-height: 1.55; letter-spacing: 0; text-align: center; }
 .cs-study-quote cite { display: block; margin-top: 28px; color: #bdd0e4; font-size: 16px; font-style: normal; letter-spacing: 0; }
 .cs-study-conclusion { max-width: 760px; margin: 0 auto; text-align: center; }
-.cs-study-quote blockquote + .cs-study-conclusion { margin-top: 80px; padding-top: 60px; border-top: 1px solid rgba(255,255,255,.2); }
+.cs-study-quote blockquote + .cs-study-conclusion { margin-top: 48px; padding-top: 44px; border-top: 1px solid rgba(255,255,255,.2); }
 .cs-study-conclusion span { color: #8dbcf0; font-size: 12px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
 .cs-study-conclusion p { margin: 14px 0 0; color: #fff; font-size: clamp(18px, 1.7vw, 24px); line-height: 1.5; }
 
