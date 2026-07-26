@@ -12,8 +12,6 @@
  */
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-let client: SupabaseClient | null = null;
-
 export function getSupabaseClient(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -22,10 +20,10 @@ export function getSupabaseClient(): SupabaseClient | null {
     // Not configured yet — the app uses static /data instead.
     return null;
   }
-  if (!client) {
-    client = createClient(url, anonKey);
-  }
-  return client;
+  // Not memoized: a client cached at module scope can pin its internal fetch
+  // to a stale Next.js Data Cache entry on warm serverless instances. See
+  // lib/supabaseAdmin.ts for the fuller explanation.
+  return createClient(url, anonKey, { global: { fetch: (...args) => fetch(...args) } });
 }
 
 /** Convenience flag for UI that should adapt when the DB is live. */
