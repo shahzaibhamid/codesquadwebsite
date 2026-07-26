@@ -7,17 +7,17 @@ import CaseStudyMockup from '@/components/sections/CaseStudyMockup';
 import { caseStudyMockups } from '@/data/caseStudyMockups';
 import type { CaseStudy } from '@/types';
 
-const TABS = ['All', 'Healthcare & Clinics', 'E-commerce'] as const;
-type Tab = (typeof TABS)[number];
+const ALL = 'All';
 
-export default function CaseStudiesGrid({ items }: { items: CaseStudy[] }) {
-  const [tab, setTab] = useState<Tab>('All');
-  const visible = tab === 'All' ? items : items.filter((item) => item.vertical === tab);
+export default function CaseStudiesGrid({ items, industries }: { items: CaseStudy[]; industries: string[] }) {
+  const [tab, setTab] = useState<string>(ALL);
+  const tabs = [ALL, ...industries];
+  const visible = tab === ALL ? items : items.filter((item) => item.vertical === tab);
 
   return (
     <>
       <div className="cs-cats" role="list" aria-label="Case study categories">
-        {TABS.map((t) => (
+        {tabs.map((t) => (
           <button
             type="button"
             key={t}

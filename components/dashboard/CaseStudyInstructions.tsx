@@ -15,7 +15,7 @@ export default function CaseStudyInstructions() {
         <div><strong>4. Add capabilities</strong><p><code>Heading | Item one, Item two</code>. Separate capability items with commas.</p></div>
         <div><strong>5. Place media precisely</strong><p>Choose Start, End, or “Between text.” For between text, write <code>#IMAGE#</code> on its own line where the next media item should appear.</p></div>
         <div><strong>6. Review and publish</strong><p>Use only verified figures, preview the page, choose its display order, then enable Published.</p></div>
-        <div><strong>7. Vertical &amp; card metric</strong><p>Pick a Vertical to control the homepage grid and /case-studies tabs, and set a short Headline metric (e.g. “60 sec response”) for the card.</p></div>
+        <div><strong>7. Industry &amp; card metric</strong><p>Pick an existing industry or type a new one — new industries are saved and appear as filter tabs on /case-studies automatically. Also set a short Headline metric (e.g. “60 sec response”) for the card.</p></div>
         <div><strong>8. Icon highlights &amp; before/after</strong><p><code>icon-keyword | Title | Description</code> (up to 3 lines) replaces the capabilities table with an icon block. <code>Metric | Before | After</code> adds a comparison table.</p></div>
         <div><strong>9. FAQ</strong><p><code>Question | Answer</code>, one per line, renders as an accordion at the bottom of the page.</p></div>
       </div>

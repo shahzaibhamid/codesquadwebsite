@@ -52,10 +52,11 @@ export interface CaseStudy {
   conclusionMediaPlacement?: 'start' | 'inline' | 'end';
   testimonial?: string;
   testimonialAuthor?: string;
-  /** Category group used by the case-studies filter tabs. Leave unset to keep
-   *  a case study out of the curated homepage grid while still appearing
-   *  under "All" on the /case-studies index. */
-  vertical?: 'Healthcare & Clinics' | 'E-commerce';
+  /** Industry/vertical used by the /case-studies filter tabs — an
+   *  admin-managed value (see lib/industries.ts), not a fixed set. Leave
+   *  unset to keep a case study out of the curated homepage grid while still
+   *  appearing under "All" on the /case-studies index. */
+  vertical?: string;
   /** Short stat shown on case-study cards, e.g. "60 sec response". */
   headlineMetric?: string;
   /** Pipe-delimited `Question | Answer`, one per line. */

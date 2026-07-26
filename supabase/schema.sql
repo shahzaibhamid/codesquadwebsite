@@ -101,6 +101,30 @@ alter table public.case_studies add column if not exists icon_highlights text;
 alter table public.case_studies add column if not exists before_after text;
 
 -- ---------------------------------------------------------------------------
+-- CASE STUDY INDUSTRIES — admin-extensible list backing the "vertical" field
+-- and the /case-studies filter tabs. Seeded with the two verticals already
+-- in use so existing case studies keep working unchanged.
+-- ---------------------------------------------------------------------------
+create table if not exists public.case_study_industries (
+  id          uuid primary key default gen_random_uuid(),
+  name        text not null unique,
+  sort_order  integer not null default 0,
+  created_at  timestamptz not null default now()
+);
+
+insert into public.case_study_industries (name, sort_order) values
+  ('Healthcare & Clinics', 1),
+  ('E-commerce', 2)
+on conflict (name) do nothing;
+
+alter table public.case_study_industries enable row level security;
+
+drop policy if exists "case study industries are public readable" on public.case_study_industries;
+create policy "case study industries are public readable"
+  on public.case_study_industries for select
+  using (true);
+
+-- ---------------------------------------------------------------------------
 -- CASE STUDY MEDIA — public Storage bucket
 -- Dashboard uploads (cover image, section media) go here via the service-role
 -- key (server-only). The bucket is public so uploaded images/videos load

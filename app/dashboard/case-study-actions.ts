@@ -10,6 +10,7 @@ import {
   deleteCaseStudyStore,
   updateCaseStudyStore,
 } from '@/lib/caseStudiesStore';
+import { ensureIndustry } from '@/lib/industries';
 
 async function saveUploads(formData: FormData, field: string, imageOnly = false): Promise<string[]> {
   const files = formData.getAll(field).filter((value): value is File => value instanceof File && value.size > 0);
@@ -43,6 +44,9 @@ async function caseStudyFromForm(formData: FormData): Promise<CaseStudy> {
   }
   const parsedUrl = new URL(url);
   if (!['http:', 'https:'].includes(parsedUrl.protocol)) throw new Error('Website URL must use HTTP or HTTPS.');
+
+  const vertical = text('vertical') || undefined;
+  if (vertical) await ensureIndustry(vertical);
 
   const uploadedCover = await saveUploads(formData, 'cover_image_file', true);
   const coverUrl = text('cover_image_url');
@@ -83,7 +87,7 @@ async function caseStudyFromForm(formData: FormData): Promise<CaseStudy> {
     conclusionMediaPlacement: placement('conclusion_media_placement'),
     testimonial: text('testimonial') || undefined,
     testimonialAuthor: text('testimonial_author') || undefined,
-    vertical: (text('vertical') || undefined) as CaseStudy['vertical'],
+    vertical,
     headlineMetric: text('headline_metric') || undefined,
     faq: text('faq') || undefined,
     iconHighlights: text('icon_highlights') || undefined,

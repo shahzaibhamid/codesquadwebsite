@@ -4,6 +4,7 @@ import CaseStudyForm from '@/components/dashboard/CaseStudyForm';
 import { updateCaseStudy } from '@/app/dashboard/case-study-actions';
 import { getCaseStudy } from '@/lib/caseStudies';
 import CaseStudyInstructions from '@/components/dashboard/CaseStudyInstructions';
+import { getIndustries } from '@/lib/industries';
 
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
@@ -11,14 +12,14 @@ export const metadata: Metadata = { title: 'Edit case study', robots: { index: f
 export function generateStaticParams() { return []; }
 
 export default async function EditCaseStudyPage({ params }: { params: { slug: string } }) {
-  const item = await getCaseStudy(params.slug);
+  const [item, industries] = await Promise.all([getCaseStudy(params.slug), getIndustries()]);
   if (!item) notFound();
 
   return (
     <>
       <div className="cs-dash__head"><h1>Edit case study</h1></div>
       <CaseStudyInstructions />
-      <div className="cs-card"><CaseStudyForm action={updateCaseStudy} caseStudy={item} submitLabel="Save changes" /></div>
+      <div className="cs-card"><CaseStudyForm action={updateCaseStudy} caseStudy={item} submitLabel="Save changes" industries={industries} /></div>
     </>
   );
 }

@@ -33,4 +33,11 @@ export const caseStudyMockups: Record<string, CaseStudyMockupProps> = {
     rows: ['Platform signals ingested', 'Draft scored for SEO · AEO · GEO', 'Editorial queue updated', 'Post scheduled'],
     accent: '#1e3a5f',
   },
+  'tristate-auto-sales': {
+    eyebrow: 'Omnichannel engagement',
+    title: 'Every conversation, one connected system.',
+    stats: [{ value: '8', label: 'Connected workflows' }, { value: '1', label: 'Shared CRM' }],
+    rows: ['Conversation classified by intent', 'Lead scored and routed', 'Appointment booked', 'Follow-up sent automatically'],
+    accent: '#b23b2f',
+  },
 };

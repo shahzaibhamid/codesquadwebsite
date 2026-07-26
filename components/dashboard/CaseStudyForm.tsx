@@ -1,12 +1,14 @@
 import type { CaseStudy } from '@/types';
+import IndustryPicker from './IndustryPicker';
 
 interface CaseStudyFormProps {
   action: (formData: FormData) => void | Promise<void>;
   caseStudy?: CaseStudy;
   submitLabel: string;
+  industries: string[];
 }
 
-export default function CaseStudyForm({ action, caseStudy, submitLabel }: CaseStudyFormProps) {
+export default function CaseStudyForm({ action, caseStudy, submitLabel, industries }: CaseStudyFormProps) {
   return (
     <form className="cs-form" action={action} encType="multipart/form-data">
       {caseStudy && <input type="hidden" name="original_slug" value={caseStudy.slug} />}
@@ -17,7 +19,7 @@ export default function CaseStudyForm({ action, caseStudy, submitLabel }: CaseSt
       <div className="cs-field"><label htmlFor="case-category">Industry / category</label><input id="case-category" name="category" className="cs-input" defaultValue={caseStudy?.category} placeholder="Healthcare" required /></div>
       <div className="cs-field"><label htmlFor="case-services">Services provided</label><input id="case-services" name="services" className="cs-input" defaultValue={caseStudy?.services} placeholder="Automation · CRM · Website" required /></div>
       <div className="cs-field"><label htmlFor="case-desc">Case-study summary</label><textarea id="case-desc" name="desc" className="cs-textarea" defaultValue={caseStudy?.desc} required /><small>No word or character limit.</small></div>
-      <div className="cs-field"><label htmlFor="case-vertical">Vertical (case-study filter tab)</label><select id="case-vertical" name="vertical" className="cs-input" defaultValue={caseStudy?.vertical || ''}><option value="">— None (shown under &quot;All&quot; only) —</option><option value="Healthcare & Clinics">Healthcare &amp; Clinics</option><option value="E-commerce">E-commerce</option></select><small>Controls the homepage grid and the /case-studies category tabs.</small></div>
+      <div className="cs-field"><label htmlFor="case-vertical">Industry (case-study filter tab)</label><IndustryPicker industries={industries} defaultValue={caseStudy?.vertical} /><small>Controls the /case-studies filter tabs. Pick an existing industry or add a new one — new industries are saved and appear as tabs automatically.</small></div>
       <div className="cs-field"><label htmlFor="case-headline-metric">Headline metric (shown on the card)</label><input id="case-headline-metric" name="headline_metric" className="cs-input" defaultValue={caseStudy?.headlineMetric} placeholder="60 sec response" /></div>
 
       <fieldset className="cs-case-form__section">
