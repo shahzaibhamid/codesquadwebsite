@@ -48,21 +48,13 @@ export default async function HomePage() {
           <p className="cs-proof__label">Trusted by</p>
           <div className="cs-logo-rail">
             <div className="cs-logo-rail__track">
-              {[...partners, ...partners].map((p, i) => (
+              {partners.map((p) => (
                 <a
-                  className={`cs-partner${
-                    p.name === 'Modern Law'
-                      ? ' cs-partner--modern-law'
-                      : p.name === 'Harmony Med Spa'
-                        ? ' cs-partner--harmony'
-                        : p.name === 'Debate Partners'
-                          ? ' cs-partner--debate'
-                        : ''
-                  }`}
+                  className={`cs-partner${p.dark ? ' cs-partner--dark' : ''}`}
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  key={`${p.name}-${i}`}
+                  key={p.name}
                   aria-label={p.name}
                 >
                   <span className="cs-partner__logo">

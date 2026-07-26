@@ -200,27 +200,8 @@ body.cs-body {
 .cs-home-hero .cs-tags { max-width: 520px; margin: 0 0 32px; gap: 10px; justify-content: flex-start; }
 .cs-home-hero .cs-tag { color: #eff6ff; background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .2); backdrop-filter: blur(8px); }
 .cs-home-hero .cs-hero__cta { justify-content: flex-start; }
-.cs-home-proof { position: absolute; bottom: 28px; left: 50%; width: min(calc(100% - 48px), 920px); gap: 20px; justify-content: center; transform: translateX(-50%); }
+.cs-home-proof { position: absolute; bottom: 24px; left: 50%; width: min(calc(100% - 48px), 960px); gap: 14px; justify-content: center; transform: translateX(-50%); }
 .cs-home-proof .cs-proof__label { color: rgba(255, 255, 255, .62); }
-.cs-home-proof .cs-logo-rail { flex: 0 1 760px; }
-.cs-home-proof .cs-logo-rail__track { animation-direction: reverse; }
-.cs-home-proof .cs-partner--debate {
-  grid-template-columns: 64px;
-  padding: 5px 32px;
-  border: 0;
-  background: transparent;
-}
-.cs-home-proof .cs-partner--debate .cs-partner__logo {
-  width: 64px;
-  height: 64px;
-}
-.cs-home-proof .cs-partner--modern-law {
-  grid-template-columns: 58px;
-}
-.cs-home-proof .cs-partner--modern-law .cs-partner__logo {
-  width: 58px;
-  height: 58px;
-}
 
 /* =====================================================================
    CASE STUDY — editorial, outcome-led long-form layout
@@ -607,16 +588,12 @@ body.cs-body {
 .cs-logos { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px 44px; }
 .cs-logos span, .cs-logos a { font-family: var(--cs-font-display); font-weight: 600; font-size: 20px; color: #4a5565; opacity: .65; transition: opacity .2s, color .2s; text-decoration: none; }
 .cs-logos span:hover, .cs-logos a:hover { opacity: 1; color: var(--cs-cyan); }
-.cs-logo-rail { flex: 1; overflow: hidden; width: 100%; padding: 5px 0; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
-.cs-logo-rail__track { display: flex; align-items: center; gap: 42px; width: max-content; animation: cs-logo-scroll 36s linear infinite; }
-.cs-logo-rail:hover .cs-logo-rail__track { animation-play-state: paused; }
-.cs-logo-rail:active .cs-logo-rail__track,
-.cs-logo-rail:focus-within .cs-logo-rail__track { animation-play-state: paused; }
-.cs-partner { display: grid; grid-template-columns: 112px; justify-items: center; flex: 0 0 auto; touch-action: manipulation; }
-.cs-partner__logo { width: 112px; height: 40px; display: grid; place-items: center; }
-.cs-partner__logo { pointer-events: none; }
-.cs-partner__logo img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
-@keyframes cs-logo-scroll { to { transform: translateX(-50%); } }
+.cs-logo-rail { flex: 1; width: 100%; padding: 5px 0; }
+.cs-logo-rail__track { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 16px; }
+.cs-partner { display: flex; align-items: center; justify-content: center; flex: 0 0 auto; padding: 7px 14px; border-radius: 9px; background: rgba(255, 255, 255, .92); box-shadow: 0 1px 4px rgba(3, 7, 14, .08); touch-action: manipulation; }
+.cs-partner--dark { background: #170800; box-shadow: 0 1px 4px rgba(3, 7, 14, .3); }
+.cs-partner__logo { display: flex; align-items: center; justify-content: center; height: 32px; pointer-events: none; }
+.cs-partner__logo img { width: auto; max-width: 100px; height: 100%; object-fit: contain; pointer-events: none; }
 
 .cs-tools { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 .cs-tool {
@@ -960,20 +937,6 @@ body.cs-body {
   .cs-body p, .cs-body li, .cs-body a, .cs-dash__title { overflow-wrap: anywhere; }
   .cs-post__meta, .cs-quote__foot { flex-wrap: wrap; }
 
-  /* Logo strip: the desktop marquee (duplicated logos + infinite scroll) breaks
-     on narrow screens. Switch to a static, wrapped grid instead — one set of
-     logos, consistent sizing, no animation, no horizontal fade mask. The rail
-     renders each partner twice ([...partners, ...partners]) for the seamless
-     marquee loop; :nth-child hides the second copy here (partners.length = 10). */
-  .cs-home-proof .cs-logo-rail { overflow: visible; mask-image: none; }
-  .cs-home-proof .cs-logo-rail__track {
-    width: 100%; flex-wrap: wrap; justify-content: center; row-gap: 14px;
-    animation: none;
-  }
-  .cs-home-proof .cs-partner:nth-child(n+11) { display: none; }
-  .cs-home-proof .cs-partner { grid-template-columns: 88px; }
-  .cs-home-proof .cs-partner__logo { width: 88px; height: 32px; }
-
   /* Mobile browsers can defer IntersectionObserver callbacks while restoring a
      tab, leaving reveal targets invisible. Keep phone content always visible. */
   .cs-motion .cs-heading,
@@ -1020,49 +983,8 @@ body.cs-body {
   .cs-home-hero .cs-hero__cta { width: 100%; }
   .cs-home-hero .cs-hero__cta .cs-btn { width: 100%; min-height: 52px; padding: 12px 16px; line-height: 1.35; }
   .cs-home-proof { width: calc(100% - 24px); }
-  .cs-home-proof .cs-partner {
-    padding: 7px 11px;
-    border: 1px solid rgba(255, 255, 255, .5);
-    border-radius: 9px;
-    background: rgba(255, 255, 255, .88);
-    box-shadow: 0 1px 4px rgba(3, 7, 14, .05);
-    backdrop-filter: blur(6px);
-  }
-  /* These two source marks have very different aspect ratios from the rest of
-     the rail, so give them phone-only dimensions that keep the artwork legible. */
-  .cs-home-proof .cs-partner--modern-law {
-    grid-template-columns: 50px;
-    padding: 4px 8px;
-  }
-  .cs-home-proof .cs-partner--modern-law .cs-partner__logo {
-    width: 50px;
-    height: 50px;
-  }
-  .cs-home-proof .cs-partner--harmony {
-    grid-template-columns: 116px;
-    padding: 9px 10px;
-    background: #fff;
-    border-color: rgba(15, 23, 42, .18);
-  }
-  .cs-home-proof .cs-partner--harmony .cs-partner__logo {
-    width: 116px;
-    height: 37px;
-  }
-  .cs-home-proof .cs-partner--harmony .cs-partner__logo img {
-    filter: brightness(0);
-  }
-  .cs-home-proof .cs-partner--debate {
-    grid-template-columns: 70px;
-    padding: 5px 8px;
-    background: #170800;
-    border-color: rgba(255, 184, 77, .28);
-  }
-  .cs-home-proof .cs-partner--debate .cs-partner__logo {
-    width: 70px;
-    height: 70px;
-  }
-  .cs-partner { grid-template-columns: 96px; }
-  .cs-partner__logo { width: 96px; height: 34px; }
+  .cs-partner { padding: 6px 11px; }
+  .cs-partner__logo { height: 28px; }
   .cs-hero__stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; margin-top: 42px; }
   .cs-hero__stat:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .cs-card { padding: 21px; border-radius: 16px; }
@@ -1136,7 +1058,6 @@ html.cs-light .cs-orb { opacity: .32; }
   html { scroll-behavior: auto; }
   .cs-card, .cs-btn, .cs-tool { transition: none; }
   .cs-orb { animation: none; }
-  .cs-logo-rail__track { animation: none; transform: none; }
   .cs-motion .cs-heading,
   .cs-motion .cs-hero__inner > *,
   .cs-motion .cs-audit-hero > *,

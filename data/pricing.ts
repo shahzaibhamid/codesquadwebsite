@@ -32,7 +32,7 @@ export interface PricingIndustry {
 export const pricingIndustries: PricingIndustry[] = [
   {
     key: 'clinics',
-    label: 'Clinics & Physical Businesses',
+    label: 'Clinics & Appointment-Based Businesses',
     tiers: [
       {
         name: 'Dashboard',
@@ -56,7 +56,7 @@ export const pricingIndustries: PricingIndustry[] = [
         features: [
           'Instant lead response (SMS + email within 60 seconds)',
           '2-week automated follow-up for new leads',
-          'Past-patient reactivation campaigns',
+          'Past-customer reactivation campaigns',
           'Automatic rebooking reminders (timed to treatment cycles)',
           'Google Ads setup + management',
           'On-page SEO + Google Business Profile optimization',
@@ -76,7 +76,7 @@ export const pricingIndustries: PricingIndustry[] = [
           'Referral program automation',
           'Advanced SEO + AI search visibility (ChatGPT, Perplexity, AI Overviews)',
           'Content creation (not just upload)',
-          'Outbound patient acquisition system',
+          'Outbound lead acquisition system',
           'Monthly executive report + analytics deep-dive',
           '2 strategy calls/week',
           'Same-day priority support',
@@ -90,7 +90,7 @@ export const pricingIndustries: PricingIndustry[] = [
       { feature: 'Strategy calls', dashboard: true, growth: true, scale: true },
       { feature: 'Instant lead response (60 sec)', dashboard: false, growth: true, scale: true },
       { feature: 'Automated follow-up sequences', dashboard: false, growth: true, scale: true },
-      { feature: 'Patient reactivation & rebooking', dashboard: false, growth: true, scale: true },
+      { feature: 'Customer reactivation & rebooking', dashboard: false, growth: true, scale: true },
       { feature: 'Referral program automation', dashboard: false, growth: false, scale: true },
       { feature: 'Google Ads management', dashboard: false, growth: true, scale: true },
       { feature: 'On-page SEO + Google Business Profile', dashboard: false, growth: true, scale: true },
@@ -100,14 +100,14 @@ export const pricingIndustries: PricingIndustry[] = [
       { feature: 'Reputation management', dashboard: false, growth: false, scale: true },
       { feature: 'Advanced SEO + AI search visibility', dashboard: false, growth: false, scale: true },
       { feature: 'Content creation (not just upload)', dashboard: false, growth: false, scale: true },
-      { feature: 'Outbound patient acquisition system', dashboard: false, growth: false, scale: true },
+      { feature: 'Outbound lead acquisition system', dashboard: false, growth: false, scale: true },
       { feature: 'Monthly executive report + analytics', dashboard: false, growth: false, scale: true },
       { feature: 'Same-day priority support', dashboard: false, growth: false, scale: true },
     ],
   },
   {
     key: 'ecommerce',
-    label: 'E-commerce',
+    label: 'Marketing and E-commerce',
     tiers: [
       {
         name: 'Dashboard',

@@ -4,16 +4,13 @@
 export const hero = {
   badge: 'Trusted by 20+ companies worldwide',
   title: 'Build Automation Engines',
-  sub: 'We help businesses automate repetitive manual tasks.',
+  sub: 'Growth systems for clinics and appointment-based businesses. Marketing intelligence for e-commerce and beyond. Built into your existing stack.',
   tags: [
-    'Outbound',
-    'Inbound',
-    'SEO · AEO · GEO',
-    'Content Automation',
-    'Ads',
-    'Dashboards',
     'Patient Growth',
-    'AI Agents',
+    'Dashboards',
+    'Ads',
+    'SEO · AEO · GEO',
+    'Marketing Intelligence',
   ],
   ctaLabel: 'Book a Consultation Call',
 };
@@ -23,6 +20,9 @@ export interface Partner {
   name: string;
   url: string;
   logo: string;
+  /** Set true when the logo artwork is light-colored and needs a dark chip
+   *  background for contrast, instead of the default light chip. */
+  dark?: boolean;
 }
 export const partners: Partner[] = [
   { name: 'iPromo', url: 'https://www.ipromo.com/', logo: '/partners/ipromo.webp' },
@@ -30,11 +30,11 @@ export const partners: Partner[] = [
   { name: 'Gengyve USA', url: 'https://gengyveusa.com/', logo: '/partners/gengyve.webp' },
   { name: 'Modern Law', url: 'https://mymodernlaw.com/', logo: '/partners/modern-law.svg' },
   { name: 'Kenetics Solutions', url: 'https://keneticssolutions.com', logo: '/partners/kenetics.png' },
-  { name: 'TriState Auto Sales', url: 'https://www.settlein.io', logo: '/partners/tristate.webp' },
-  { name: 'SettleIn', url: 'https://www.harmonymedspafl.com', logo: '/partners/settlein.png' },
+  { name: 'TriState Auto Sales', url: 'https://www.tristateautosales.com', logo: '/partners/tristate.webp' },
+  { name: 'SettleIn', url: 'https://www.settlein.io', logo: '/partners/settlein.png' },
   { name: 'Mama’s Compass', url: 'https://mamascompass.com', logo: '/partners/mamas-compass.png' },
-  { name: 'Debate Partners', url: 'https://debatepartners.com', logo: '/partners/debate-partners-transparent.png' },
-  { name: 'Harmony Med Spa', url: 'https://www.tristateautosales.com', logo: '/partners/harmony-med-spa.png' },
+  { name: 'Debate Partners', url: 'https://debatepartners.com', logo: '/partners/debate-partners-transparent.png', dark: true },
+  { name: 'Harmony Med Spa', url: 'https://www.harmonymedspafl.com', logo: '/partners/harmony-med-spa.png' },
 ];
 
 /** Case studies — the selected work shown on the live site's home page. */
