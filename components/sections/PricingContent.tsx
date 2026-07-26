@@ -62,6 +62,10 @@ export default function PricingContent() {
           </div>
         ))}
       </div>
+
+      <p className="cs-pricing-note">
+        Need something that isn&apos;t covered above? <a href={site.calendly} target="_blank" rel="noopener noreferrer">Talk to us for a custom quote</a>.
+      </p>
     </>
   );
 }

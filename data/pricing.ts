@@ -182,4 +182,5 @@ export const pricingFaq = [
   { question: 'Can I switch tiers?', answer: 'Yes, month-to-month — upgrade or downgrade as your needs change.' },
   { question: 'Is there a setup fee?', answer: 'None — setup and integration are included in every plan.' },
   { question: 'Is there a contract?', answer: 'No — every plan is month-to-month.' },
+  { question: 'What if I need something not listed here?', answer: 'Book a call and tell us what you need — we’ll scope it and put together a custom quote.' },
 ];
