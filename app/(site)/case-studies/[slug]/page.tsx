@@ -8,8 +8,9 @@ import CaseStudyHero from '@/components/sections/CaseStudyHero';
 import CaseStudyMediaItem from '@/components/sections/CaseStudyMediaItem';
 import IconHighlights from '@/components/sections/IconHighlights';
 import BeforeAfterTable from '@/components/sections/BeforeAfterTable';
-import CaseStudyMockup, { type CaseStudyMockupProps } from '@/components/sections/CaseStudyMockup';
+import CaseStudyMockup from '@/components/sections/CaseStudyMockup';
 import Faq from '@/components/sections/Faq';
+import { caseStudyMockups } from '@/data/caseStudyMockups';
 import { classifyMedia, fetchVimeoThumbnail } from '@/lib/media';
 import type { IconName } from '@/types';
 
@@ -128,40 +129,6 @@ const details: Record<string, {
   },
 };
 
-/** Illustrative hero mockup shown for case studies with no uploaded cover
- *  photo — original artwork describing the delivered system, not a
- *  screenshot of the client's actual site or product. */
-const mockups: Record<string, CaseStudyMockupProps> = {
-  'modern-law': {
-    eyebrow: 'Content operations',
-    title: '4 brands. One publishing engine.',
-    stats: [{ value: '4', label: 'Brands connected' }, { value: '1', label: 'Unified workflow' }],
-    rows: ['Brief approved', 'Draft generated per brand voice', 'Social variants created', 'Queued for review'],
-    accent: '#8a6d3b',
-  },
-  ipromo: {
-    eyebrow: 'Campaign pipeline',
-    title: 'Product-of-the-month, automated.',
-    stats: [{ value: '25+', label: 'Years in business' }, { value: '1', label: 'Connected pipeline' }],
-    rows: ['Product image generated', 'Salesforce record enriched', 'Campaign email queued', 'Analysis report ready'],
-    accent: '#2f6fae',
-  },
-  gengyveusa: {
-    eyebrow: 'Marketing intelligence',
-    title: 'SEO, ads, and reviews — one view.',
-    stats: [{ value: '3', label: 'Channels unified' }, { value: '2,674+', label: 'Reviews analyzed' }],
-    rows: ['Keyword rankings synced', 'Ad spend pulled from Meta & Google', 'Review sentiment tagged', 'Content brief generated'],
-    accent: '#3f8f6e',
-  },
-  energybits: {
-    eyebrow: 'Content & search intelligence',
-    title: '15+ platforms. One publishing brain.',
-    stats: [{ value: '15+', label: 'Platforms connected' }, { value: '3', label: 'Search scores' }],
-    rows: ['Platform signals ingested', 'Draft scored for SEO · AEO · GEO', 'Editorial queue updated', 'Post scheduled'],
-    accent: '#1e3a5f',
-  },
-};
-
 export async function generateStaticParams() {
   return (await getCaseStudies()).map(({ slug }) => ({ slug }));
 }
@@ -239,7 +206,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const implementationMarkers = markerCount(item.implementation);
   const resultsMarkers = markerCount(item.results);
 
-  const mockup = mockups[item.slug];
+  const mockup = caseStudyMockups[item.slug];
 
   const study = item;
 

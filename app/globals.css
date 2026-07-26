@@ -653,6 +653,14 @@ body.cs-body {
 .cs-case__visit { display: flex; align-items: center; justify-content: space-between; margin: 20px -32px 0; padding: 16px 32px 0; border-top: 1px solid #f0f1f4; color: #6b7280; font-size: 12.5px; font-weight: 500; }
 .cs-case__visit svg { width: 16px; height: 16px; }
 .cs-case:hover .cs-case__visit { color: #1e3a5f; }
+.cs-case__thumb { margin: -32px -32px 24px; border-radius: 16px 16px 0 0; overflow: hidden; aspect-ratio: 16 / 10; background: #f3f0e9; }
+.cs-case__thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cs-case__thumb .cs-mockup { height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+.cs-mockup--compact { max-width: none; height: 100%; display: flex; flex-direction: column; }
+.cs-mockup--compact .cs-mockup__body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px 22px; }
+.cs-mockup--compact .cs-mockup__title { margin-bottom: 16px; font-size: 18px; }
+.cs-mockup--compact .cs-mockup__stats { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+.cs-mockup--compact .cs-mockup__stat strong { font-size: 19px; }
 
 /* Hero service tags (home) */
 .cs-tags { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0 auto 32px; max-width: 620px; }
