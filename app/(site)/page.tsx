@@ -8,6 +8,10 @@ import { site } from '@/data/site';
 import { hero, partners, founder, howWeWork } from '@/data/home';
 import { getCaseStudies } from '@/lib/caseStudies';
 
+// Always read the store fresh so dashboard changes to the curated case
+// studies appear immediately — mirrors the pattern in app/(site)/blog.
+export const dynamic = 'force-dynamic';
+
 /** Curated homepage picks, in display order. Update as featured work changes. */
 const HOMEPAGE_CASE_SLUGS = ['harmony-medspa-patient-growth-automation', 'energybits', 'ipromo'];
 

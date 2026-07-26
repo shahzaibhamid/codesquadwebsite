@@ -101,6 +101,7 @@ async function caseStudyFromForm(formData: FormData): Promise<CaseStudy> {
  * mirrors the working pattern in app/dashboard/actions.ts (revalidatePosts). */
 function revalidateCaseStudies(...slugs: string[]) {
   revalidatePath('/');
+  revalidatePath('/case-studies');
   revalidatePath('/dashboard/case-studies');
   revalidatePath('/case-studies/[slug]', 'page');
   for (const slug of slugs) if (slug) revalidatePath(`/case-studies/${slug}`);
