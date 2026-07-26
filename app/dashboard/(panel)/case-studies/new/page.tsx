@@ -5,6 +5,7 @@ import CaseStudyInstructions from '@/components/dashboard/CaseStudyInstructions'
 import { getIndustries } from '@/lib/industries';
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 export const metadata: Metadata = { title: 'New case study', robots: { index: false } };
 
 export default async function NewCaseStudyPage() {

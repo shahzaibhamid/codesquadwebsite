@@ -4,6 +4,7 @@ import DeleteCaseStudyButton from '@/components/dashboard/DeleteCaseStudyButton'
 import CaseStudyInstructions from '@/components/dashboard/CaseStudyInstructions';
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 const messages: Record<string, string> = {
   created: 'Case study created.',

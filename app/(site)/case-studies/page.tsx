@@ -7,6 +7,7 @@ import { getIndustries } from '@/lib/industries';
 // Always read the store fresh so dashboard changes (new case studies, new
 // industries) appear immediately — mirrors the pattern in app/(site)/blog.
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 export const metadata: Metadata = {
   title: 'Case Studies',

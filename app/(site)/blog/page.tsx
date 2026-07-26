@@ -7,6 +7,7 @@ import { getPosts } from '@/lib/posts';
 
 // Always read the store fresh so dashboard changes appear immediately.
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 export const metadata: Metadata = {
   title: 'CodeSquad Blog | AI Automation, SMEs & Business Growth',

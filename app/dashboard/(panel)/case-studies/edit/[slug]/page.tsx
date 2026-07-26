@@ -8,6 +8,7 @@ import { getIndustries } from '@/lib/industries';
 
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
+export const fetchCache = 'force-no-store';
 export const metadata: Metadata = { title: 'Edit case study', robots: { index: false } };
 export function generateStaticParams() { return []; }
 
