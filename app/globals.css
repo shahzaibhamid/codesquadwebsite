@@ -633,6 +633,24 @@ body.cs-body {
 .cs-case__thumb { margin: -32px -32px 24px; border-radius: 16px 16px 0 0; overflow: hidden; aspect-ratio: 16 / 10; background: #f3f0e9; }
 .cs-case__thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .cs-case__thumb .cs-mockup { height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+
+/* /case-studies index card — image, tag, title, client, divider, link.
+   Deliberately its own class (not .cs-case, which the homepage's curated
+   grid still uses in its original centered-brand style). */
+.cs-scard { display: flex; flex-direction: column; border: 1px solid #e5e7eb; border-radius: 16px; background: #fff; overflow: hidden; color: inherit; transition: border-color .2s ease, transform .2s ease, box-shadow .25s ease; }
+.cs-scard:hover { color: inherit; border-color: rgba(30, 58, 95, .35); transform: translateY(-3px); box-shadow: 0 14px 32px rgba(15, 23, 42, .09); }
+.cs-scard__thumb { aspect-ratio: 16 / 10; background: #f3f0e9; }
+.cs-scard__thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cs-scard__thumb .cs-mockup { height: 100%; border: 0; border-radius: 0; box-shadow: none; }
+.cs-scard__placeholder { display: grid; place-items: center; width: 100%; height: 100%; color: #fff; }
+.cs-scard__placeholder svg { width: 34px; height: 34px; opacity: .85; }
+.cs-scard__body { display: flex; flex-direction: column; flex: 1; padding: 22px 24px 20px; }
+.cs-scard__tag { color: var(--cs-cyan); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
+.cs-scard h3 { margin: 0 0 6px; color: #18202a; font-size: 19px; font-weight: 600; line-height: 1.4; letter-spacing: -.01em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cs-scard__client { margin: 0; color: #6b7280; font-size: 14px; }
+.cs-scard__visit { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 16px; border-top: 1px solid #f0f1f4; color: #6b7280; font-size: 12.5px; font-weight: 500; }
+.cs-scard__visit svg { width: 16px; height: 16px; }
+.cs-scard:hover .cs-scard__visit { color: #1e3a5f; }
 .cs-mockup--compact { max-width: none; height: 100%; display: flex; flex-direction: column; }
 .cs-mockup--compact .cs-mockup__body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px 22px; }
 .cs-mockup--compact .cs-mockup__title { margin-bottom: 16px; font-size: 18px; }
