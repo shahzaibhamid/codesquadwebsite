@@ -15,26 +15,22 @@ export const hero = {
   ctaLabel: 'Book a Consultation Call',
 };
 
-/** Trusted-by companies (logo strip). Each name links to the client's site. */
+/** Trusted-by companies (text marquee). Each name links to the client's site. */
 export interface Partner {
   name: string;
   url: string;
-  logo: string;
-  /** Set true when the logo artwork is light-colored and needs a dark chip
-   *  background for contrast, instead of the default light chip. */
-  dark?: boolean;
 }
 export const partners: Partner[] = [
-  { name: 'iPromo', url: 'https://www.ipromo.com/', logo: '/partners/ipromo.webp' },
-  { name: 'ENERGYbits', url: 'https://energybits.com/', logo: '/partners/energybits-logo.svg' },
-  { name: 'Gengyve USA', url: 'https://gengyveusa.com/', logo: '/partners/gengyve.webp' },
-  { name: 'Modern Law', url: 'https://mymodernlaw.com/', logo: '/partners/modern-law.svg' },
-  { name: 'Kenetics Solutions', url: 'https://keneticssolutions.com', logo: '/partners/kenetics.png' },
-  { name: 'TriState Auto Sales', url: 'https://www.tristateautosales.com', logo: '/partners/tristate.webp' },
-  { name: 'SettleIn', url: 'https://www.settlein.io', logo: '/partners/settlein.png' },
-  { name: 'Mama’s Compass', url: 'https://mamascompass.com', logo: '/partners/mamas-compass.png' },
-  { name: 'Debate Partners', url: 'https://debatepartners.com', logo: '/partners/debate-partners-transparent.png', dark: true },
-  { name: 'Harmony Med Spa', url: 'https://www.harmonymedspafl.com', logo: '/partners/harmony-med-spa.png' },
+  { name: 'iPromo', url: 'https://www.ipromo.com/' },
+  { name: 'ENERGYbits', url: 'https://energybits.com/' },
+  { name: 'Gengyve USA', url: 'https://gengyveusa.com/' },
+  { name: 'Modern Law', url: 'https://mymodernlaw.com/' },
+  { name: 'Kenetics Solutions', url: 'https://keneticssolutions.com' },
+  { name: 'TriState Auto Sales', url: 'https://www.tristateautosales.com' },
+  { name: 'SettleIn', url: 'https://www.settlein.io' },
+  { name: 'Mama’s Compass', url: 'https://mamascompass.com' },
+  { name: 'Debate Partners', url: 'https://debatepartners.com' },
+  { name: 'Harmony Med Spa', url: 'https://www.harmonymedspafl.com' },
 ];
 
 /** Case studies — the selected work shown on the live site's home page. */

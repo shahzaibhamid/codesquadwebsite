@@ -201,7 +201,6 @@ body.cs-body {
 .cs-home-hero .cs-tag { color: #eff6ff; background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .2); backdrop-filter: blur(8px); }
 .cs-home-hero .cs-hero__cta { justify-content: flex-start; }
 .cs-home-proof { position: absolute; bottom: 24px; left: 50%; width: min(calc(100% - 48px), 960px); gap: 14px; justify-content: center; transform: translateX(-50%); }
-.cs-home-proof .cs-proof__label { color: rgba(255, 255, 255, .62); }
 
 /* =====================================================================
    CASE STUDY — editorial, outcome-led long-form layout
@@ -584,16 +583,30 @@ body.cs-body {
    SOCIAL PROOF / LOGOS / TOOLS
    ===================================================================== */
 .cs-proof { display: flex; align-items: center; gap: 32px; text-align: left; }
-.cs-proof__label { flex: 0 0 auto; color: #9ca3af; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; margin: 0; }
 .cs-logos { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px 44px; }
 .cs-logos span, .cs-logos a { font-family: var(--cs-font-display); font-weight: 600; font-size: 20px; color: #4a5565; opacity: .65; transition: opacity .2s, color .2s; text-decoration: none; }
 .cs-logos span:hover, .cs-logos a:hover { opacity: 1; color: var(--cs-cyan); }
-.cs-logo-rail { flex: 1; width: 100%; padding: 5px 0; }
-.cs-logo-rail__track { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 16px; }
-.cs-partner { display: flex; align-items: center; justify-content: center; flex: 0 0 auto; padding: 7px 14px; border-radius: 9px; background: rgba(255, 255, 255, .92); box-shadow: 0 1px 4px rgba(3, 7, 14, .08); touch-action: manipulation; }
-.cs-partner--dark { background: #170800; box-shadow: 0 1px 4px rgba(3, 7, 14, .3); }
-.cs-partner__logo { display: flex; align-items: center; justify-content: center; height: 32px; pointer-events: none; }
-.cs-partner__logo img { width: auto; max-width: 100px; height: 100%; object-fit: contain; pointer-events: none; }
+.cs-logo-rail { flex: 1; width: 100%; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.cs-logo-rail__track { display: flex; align-items: center; width: max-content; animation: cs-logo-scroll 32s linear infinite; }
+.cs-logo-rail:hover .cs-logo-rail__track,
+.cs-logo-rail:focus-within .cs-logo-rail__track { animation-play-state: paused; }
+.cs-logo-rail__group { display: flex; align-items: center; flex: 0 0 auto; }
+.cs-partner-name,
+.cs-partner-label {
+  flex: 0 0 auto;
+  padding: 0 22px;
+  font: 500 12px/1 ui-monospace, 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  white-space: nowrap;
+}
+.cs-partner-name { color: rgba(255, 255, 255, .55); text-decoration: none; transition: color .2s; }
+.cs-partner-name:hover { color: #fff; }
+.cs-partner-label { color: rgba(255, 255, 255, .32); }
+@keyframes cs-logo-scroll { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .cs-logo-rail__track { animation: none; }
+}
 
 .cs-tools { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 .cs-tool {
@@ -912,7 +925,6 @@ body.cs-body {
     margin: 0 auto;
     transform: none;
   }
-  .cs-home-proof .cs-proof__label { display: none; }
   .cs-home-proof .cs-logo-rail { flex-basis: 100%; }
   .cs-founder-section { padding: 80px 0; }
   .cs-ready { padding: 80px 0; }
@@ -1001,8 +1013,7 @@ body.cs-body {
   .cs-home-hero .cs-hero__cta { width: 100%; }
   .cs-home-hero .cs-hero__cta .cs-btn { width: 100%; min-height: 52px; padding: 12px 16px; line-height: 1.35; }
   .cs-home-proof { width: calc(100% - 24px); }
-  .cs-partner { padding: 6px 11px; }
-  .cs-partner__logo { height: 28px; }
+  .cs-partner-name, .cs-partner-label { padding: 0 16px; font-size: 11px; }
   .cs-hero__stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; margin-top: 42px; }
   .cs-hero__stat:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .cs-card { padding: 21px; border-radius: 16px; }

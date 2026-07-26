@@ -50,22 +50,23 @@ export default async function HomePage() {
         </div>
 
         <div className="cs-home-proof cs-proof" aria-label="Trusted partners">
-          <p className="cs-proof__label">Trusted by</p>
           <div className="cs-logo-rail">
             <div className="cs-logo-rail__track">
-              {partners.map((p) => (
-                <a
-                  className={`cs-partner${p.dark ? ' cs-partner--dark' : ''}`}
-                  href={p.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  key={p.name}
-                  aria-label={p.name}
-                >
-                  <span className="cs-partner__logo">
-                    <Image src={p.logo} alt="" width={112} height={40} sizes="112px" />
-                  </span>
-                </a>
+              {[...Array(2)].map((_, loop) => (
+                <div className="cs-logo-rail__group" key={loop}>
+                  <span className="cs-partner-label">Trusted by 20+ companies</span>
+                  {partners.map((p) => (
+                    <a
+                      className="cs-partner-name"
+                      href={p.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      key={p.name}
+                    >
+                      {p.name}
+                    </a>
+                  ))}
+                </div>
               ))}
             </div>
           </div>
