@@ -600,8 +600,8 @@ body.cs-body {
   letter-spacing: .18em;
   white-space: nowrap;
 }
-.cs-partner-name { color: rgba(255, 255, 255, .55); text-decoration: none; transition: color .2s; }
-.cs-partner-name:hover { color: #fff; }
+.cs-logo-rail .cs-partner-name { color: rgba(255, 255, 255, .55); text-decoration: none; transition: color .2s; }
+.cs-logo-rail .cs-partner-name:hover { color: #fff; }
 .cs-partner-label { color: rgba(255, 255, 255, .32); }
 @keyframes cs-logo-scroll { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
