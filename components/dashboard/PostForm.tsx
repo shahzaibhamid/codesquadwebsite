@@ -10,7 +10,7 @@ interface PostFormProps {
 /** Shared create/edit form for blog posts (server component). */
 export default function PostForm({ action, post, submitLabel }: PostFormProps) {
   return (
-    <form className="cs-form" action={action}>
+    <form className="cs-form" action={action} encType="multipart/form-data">
       {post && <input type="hidden" name="original_slug" defaultValue={post.slug} />}
 
       <div className="cs-field">
@@ -42,6 +42,26 @@ export default function PostForm({ action, post, submitLabel }: PostFormProps) {
       <div className="cs-field">
         <label htmlFor="pf-yt">YouTube URL (optional — auto-fills the card thumbnail)</label>
         <input id="pf-yt" name="youtube" className="cs-input" defaultValue={post?.youtube} placeholder="https://youtu.be/…" />
+      </div>
+
+      <div className="cs-field">
+        <label htmlFor="pf-image-url">Cover image URL</label>
+        <input
+          id="pf-image-url"
+          name="image_url"
+          className="cs-input"
+          type="url"
+          defaultValue={post?.image?.startsWith('http') ? post.image : ''}
+          placeholder="https://example.com/cover.jpg"
+        />
+      </div>
+
+      <div className="cs-field">
+        <label htmlFor="pf-image-file">Upload cover image</label>
+        <input id="pf-image-file" name="image_file" className="cs-input" type="file" accept="image/*" />
+        <input type="hidden" name="existing_image" defaultValue={post?.image} />
+        {post?.image && <small>Current cover: {post.image}</small>}
+        <small>Uploading a new image or entering a new URL replaces the current cover.</small>
       </div>
 
       <div className="cs-field">

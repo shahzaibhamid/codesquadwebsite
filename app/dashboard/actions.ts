@@ -7,6 +7,7 @@ import type { BlogPost } from '@/types';
 import { ADMIN_COOKIE, ADMIN_SESSION, isValidDashboardPassword } from '@/lib/auth';
 import { slugify, contentToHtml } from '@/lib/utils';
 import { createPostStore, updatePostStore, deletePostStore } from '@/lib/postsStore';
+import { uploadCaseStudyFile } from '@/lib/mediaStorage';
 
 export async function login(formData: FormData) {
   const pw = String(formData.get('password') || '').trim();
@@ -26,7 +27,7 @@ export async function logout() {
   redirect('/dashboard/login');
 }
 
-function postFromForm(formData: FormData): BlogPost {
+async function postFromForm(formData: FormData): Promise<BlogPost> {
   const title = String(formData.get('title') || '').trim();
   const rawSlug = String(formData.get('slug') || '').trim();
   const slug = slugify(rawSlug) || slugify(title);
@@ -34,7 +35,14 @@ function postFromForm(formData: FormData): BlogPost {
     String(formData.get('date') || '').trim() ||
     new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   const youtube = String(formData.get('youtube') || '').trim();
-  const image = String(formData.get('image') || '').trim();
+
+  const imageFile = formData.get('image_file');
+  const uploadedImage =
+    imageFile instanceof File && imageFile.size > 0 ? await uploadCaseStudyFile(imageFile, true) : '';
+  const imageUrl = String(formData.get('image_url') || '').trim();
+  const existingImage = String(formData.get('existing_image') || '').trim();
+  const image = uploadedImage || imageUrl || existingImage;
+
   return {
     slug,
     title,
@@ -55,7 +63,7 @@ function revalidatePosts(...slugs: string[]) {
 }
 
 export async function createPost(formData: FormData) {
-  const post = postFromForm(formData);
+  const post = await postFromForm(formData);
   const slug = await createPostStore(post);
   revalidatePosts(slug);
   redirect('/dashboard?ok=created');
@@ -63,7 +71,7 @@ export async function createPost(formData: FormData) {
 
 export async function updatePost(formData: FormData) {
   const original = String(formData.get('original_slug') || '');
-  const post = postFromForm(formData);
+  const post = await postFromForm(formData);
   await updatePostStore(original, post);
   revalidatePosts(post.slug, original);
   redirect('/dashboard?ok=updated');
