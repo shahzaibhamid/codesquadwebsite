@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getPosts } from '@/lib/posts';
 import DeleteButton from '@/components/dashboard/DeleteButton';
+import { isDashboardDbReady } from '@/lib/supabaseAdmin';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,8 +33,14 @@ export default async function DashboardHome({
         </div>
       )}
       <div className="cs-dash__notice">
-        Posts are saved locally to <code>content/posts.json</code> — create, edit, and delete work right away.
-        To persist on live hosting (e.g. Vercel), connect Supabase later (see <code>supabase/schema.sql</code>).
+        {isDashboardDbReady ? (
+          <>Posts are saved to Supabase — create, edit, and delete persist immediately in production.</>
+        ) : (
+          <>
+            Posts are saved locally to <code>content/posts.json</code> — create, edit, and delete work right away.
+            To persist on live hosting (e.g. Vercel), connect Supabase later (see <code>supabase/schema.sql</code>).
+          </>
+        )}
       </div>
 
       <div className="cs-dash__table">

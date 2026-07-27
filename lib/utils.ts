@@ -5,12 +5,12 @@ export function cn(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
-/** Turn a title into a URL-safe slug. */
+/** Turn a title (or a manually-entered slug) into a single-segment, URL-safe slug. */
 export function slugify(input: string): string {
   return input
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '-') // includes "/" — never allow multi-segment slugs
     .replace(/[\s-]+/g, '-')
     .replace(/^-+|-+$/g, '');
 }

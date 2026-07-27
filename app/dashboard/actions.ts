@@ -28,7 +28,8 @@ export async function logout() {
 
 function postFromForm(formData: FormData): BlogPost {
   const title = String(formData.get('title') || '').trim();
-  const slug = String(formData.get('slug') || '').trim() || slugify(title);
+  const rawSlug = String(formData.get('slug') || '').trim();
+  const slug = slugify(rawSlug) || slugify(title);
   const date =
     String(formData.get('date') || '').trim() ||
     new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
