@@ -20,8 +20,8 @@ export const offices = [
   {
     code: 'us' as const,
     country: 'USA',
-    lines: ['312 W 2nd St Unit #A1528', 'Casper, WY 82601'],
-    map: 'https://www.google.com/maps/place/Apt+Tech+Studio/@39.156704,-75.5242117,17z/data=!3m1!4b1!4m6!3m5!1s0x89c765214ce2e4a3:0xd8584f678a89eceb!8m2!3d39.156704!4d-75.5242117!16s%2Fg%2F11y6rmnrz0!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D',
+    lines: ['8 The Green Ste 14681', 'Dover, DE 19901'],
+    map: 'https://www.google.com/maps/search/?api=1&query=8+The+Green+Ste+14681%2C+Dover%2C+DE+19901',
   },
   { code: 'pk' as const, country: 'Pakistan', lines: ['Lahore, Pakistan'], map: undefined as string | undefined },
 ];

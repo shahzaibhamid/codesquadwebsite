@@ -2,7 +2,7 @@
  *  verticals; feature lists are tailored to how each industry buys. */
 
 export const pricingHero = {
-  eyebrow: 'Pricing',
+  eyebrow: 'Offers',
   title: 'Simple pricing. Real growth.',
   sub: 'Growth plans for clinics and e-commerce brands. All monthly, maintenance included. Ad platform costs are never included — billed separately by the platform.',
 };
