@@ -8,7 +8,7 @@ import { pricingIndustries } from '@/data/pricing';
 import type { PricingIndustry } from '@/data/pricing';
 
 export default function PricingContent() {
-  const [industryKey, setIndustryKey] = useState<PricingIndustry['key']>('clinics');
+  const [industryKey, setIndustryKey] = useState<PricingIndustry['key']>('appointments');
   const industry = pricingIndustries.find((i) => i.key === industryKey) || pricingIndustries[0];
 
   return (

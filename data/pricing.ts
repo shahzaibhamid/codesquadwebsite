@@ -3,8 +3,8 @@
 
 export const pricingHero = {
   eyebrow: 'Offers',
-  title: 'Simple pricing. Real growth.',
-  sub: 'Growth plans for clinics and e-commerce brands. All monthly, maintenance included. Ad platform costs are never included — billed separately by the platform.',
+  title: 'Simple offers. Real growth.',
+  sub: 'Growth plans for physical appointment-based businesses and e-commerce brands. All monthly, maintenance included. Ad platform costs are never included — billed separately by the platform.',
 };
 
 export interface PricingTier {
@@ -23,7 +23,7 @@ export interface PricingComparisonRow {
 }
 
 export interface PricingIndustry {
-  key: 'clinics' | 'ecommerce';
+  key: 'appointments' | 'ecommerce';
   label: string;
   tiers: PricingTier[];
   comparison: PricingComparisonRow[];
@@ -31,13 +31,13 @@ export interface PricingIndustry {
 
 export const pricingIndustries: PricingIndustry[] = [
   {
-    key: 'clinics',
-    label: 'Clinics & Appointment-Based Businesses',
+    key: 'appointments',
+    label: 'Physical Appointment-Based Businesses',
     tiers: [
       {
         name: 'Dashboard',
         price: '$500/mo',
-        description: 'For clinics with an existing team who want visibility without workflow changes.',
+        description: 'For physical appointment-based businesses with an existing team who want visibility without workflow changes.',
         features: [
           'Live dashboard connecting existing tools (CRM, ads, calendar, forms)',
           'Leads + status + campaign activity + delivery health + audit log',

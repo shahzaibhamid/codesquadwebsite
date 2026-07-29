@@ -11,7 +11,7 @@ export const fetchCache = 'force-no-store';
 
 export const metadata: Metadata = {
   title: 'Case Studies',
-  description: 'Production systems built for healthcare, clinics, and e-commerce teams.',
+  description: 'Production systems built for healthcare, physical appointment-based businesses, and e-commerce teams.',
 };
 
 export default async function CaseStudiesIndexPage() {
@@ -22,7 +22,7 @@ export default async function CaseStudiesIndexPage() {
         <SectionHeading
           eyebrow="Selected work"
           title="Case studies"
-          sub="Production systems built for healthcare, clinics, and e-commerce teams designed around their needs."
+          sub="Production systems built for healthcare, physical appointment-based businesses, and e-commerce teams designed around their needs."
         />
         <CaseStudiesGrid items={caseStudies} industries={industries} />
       </div>

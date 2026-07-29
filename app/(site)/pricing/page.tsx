@@ -6,7 +6,7 @@ import { site } from '@/data/site';
 import { pricingHero, pricingFaq } from '@/data/pricing';
 
 export const metadata: Metadata = {
-  title: 'Pricing',
+  title: 'Offers',
   description: pricingHero.sub,
 };
 
@@ -29,7 +29,7 @@ export default function PricingPage() {
 
       <section className="cs-section cs-section--tight">
         <div className="cs-container">
-          <h2 className="cs-pricing-faq__title">Pricing FAQ</h2>
+          <h2 className="cs-pricing-faq__title">Offers FAQ</h2>
           <Faq items={pricingFaq} />
         </div>
       </section>

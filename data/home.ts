@@ -4,7 +4,7 @@
 export const hero = {
   badge: 'Trusted by 20+ companies worldwide',
   title: 'Build Automation Engines',
-  sub: 'Growth systems for clinics and appointment-based businesses. Marketing intelligence for e-commerce and beyond. Built into your existing stack.',
+  sub: 'Growth systems for physical appointment-based businesses. Marketing intelligence for e-commerce and beyond. Built into your existing stack.',
   tags: [
     'Patient Growth',
     'Dashboards',
@@ -74,7 +74,7 @@ export const founder = {
   bio: [
     'I build AI systems that help small and medium businesses grow, with automation that lives inside your stack and becomes yours to run.',
     'At CodeSquad, my team and I turn those capabilities into systems that actually move the needle: more pipeline, more booked revenue, fewer hours lost to manual work. We don’t just automate tasks; we build the engine that drives growth and then hand it over. It lives in your stack, your team runs it, and it holds up under real workload.',
-    'Focused on patient growth systems for clinics and marketing intelligence for e-commerce.',
+    'Focused on patient growth systems for physical appointment-based businesses and marketing intelligence for e-commerce.',
   ],
 };
 

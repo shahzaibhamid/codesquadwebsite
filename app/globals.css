@@ -455,6 +455,7 @@ body.cs-body {
 
 /* Pricing page */
 .cs-pricing-hero__inner { max-width: 780px; text-align: center; margin: 0 auto; }
+.cs-pricing-hero .cs-eyebrow { font-size: 18px; padding: 9px 18px; }
 .cs-pricing-hero__inner h1 { margin: 18px 0 16px; font-size: clamp(38px, 5.5vw, 64px); line-height: 1.05; letter-spacing: -.03em; }
 .cs-pricing-hero .cs-hero__sub { max-width: 640px; margin: 0 auto; }
 .cs-pricing-note { max-width: 640px; margin: 22px auto 0; padding: 14px 20px; border: 1px solid var(--cs-border); border-radius: 12px; background: var(--cs-panel); color: var(--cs-muted); font-size: 14px; line-height: 1.6; }
