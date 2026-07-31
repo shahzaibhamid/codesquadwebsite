@@ -177,6 +177,17 @@ export const pricingIndustries: PricingIndustry[] = [
   },
 ];
 
+/** Full-width block below the 3 tiers — bespoke/project-based work, not a
+ *  monthly retainer, so it lives outside the per-industry tier arrays. */
+export const customOffer = {
+  badge: 'Enterprise',
+  name: 'Custom AI Implementation',
+  price: 'Starting at $10K',
+  priceNote: 'One-time project pricing, not a monthly retainer.',
+  description: 'For businesses needing bespoke AI agents, custom integrations, or industry-specific systems across any vertical. Scoped to your needs.',
+  cta: 'Book a scoping call',
+};
+
 export const pricingFaq = [
   { question: 'Are ad spend fees included?', answer: 'No — ad spend is billed by the platforms (Google, Meta) directly, separate from your monthly plan.' },
   { question: 'Can I switch tiers?', answer: 'Yes, month-to-month — upgrade or downgrade as your needs change.' },

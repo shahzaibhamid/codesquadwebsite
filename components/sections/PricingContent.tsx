@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { site } from '@/data/site';
-import { pricingIndustries } from '@/data/pricing';
+import { pricingIndustries, customOffer } from '@/data/pricing';
 import type { PricingIndustry } from '@/data/pricing';
 
 export default function PricingContent() {
@@ -44,6 +44,21 @@ export default function PricingContent() {
             </Button>
           </div>
         ))}
+      </div>
+
+      <div className="cs-custom-offer" id="custom">
+        <span className="cs-custom-offer__badge">{customOffer.badge}</span>
+        <div className="cs-custom-offer__body">
+          <h3>{customOffer.name}</h3>
+          <p className="cs-custom-offer__price">
+            {customOffer.price}
+            <span>{customOffer.priceNote}</span>
+          </p>
+          <p className="cs-custom-offer__desc">{customOffer.description}</p>
+        </div>
+        <Button href={site.calendly} variant="primary" external className="cs-custom-offer__cta">
+          {customOffer.cta}
+        </Button>
       </div>
 
       <div className="cs-compare-table cs-pricing-table" role="table">

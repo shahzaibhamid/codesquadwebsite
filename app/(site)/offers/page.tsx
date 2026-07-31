@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: pricingHero.sub,
 };
 
-export default function PricingPage() {
+export default function OffersPage() {
   return (
     <>
       <section className="cs-section cs-pricing-hero">

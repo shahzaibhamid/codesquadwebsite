@@ -473,12 +473,25 @@ body.cs-body {
 .cs-pricing-table__row span[role="cell"] svg { width: 18px; height: 18px; color: var(--cs-cyan); }
 .cs-pricing-faq__title { margin: 0 0 28px; text-align: center; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -.03em; }
 
+.cs-custom-offer { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; margin-top: 24px; padding: 40px 44px; border-radius: 18px; background: var(--cs-grad); scroll-margin-top: 100px; }
+.cs-custom-offer__badge { position: absolute; top: -14px; left: 44px; padding: 5px 14px; border-radius: 999px; background: #fff; color: var(--cs-cyan); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.cs-custom-offer__body { flex: 1; min-width: 260px; }
+.cs-custom-offer__body h3 { margin: 6px 0 4px; font-size: 24px; color: #fff; }
+.cs-custom-offer__price { font-family: var(--cs-font-display); font-size: 26px; font-weight: 700; color: #fff; margin: 0 0 10px; }
+.cs-custom-offer__price span { display: block; font-size: 13px; font-weight: 500; color: rgba(255, 255, 255, .75); margin-top: 4px; }
+.cs-custom-offer__desc { color: rgba(255, 255, 255, .85); font-size: 14.5px; margin: 0; max-width: 520px; }
+.cs-custom-offer__cta.cs-btn--primary { flex-shrink: 0; background: #fff; color: var(--cs-cyan); }
+.cs-custom-offer__cta.cs-btn--primary:hover { background: #e9eef5; color: var(--cs-cyan); }
+.cs-body a.cs-custom-offer__cta.cs-btn--primary, .cs-body .cs-custom-offer__cta.cs-btn--primary { color: var(--cs-cyan); }
+
 @media (max-width: 900px) {
   .cs-pricing-grid { grid-template-columns: 1fr; }
   .cs-pricing-table__row { grid-template-columns: 1fr; }
   .cs-pricing-table__row--head { display: none; }
   .cs-pricing-table__row span[role="cell"] { justify-content: flex-start; gap: 8px; }
   .cs-pricing-table__row span[role="cell"]::before { content: attr(data-label) ":"; color: var(--cs-muted); font-size: 13px; font-weight: 600; }
+  .cs-custom-offer { flex-direction: column; align-items: flex-start; padding: 32px 28px; }
+  .cs-custom-offer__cta { width: 100%; justify-content: center; }
 }
 
 /* Services cinematic hero */
@@ -697,6 +710,9 @@ body.cs-body {
 .cs-ready p { max-width: 576px; margin: 0 auto 32px; color: #6b7280; font-size: 16px; line-height: 1.7; }
 .cs-ready .cs-btn { min-height: 48px; padding: 0 32px; border-radius: 8px; font-size: 16px; font-weight: 600; }
 .cs-ready__actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px; }
+.cs-ready__custom { margin: 24px 0 0; font-size: 14.5px; color: var(--cs-muted); }
+.cs-ready__custom a { color: var(--cs-cyan); font-weight: 600; text-decoration: none; }
+.cs-ready__custom a:hover { text-decoration: underline; }
 
 /* Founder section (home) */
 .cs-founder {

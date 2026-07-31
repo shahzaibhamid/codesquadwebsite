@@ -221,7 +221,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         <div className="cs-study-meta"><span>Services</span><strong>{study.services}</strong></div>
         {study.vertical === 'Healthcare & Clinics' && (
           <div className="cs-study-hero__cta">
-            <Link className="cs-btn cs-btn--primary" href="/pricing">See offers <Icon name="arrow-ur" /></Link>
+            <Link className="cs-btn cs-btn--primary" href="/offers">See offers <Icon name="arrow-ur" /></Link>
           </div>
         )}
       </>
@@ -316,7 +316,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <p>Have an idea worth building?</p>
           <h2>Let’s turn your workflow into a system that scales.</h2>
           <div className="cs-study-cta__actions">
-            <Link className="cs-btn cs-btn--primary" href="/pricing">See offers <Icon name="arrow-ur" /></Link>
+            <Link className="cs-btn cs-btn--primary" href="/offers">See offers <Icon name="arrow-ur" /></Link>
             <a className="cs-btn cs-btn--ghost" href={site.calendly} target="_blank" rel="noopener noreferrer">Book a free call</a>
           </div>
         </div>

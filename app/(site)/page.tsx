@@ -150,9 +150,12 @@ export default async function HomePage() {
             evolving systems, and continued support as the business grows.
           </p>
           <div className="cs-ready__actions">
-            <Button href="/pricing" variant="primary">See offers</Button>
+            <Button href="/offers" variant="primary">See offers</Button>
             <Button href={site.calendly} variant="ghost" icon="phone" external>Book a Free Call</Button>
           </div>
+          <p className="cs-ready__custom">
+            Need something custom? <a href="/offers#custom">We build bespoke AI implementations →</a>
+          </p>
         </div>
       </section>
 

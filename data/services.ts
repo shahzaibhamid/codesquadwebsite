@@ -1,6 +1,6 @@
 import type { Service, Build } from '@/types';
 
-/** The eight core services offered by CodeSquad. */
+/** The core services offered by CodeSquad. */
 export const services: Service[] = [
   {
     icon: 'target', title: 'Outbound',
@@ -41,6 +41,11 @@ export const services: Service[] = [
     icon: 'robot', title: 'AI Agents',
     desc: 'Deploy task-specific AI agents that reason, use your business tools, and complete real work with the right human controls.',
     points: ['Research, analysis, and task execution', 'CRM, inbox, document, and app integrations', 'Human approval and operational safeguards'],
+  },
+  {
+    icon: 'rocket', title: 'Custom AI Implementation',
+    desc: 'Bespoke AI agents, custom integrations, or industry-specific systems built for your business, in any vertical. Project-based, scoped to your needs, starting at $10K.',
+    points: ['Bespoke AI agents and custom integrations', 'Industry-specific systems for any vertical', 'Project-based pricing, scoped to your needs'],
   },
 ];
 
