@@ -30,7 +30,7 @@ export default async function HomePage() {
         <div className="cs-container cs-hero__inner">
           <span className="cs-eyebrow">{hero.badge}</span>
           <h1>
-            Growth systems for <span className="cs-gradient-text">physical appointment-based businesses and marketing teams</span>
+            Growth systems for <span className="cs-gradient-text">businesses of every kind</span>
           </h1>
           <p className="cs-hero__sub">{hero.sub}</p>
 
