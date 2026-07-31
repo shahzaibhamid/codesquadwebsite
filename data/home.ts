@@ -4,9 +4,8 @@
 export const hero = {
   badge: 'Trusted by 20+ companies worldwide',
   title: 'Build Automation Engines',
-  sub: 'Growth systems for physical appointment-based businesses. Marketing intelligence for e-commerce and beyond. Built into your existing stack.',
+  sub: 'Built into your existing stack — no rip-and-replace, no new tools to learn.',
   tags: [
-    'Patient Growth',
     'Dashboards',
     'Ads',
     'SEO · AEO · GEO',
