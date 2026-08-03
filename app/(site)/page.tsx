@@ -50,11 +50,11 @@ export default async function HomePage() {
         </div>
 
         <div className="cs-home-proof cs-proof" aria-label="Trusted partners">
+          <span className="cs-partner-label cs-partner-label--static">Trusted by 20+ companies</span>
           <div className="cs-logo-rail">
             <div className="cs-logo-rail__track">
               {[...Array(2)].map((_, loop) => (
                 <div className="cs-logo-rail__group" key={loop}>
-                  <span className="cs-partner-label">Trusted by 20+ companies</span>
                   {partners.map((p) => (
                     <a
                       className="cs-partner-name"
@@ -153,9 +153,6 @@ export default async function HomePage() {
             <Button href="/offers" variant="primary">See offers</Button>
             <Button href={site.calendly} variant="ghost" icon="phone" external>Book a Free Call</Button>
           </div>
-          <p className="cs-ready__custom">
-            Need something custom? <a href="/offers#custom">We build bespoke AI implementations →</a>
-          </p>
         </div>
       </section>
 

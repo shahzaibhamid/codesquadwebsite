@@ -13,6 +13,23 @@ export default function PricingContent() {
 
   return (
     <>
+      <div className="cs-custom-offer" id="custom">
+        <span className="cs-custom-offer__badge">{customOffer.badge}</span>
+        <div className="cs-custom-offer__body">
+          <h3>{customOffer.name}</h3>
+          <p className="cs-custom-offer__price">
+            {customOffer.price}
+            <span>{customOffer.priceNote}</span>
+          </p>
+          <p className="cs-custom-offer__desc">{customOffer.description}</p>
+        </div>
+        <Button href={site.calendly} variant="primary" external className="cs-custom-offer__cta">
+          {customOffer.cta}
+        </Button>
+      </div>
+
+      <p className="cs-custom-offer__divider">Or choose a monthly growth plan below</p>
+
       <div className="cs-cats" role="list" aria-label="Choose your industry">
         {pricingIndustries.map((i) => (
           <button
@@ -44,21 +61,6 @@ export default function PricingContent() {
             </Button>
           </div>
         ))}
-      </div>
-
-      <div className="cs-custom-offer" id="custom">
-        <span className="cs-custom-offer__badge">{customOffer.badge}</span>
-        <div className="cs-custom-offer__body">
-          <h3>{customOffer.name}</h3>
-          <p className="cs-custom-offer__price">
-            {customOffer.price}
-            <span>{customOffer.priceNote}</span>
-          </p>
-          <p className="cs-custom-offer__desc">{customOffer.description}</p>
-        </div>
-        <Button href={site.calendly} variant="primary" external className="cs-custom-offer__cta">
-          {customOffer.cta}
-        </Button>
       </div>
 
       <div className="cs-compare-table cs-pricing-table" role="table">
