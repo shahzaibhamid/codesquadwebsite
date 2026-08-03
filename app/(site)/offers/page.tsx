@@ -21,7 +21,7 @@ export default function OffersPage() {
         </div>
       </section>
 
-      <section className="cs-section cs-section--tight">
+      <section className="cs-section cs-section--tight cs-offers-top">
         <div className="cs-container">
           <PricingContent />
         </div>
