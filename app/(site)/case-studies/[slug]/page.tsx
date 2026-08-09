@@ -293,6 +293,20 @@ export default async function CaseStudyPage({ params }: PageProps) {
         {resultsPlacement === 'end' && <div className="cs-container"><MediaGrid links={item.resultsMedia} /></div>}
       </section>}
 
+      {item.slug === 'harmony-medspa-patient-growth-automation' && <section className="cs-study-section cs-study-benchmark">
+        <div className="cs-container">
+          <div className="cs-study-heading cs-study-heading--wide"><span>A modeled estimate, not a Harmony result</span><h2>What this is typically worth.</h2></div>
+          <p className="cs-study-benchmark__intro">Industry benchmarks: manual follow-up books 8–12% of enquiries; automated 60-second response with structured follow-up books 25–35%. Average med spa visit runs $420–500.</p>
+          <p className="cs-study-benchmark__scenario">For a clinic receiving 80 enquiries a month:</p>
+          <div className="cs-study-benchmark__grid">
+            <div><span>Before</span><strong>≈ 8 booked appointments</strong></div>
+            <div><span>After</span><strong>≈ 22 booked appointments</strong></div>
+            <div><span>Difference</span><strong>≈ 14 appointments/month</strong><small>$5,900–7,000 in additional first-visit revenue</small></div>
+          </div>
+          <p className="cs-study-benchmark__caption">Illustrative model based on published industry benchmarks, not Harmony MedSpa&apos;s reported figures. Individual results vary.</p>
+        </div>
+      </section>}
+
       {!!beforeAfterRows(item.beforeAfter).length && <section className="cs-study-section cs-study-section--soft">
         <div className="cs-container">
           <div className="cs-study-heading cs-study-heading--wide"><span>Before &amp; after</span><h2>What changed.</h2></div>

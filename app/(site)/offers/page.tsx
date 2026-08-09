@@ -31,6 +31,10 @@ export default function OffersPage() {
         <div className="cs-container">
           <h2 className="cs-pricing-faq__title">Offers FAQ</h2>
           <Faq items={pricingFaq} />
+          <div className="cs-offers-more">
+            <p>Need something bespoke — custom AI agents or industry-specific systems?</p>
+            <Button href="/custom" variant="ghost">See Custom AI Implementation</Button>
+          </div>
         </div>
       </section>
 
