@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    // Dashboard post/case-study forms upload images (up to 25MB, see
+    // lib/mediaStorage.ts) through server actions, which default to a 1MB
+    // request body limit.
+    serverActions: {
+      bodySizeLimit: '25mb',
+    },
+  },
   async redirects() {
     return [
       {
