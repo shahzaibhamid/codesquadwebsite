@@ -27,6 +27,18 @@ export async function logout() {
   redirect('/dashboard/login');
 }
 
+/** Content images, in order: typed URLs first, then uploaded files — matched
+ * positionally to each #IMAGE# marker in the content textarea. */
+async function contentImages(formData: FormData): Promise<string[]> {
+  const urls = String(formData.get('content_image_links') || '')
+    .split(/\r?\n/)
+    .map((value) => value.trim())
+    .filter(Boolean);
+  const files = formData.getAll('content_image_files').filter((value): value is File => value instanceof File && value.size > 0);
+  const uploaded = await Promise.all(files.map((file) => uploadCaseStudyFile(file, true)));
+  return [...urls, ...uploaded];
+}
+
 async function postFromForm(formData: FormData): Promise<BlogPost> {
   const title = String(formData.get('title') || '').trim();
   const rawSlug = String(formData.get('slug') || '').trim();
@@ -43,13 +55,15 @@ async function postFromForm(formData: FormData): Promise<BlogPost> {
   const existingImage = String(formData.get('existing_image') || '').trim();
   const image = uploadedImage || imageUrl || existingImage;
 
+  const images = await contentImages(formData);
+
   return {
     slug,
     title,
     category: String(formData.get('category') || 'AI Automation'),
     date,
     excerpt: String(formData.get('excerpt') || ''),
-    content: contentToHtml(String(formData.get('content') || '')),
+    content: contentToHtml(String(formData.get('content') || ''), images),
     youtube: youtube || undefined,
     image: image || undefined,
   };

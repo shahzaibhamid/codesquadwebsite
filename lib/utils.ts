@@ -33,29 +33,45 @@ export function youtubeThumb(url?: string): string {
   return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : '';
 }
 
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+const escapeAttr = (s: string) => escapeHtml(s).replace(/"/g, '&quot;');
+
+function imageTag(src?: string): string {
+  return src ? `<img class="cs-article__image" src="${escapeAttr(src)}" alt="" loading="lazy" />` : '';
+}
+
 /**
  * Turn plain pasted text into paragraph/heading HTML so admins don't need to
  * write raw tags. Rules:
  *  - Blank line = new paragraph.
  *  - A line starting with #, ##, or ### becomes an H1/H2/H3 heading.
  *  - **double asterisks** around text makes it bold.
- * If the text already contains HTML markup, it's left as-is.
+ *  - A line containing only #IMAGE# is replaced, in order, by the next URL
+ *    from `images` (upload the images and drop one #IMAGE# marker per spot).
+ * If the text already contains HTML markup, it's left as-is (aside from
+ * expanding any #IMAGE# markers).
  */
-export function contentToHtml(input: string): string {
+export function contentToHtml(input: string, images: string[] = []): string {
   const text = input.trim();
   if (!text) return '';
-  if (/<[a-z][\s\S]*>/i.test(text)) return text;
 
-  const escape = (s: string) =>
-    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  let nextImage = 0;
+  const takeImage = () => imageTag(images[nextImage++]);
 
-  const inline = (s: string) => escape(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  if (/<[a-z][\s\S]*>/i.test(text)) {
+    return text.replace(/#IMAGE#/gi, () => takeImage());
+  }
+
+  const inline = (s: string) => escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
   return text
     .split(/\n\s*\n/)
     .map((block) => block.trim())
     .filter(Boolean)
     .map((block) => {
+      if (block.toUpperCase() === '#IMAGE#') return takeImage();
       const heading = block.match(/^(#{1,3})\s+(.+)$/);
       if (heading) {
         const level = heading[1].length;
@@ -63,5 +79,6 @@ export function contentToHtml(input: string): string {
       }
       return `<p>${inline(block).replace(/\n/g, '<br />')}</p>`;
     })
+    .filter(Boolean)
     .join('\n');
 }

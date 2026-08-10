@@ -76,6 +76,7 @@ export default function PostForm({ action, post, submitLabel }: PostFormProps) {
           <br />• Leave a blank line between paragraphs.
           <br />• Start a line with <code># </code> for a big heading, <code>## </code> for a medium heading, or <code>### </code> for a small heading.
           <br />• Wrap text in <code>**double asterisks**</code> to make it bold.
+          <br />• To place an image, write <code>#IMAGE#</code> on its own line exactly where it should appear — add the images below, in the same order as the markers.
         </div>
         <textarea
           id="pf-content"
@@ -85,6 +86,23 @@ export default function PostForm({ action, post, submitLabel }: PostFormProps) {
           placeholder="Paste or type the post text here…"
           style={{ minHeight: 280 }}
         />
+      </div>
+
+      <div className="cs-field">
+        <label htmlFor="pf-content-image-links">In-content image URLs</label>
+        <textarea
+          id="pf-content-image-links"
+          name="content_image_links"
+          className="cs-textarea"
+          placeholder={'https://example.com/image-1.jpg\nhttps://example.com/image-2.jpg'}
+        />
+        <small>One URL per line. Matched in order to each #IMAGE# marker above, before the uploaded files below.</small>
+      </div>
+
+      <div className="cs-field">
+        <label htmlFor="pf-content-image-files">Upload in-content images</label>
+        <input id="pf-content-image-files" name="content_image_files" className="cs-input" type="file" accept="image/*" multiple />
+        <small>You may select multiple images. They fill #IMAGE# markers after the URLs above, in the order selected.</small>
       </div>
 
       <button className="cs-btn cs-btn--primary" type="submit">

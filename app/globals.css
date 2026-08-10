@@ -918,6 +918,7 @@ body.cs-body {
 .cs-article h3 { font-size: 22px; margin: 30px 0 12px; }
 .cs-article p, .cs-article li { color: var(--cs-text); margin: 0 0 20px; }
 .cs-article a { text-decoration: underline; }
+.cs-article__image { display: block; width: 100%; height: auto; margin: 34px 0 38px; border: 1px solid rgba(110,130,150,.25); border-radius: 14px; background: #eef1f4; object-fit: contain; box-shadow: 0 16px 42px rgba(7,18,31,.14); }
 
 /* =====================================================================
    FOOTER
