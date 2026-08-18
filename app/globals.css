@@ -475,32 +475,20 @@ body.cs-body {
 .cs-offers-top { padding-top: 8px; }
 .cs-pricing-note { max-width: 640px; margin: 22px auto 0; padding: 14px 20px; border: 1px solid var(--cs-border); border-radius: 12px; background: var(--cs-panel); color: var(--cs-muted); font-size: 14px; line-height: 1.6; }
 
-/* Three modules — Attract / Respond / Recover — shown above pricing */
-.cs-modules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-bottom: 56px; }
-.cs-module-card { padding: 30px; border: 1px solid var(--cs-border); border-radius: 18px; background: var(--cs-panel-2); }
-.cs-module-card__icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 18px; border-radius: 12px; background: var(--cs-grad-soft); color: var(--cs-cyan); }
-.cs-module-card__icon svg { width: 22px; height: 22px; }
-.cs-module-card h3 { margin: 0 0 8px; font-size: 20px; letter-spacing: -.01em; }
-.cs-module-card__tagline { margin: 0 0 18px; color: var(--cs-heading); font-weight: 600; font-size: 14.5px; line-height: 1.5; }
-.cs-module-card .cs-bullets li { color: var(--cs-muted); }
-
+/* Three parallel packages — Marketing & Lead Generation, Cold Outbound,
+   Business Operations — shown side by side. Not depth tiers, so no badge
+   or "most popular" styling; each card groups its scope under sub-labels. */
 .cs-pricing-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
 .cs-pricing-card { position: relative; display: flex; flex-direction: column; padding: 34px; border: 1px solid var(--cs-border); border-radius: 18px; background: #fff; }
-.cs-pricing-card--popular { border-color: var(--cs-cyan); box-shadow: var(--cs-glow-cyan); }
-.cs-pricing-card__badge { position: absolute; top: -14px; left: 34px; padding: 5px 14px; border-radius: 999px; background: var(--cs-cyan); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.cs-pricing-card__icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 18px; border-radius: 12px; background: var(--cs-grad-soft); color: var(--cs-cyan); }
+.cs-pricing-card__icon svg { width: 22px; height: 22px; }
 .cs-pricing-card h3 { margin: 6px 0 4px; font-size: 22px; }
-.cs-pricing-card__price { font-family: var(--cs-font-display); font-size: 30px; font-weight: 700; color: var(--cs-heading); margin-bottom: 12px; }
-.cs-pricing-card__desc { color: var(--cs-muted); font-size: 14.5px; margin: 0 0 6px; font-weight: 600; }
-.cs-pricing-card__includes { color: var(--cs-muted); font-size: 13px; margin: 0 0 14px; text-transform: uppercase; letter-spacing: .04em; }
-.cs-pricing-card__features { margin-bottom: 14px; flex: 1; }
-.cs-pricing-card__scope-note { margin: 0 0 18px; color: var(--cs-muted); font-size: 12.5px; line-height: 1.5; font-style: italic; }
-.cs-pricing-card__more { display: inline-block; margin: 0 0 18px; color: var(--cs-cyan); font-size: 13.5px; font-weight: 600; }
+.cs-pricing-card__desc { color: var(--cs-muted); font-size: 14.5px; margin: 0 0 20px; font-weight: 600; }
+.cs-pricing-card__group { margin-bottom: 16px; }
+.cs-pricing-card__group-label { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--cs-cyan); }
+.cs-pricing-card__features { margin-bottom: 0; }
+.cs-pricing-card__scope-note { margin: 4px 0 18px; color: var(--cs-muted); font-size: 12.5px; line-height: 1.5; font-style: italic; }
 .cs-pricing-card__cta { width: 100%; justify-content: center; margin-top: auto; }
-
-.cs-pricing-table__group-title { padding: 14px 22px; background: var(--cs-grad-soft); color: var(--cs-heading); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.cs-pricing-table__group + .cs-pricing-table__group .cs-pricing-table__group-title { border-top: 1px solid #d7d3ca; }
-.cs-pricing-table__row { grid-template-columns: 1.6fr repeat(3, 1fr); }
-.cs-pricing-table__row span[role="cell"] { display: flex; align-items: center; font-size: 14px; color: var(--cs-text); }
 .cs-pricing-faq__title { margin: 0 0 28px; text-align: center; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -.03em; }
 
 /* Guarantee band — full width, under the pricing cards */
@@ -534,13 +522,8 @@ body.cs-body {
 .cs-body a.cs-custom-offer__cta.cs-btn--primary, .cs-body .cs-custom-offer__cta.cs-btn--primary { color: var(--cs-cyan); }
 
 @media (max-width: 900px) {
-  .cs-modules { grid-template-columns: 1fr; }
   .cs-pricing-grid { grid-template-columns: 1fr; }
   .cs-onboarding__steps { grid-template-columns: repeat(2, 1fr); }
-  .cs-pricing-table__row { grid-template-columns: 1fr; }
-  .cs-pricing-table__row--head { display: none; }
-  .cs-pricing-table__row span[role="cell"] { justify-content: flex-start; gap: 8px; }
-  .cs-pricing-table__row span[role="cell"]::before { content: attr(data-label) ":"; color: var(--cs-muted); font-size: 13px; font-weight: 600; }
   .cs-custom-offer { flex-direction: column; align-items: flex-start; padding: 32px 28px; }
   .cs-custom-offer__cta { width: 100%; justify-content: center; }
 }

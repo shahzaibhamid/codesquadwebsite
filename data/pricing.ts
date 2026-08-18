@@ -1,158 +1,102 @@
-/** Offers page content. One universal offer built from three modules —
- *  Attract, Respond, Recover — sold as three depth tiers. No industry split:
- *  every tier lists the same three module names, each deeper than the one
- *  below it. */
+import type { IconName } from '@/types';
+
+/** Offers page content. Three parallel packages — Marketing & Lead
+ *  Generation, Cold Outbound, and Business Operations — shown side by side.
+ *  They aren't depth tiers of each other: a business can take one or
+ *  combine them. Each package groups its scope under sub-labels instead of
+ *  a flat bullet list. */
 
 export const pricingHero = {
   eyebrow: 'Offers',
-  title: 'Simple offers. Real growth.',
-  sub: 'Three modules — Attract, Respond, Recover — priced as one monthly plan that gets deeper at every tier. Ad platform costs are never included — billed directly by Google/Meta, separate from your monthly plan.',
+  title: 'Automate the boring stuff. Scale the business.',
+  sub: 'Marketing & Lead Generation, Cold Outbound, and Business Operations — take one or combine them. Starting at $1,000/month.',
 };
 
-/** The three modules shown as cards above pricing. Every tier below sells
- *  a deeper version of these same three jobs — never a different list. */
-export interface OfferModule {
-  key: 'attract' | 'respond' | 'recover';
-  name: string;
-  tagline: string;
+export interface PackageGroup {
+  label: string;
   points: string[];
 }
 
-export const offerModules: OfferModule[] = [
-  {
-    key: 'attract',
-    name: 'Attract',
-    tagline: 'Get found by people already looking for you.',
-    points: ['Local SEO', 'Google Business Profile', 'Website upkeep', 'Google + Meta ads', 'Content'],
-  },
-  {
-    key: 'respond',
-    name: 'Respond',
-    tagline: 'Every enquiry answered fast, so nobody books elsewhere.',
-    points: ['Instant SMS + email reply', 'Staff alerts', 'Lead captured to CRM'],
-  },
-  {
-    key: 'recover',
-    name: 'Recover',
-    tagline: 'Nobody who enquires gets forgotten.',
-    points: ['14-day / 5-touch follow-up for non-bookers', 'Past-customer reactivation', 'Rebooking reminders timed to service cycles'],
-  },
-];
-
-export interface PricingTier {
-  key: 'essential' | 'growth' | 'scale';
+export interface OfferPackage {
+  key: 'marketing' | 'outbound' | 'operations';
   name: string;
-  price: string;
-  badge?: string;
+  icon: IconName;
   tagline: string;
-  includesNote?: string;
-  /** Max 5 — the rest of the depth lives in the comparison table. */
-  bullets: string[];
-  scopeNote?: string;
+  groups: PackageGroup[];
+  footnote?: string;
 }
 
-export const pricingTiers: PricingTier[] = [
+export const offerPackages: OfferPackage[] = [
   {
-    key: 'essential',
-    name: 'Essential',
-    price: '$700/mo',
-    tagline: 'Get found, and stop missing enquiries.',
-    bullets: [
-      'Attract (starter) — local SEO, Google Business Profile optimisation, maintenance of your existing website',
-      'Respond (basic) — SMS + email reply during business hours',
-      'Live dashboard — leads, status, campaign activity, delivery health',
-      'Email support',
-      '1 strategy call/month',
+    key: 'marketing',
+    name: 'Marketing & Lead Generation',
+    icon: 'search',
+    tagline: 'Get found, respond instantly, and never lose a lead to silence.',
+    groups: [
+      {
+        label: 'Attract',
+        points: ['Local SEO & Google Business Profile', 'Google + Meta ads', 'Website upkeep', 'Content', 'Reputation & referral automation'],
+      },
+      {
+        label: 'Respond',
+        points: ['Under 60 seconds, 24/7', 'SMS + email reply', 'Staff alerts', 'Lead captured to CRM'],
+      },
+      {
+        label: 'Recover',
+        points: ['14-day / 5-touch follow-up for non-bookers', 'Past-customer reactivation', 'Rebooking reminders timed to service cycles'],
+      },
     ],
-    scopeNote: 'Website maintenance covers your existing site — new builds are quoted separately.',
+    footnote: 'Ad platform costs are billed directly by Google/Meta, separate from this package.',
   },
   {
-    key: 'growth',
-    name: 'Growth',
-    price: '$1,300/mo',
-    badge: 'Most popular',
-    tagline: 'Turn the enquiries you already get into booked appointments.',
-    includesNote: 'Everything in Essential, plus:',
-    bullets: [
-      'Attract — Google Ads setup + management',
-      'Respond (full) — under 60 seconds, 24/7, day or night',
-      'Recover (full) — 14-day follow-up, reactivation, rebooking reminders',
-      'Monthly optimisation call',
-      '24-hour response SLA',
+    key: 'outbound',
+    name: 'Cold Outbound',
+    icon: 'target',
+    tagline: 'Generate new demand instead of waiting for it to arrive.',
+    groups: [
+      {
+        label: 'Prospecting',
+        points: ['Targeted list building', 'Lead enrichment'],
+      },
+      {
+        label: 'Outreach',
+        points: ['Personalized cold email sequences', 'LinkedIn outreach'],
+      },
+      {
+        label: 'Infrastructure',
+        points: ['Sending domain setup & warmup', 'Inbox rotation', 'Deliverability monitoring'],
+      },
+      {
+        label: 'Follow-up',
+        points: ['Automated sequencing', 'Reply handling', 'CRM logging'],
+      },
     ],
   },
   {
-    key: 'scale',
-    name: 'Scale',
-    price: '$3,000/mo',
-    tagline: 'Fill the calendar.',
-    includesNote: 'Everything in Growth, plus:',
-    bullets: [
-      'Attract (full) — Google + Meta + retargeting, content creation, advanced SEO and AI search visibility',
-      'Recover (advanced) — reputation management, referral automation',
-      'Executive reporting + analytics deep-dive',
-      '2 strategy calls/week',
-      'Same-day priority support',
+    key: 'operations',
+    name: 'Business Operations',
+    icon: 'layers',
+    tagline: 'Automation for what happens after the lead becomes a customer.',
+    groups: [
+      {
+        label: 'Customer Support',
+        points: ['24/7 inquiry handling', 'FAQ / knowledge-base agent', 'Ticket escalation with context'],
+      },
+      {
+        label: 'Back-Office & Admin',
+        points: ['Billing & invoicing automation', 'Intake & document processing', 'Inventory, package & membership tracking', 'System integrations'],
+      },
+      {
+        label: 'AI Agents & Workflows',
+        points: ['Staff scheduling', 'Reporting & analytics compilation', 'Cross-tool data sync'],
+      },
     ],
+    footnote: 'Website builds and industry-specific systems are scoped separately — see Custom AI Implementation.',
   },
 ];
-
-/** Full comparison table — grouped by module, then support. Cells show what
- *  each tier gets (depth), not a tick/dash, since every tier includes every
- *  module at some depth. */
-export interface ComparisonRow {
-  feature: string;
-  essential: string;
-  growth: string;
-  scale: string;
-}
-export interface ComparisonGroup {
-  title: string;
-  rows: ComparisonRow[];
-}
-
-export const comparisonGroups: ComparisonGroup[] = [
-  {
-    title: 'Attract',
-    rows: [
-      { feature: 'Local SEO & Google Business Profile', essential: 'Included', growth: 'Included', scale: 'Included' },
-      { feature: 'Website maintenance', essential: 'Existing site', growth: 'Existing site', scale: 'Existing site' },
-      { feature: 'Paid ads', essential: 'Not included', growth: 'Google Ads', scale: 'Google + Meta + retargeting' },
-      { feature: 'Content', essential: 'Not included', growth: 'Not included', scale: 'Content creation' },
-      { feature: 'SEO depth', essential: 'Local SEO basics', growth: 'Local SEO basics', scale: 'Advanced SEO + AI search visibility' },
-    ],
-  },
-  {
-    title: 'Respond',
-    rows: [
-      { feature: 'Response speed', essential: 'Business hours', growth: 'Under 60 sec, 24/7', scale: 'Under 60 sec, 24/7' },
-      { feature: 'Reply channels', essential: 'SMS + email', growth: 'SMS + email', scale: 'SMS + email' },
-      { feature: 'Staff alerts + CRM capture', essential: 'Included', growth: 'Included', scale: 'Included' },
-    ],
-  },
-  {
-    title: 'Recover',
-    rows: [
-      { feature: 'Non-booker follow-up', essential: 'Not included', growth: '14-day / 5-touch', scale: '14-day / 5-touch' },
-      { feature: 'Reactivation & rebooking reminders', essential: 'Not included', growth: 'Included', scale: 'Included' },
-      { feature: 'Reputation & referral automation', essential: 'Not included', growth: 'Not included', scale: 'Included' },
-    ],
-  },
-  {
-    title: 'Support & Reporting',
-    rows: [
-      { feature: 'Live dashboard', essential: 'Included', growth: 'Included', scale: 'Included' },
-      { feature: 'Reporting depth', essential: 'Leads, status, campaign activity, delivery health', growth: 'Same, reviewed monthly', scale: 'Executive reporting + analytics deep-dive' },
-      { feature: 'Strategy calls', essential: '1/month', growth: 'Monthly optimisation call', scale: '2/week' },
-      { feature: 'Support', essential: 'Email support', growth: '24-hour response SLA', scale: 'Same-day priority support' },
-    ],
-  },
-];
-
-export const adCostsNote = 'Ad platform costs are never included — billed directly by Google/Meta, separate from the monthly plan.';
 
 export const guaranteeBand = {
-  title: 'Your lead response live within 14 days, or your first month is free.',
+  title: 'Live within 30 days, or your first month is free.',
   sub: 'No setup fee. No contract. Cancel any month.',
 };
 
@@ -164,13 +108,13 @@ export interface OnboardingStep {
 
 export const onboardingSteps: OnboardingStep[] = [
   { days: 'Days 1–3', title: 'Access & audit', desc: 'Nothing gets replaced.' },
-  { days: 'Days 4–10', title: 'Lead response live', desc: 'Respond goes live across SMS + email.' },
-  { days: 'Days 11–20', title: 'Follow-up & reactivation', desc: 'Recover switches on.' },
+  { days: 'Days 4–10', title: 'Core systems live', desc: 'Your chosen package(s) go live in your existing stack.' },
+  { days: 'Days 11–20', title: 'Depth & integrations', desc: 'Deeper automation and integrations connected.' },
   { days: 'Days 21–30', title: 'Handover', desc: 'Dashboard handover + first optimisation call.' },
 ];
 
 /** Full-width block on /custom — bespoke/project-based work, not a monthly
- *  retainer, so it lives on its own page instead of the tier grid. */
+ *  retainer, so it lives on its own page instead of the package grid. */
 export const customOffer = {
   badge: 'Enterprise',
   name: 'Custom AI Implementation',
@@ -181,10 +125,10 @@ export const customOffer = {
 };
 
 export const pricingFaq = [
-  { question: 'Are ad spend fees included?', answer: 'No — ad spend is billed by the platforms (Google, Meta) directly, separate from your monthly plan.' },
-  { question: 'Can I switch tiers?', answer: 'Yes, month-to-month — upgrade or downgrade as your needs change.' },
-  { question: 'Is there a setup fee?', answer: 'None — setup and integration are included in every plan.' },
-  { question: 'Is there a contract?', answer: 'No — every plan is month-to-month.' },
+  { question: 'Are ad spend fees included?', answer: 'No — ad spend is billed by the platforms (Google, Meta) directly, separate from your package.' },
+  { question: 'Can I combine packages?', answer: 'Yes — take Marketing & Lead Generation, Cold Outbound, and Business Operations independently or together, and adjust month-to-month.' },
+  { question: 'Is there a setup fee?', answer: 'None — setup and integration are included in every package.' },
+  { question: 'Is there a contract?', answer: 'No — every package is month-to-month.' },
   { question: 'Do I have to change my booking system?', answer: 'No. We build into what you already use.' },
   { question: 'What if I need something not listed here?', answer: 'Book a call and tell us what you need — we’ll scope it and put together a custom quote.' },
 ];

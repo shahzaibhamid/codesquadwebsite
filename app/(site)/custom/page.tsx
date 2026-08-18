@@ -54,7 +54,7 @@ export default function CustomPage() {
       <section className="cs-ready">
         <div className="cs-container cs-ready__inner">
           <h2>Looking for a monthly plan instead?</h2>
-          <p>See the Attract / Respond / Recover offers priced as ongoing plans.</p>
+          <p>See the Marketing, Cold Outbound, and Business Operations packages as ongoing plans.</p>
           <Button href="/offers" variant="primary">See offers</Button>
         </div>
       </section>
