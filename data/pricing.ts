@@ -46,7 +46,7 @@ export const offerPackages: OfferPackage[] = [
         points: ['14-day / 5-touch follow-up for non-bookers', 'Past-customer reactivation', 'Rebooking reminders timed to service cycles'],
       },
     ],
-    footnote: 'Ad platform costs are billed directly by Google/Meta, separate from this package.',
+    footnote: 'Ad platform costs are billed directly by Google/Meta, separate from this package. New website builds are scoped separately — see Custom AI Implementation.',
   },
   {
     key: 'outbound',
@@ -71,6 +71,7 @@ export const offerPackages: OfferPackage[] = [
         points: ['Automated sequencing', 'Reply handling', 'CRM logging'],
       },
     ],
+    footnote: 'Sending infrastructure and data/enrichment costs are billed directly by the platform, separate from this package.',
   },
   {
     key: 'operations',
