@@ -92,7 +92,7 @@ export const offerPackages: OfferPackage[] = [
         points: ['Staff scheduling', 'Reporting & analytics compilation', 'Cross-tool data sync'],
       },
     ],
-    footnote: 'Website builds and industry-specific systems are scoped separately — see Custom AI Implementation.',
+    footnote: 'Industry-specific systems are scoped separately — see Custom AI Implementation.',
   },
 ];
 
