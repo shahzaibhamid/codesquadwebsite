@@ -78,9 +78,11 @@ export default function IndustryModal() {
               <span className="ind-modal__thumb">
                 <img src={it.img} alt={it.title} loading="lazy" />
               </span>
-              <span className="ind-modal__ot">{it.title}</span>
-              <span className="ind-modal__od">{it.desc}</span>
-              <span className="ind-modal__go">Explore →</span>
+              <span className="ind-modal__txt">
+                <span className="ind-modal__ot">{it.title}</span>
+                <span className="ind-modal__od">{it.desc}</span>
+                <span className="ind-modal__go">Explore →</span>
+              </span>
             </a>
           ))}
         </div>

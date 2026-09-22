@@ -1090,6 +1090,7 @@ html,body{overflow-x:clip}
 .ind-modal__opt:hover .ind-modal__thumb img{transform:scale(1.06)}
 .ind-modal__ic{position:absolute;left:12px;bottom:12px;width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e3a5f,#2b4d78);color:#fff;box-shadow:0 8px 20px -6px rgba(8,11,22,.6)}
 .ind-modal__ic svg{width:21px;height:21px}
+.ind-modal__txt{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;min-width:0}
 .ind-modal__ot{font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink);padding:0 14px}
 .ind-modal__od{font-size:12.5px;color:var(--muted);line-height:1.45;padding:0 16px}
 .ind-modal__go{margin-top:4px;font-size:13px;font-weight:800;color:#1d4ed8}
@@ -1100,12 +1101,13 @@ html,body{overflow-x:clip}
 @media(max-width:640px){
   .ind-modal__card{padding:34px 18px 24px;border-radius:18px}
   .ind-modal__grid{grid-template-columns:1fr;gap:12px}
-  .ind-modal__opt{flex-direction:row;text-align:left;align-items:center;gap:0;padding:0}
+  .ind-modal__opt{flex-direction:row;text-align:left;align-items:stretch;gap:0;padding:0}
   .ind-modal__thumb{flex:0 0 96px;width:96px;aspect-ratio:1;margin-bottom:0}
   .ind-modal__ic{left:8px;bottom:8px;width:32px;height:32px;border-radius:9px}
   .ind-modal__ic svg{width:17px;height:17px}
-  .ind-modal__opt>.ind-modal__ot{padding:14px 14px 0}
-  .ind-modal__od{padding:2px 14px 14px}
+  .ind-modal__txt{flex:1 1 auto;min-width:0;align-items:flex-start;justify-content:center;text-align:left;gap:4px;padding:12px 14px}
+  .ind-modal__ot{padding:0}
+  .ind-modal__od{padding:0}
   .ind-modal__go{display:none}
 }
 @media(prefers-reduced-motion:reduce){.ind-modal__card,.ind-modal__backdrop{animation:none}.ind-modal__x:hover{transform:none}}
@@ -1286,3 +1288,52 @@ html,body{overflow-x:clip}
 .rs-dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(30,58,95,.22);cursor:pointer;padding:0;transition:.25s}
 .rs-dots button.on{background:linear-gradient(135deg,#1e3a5f,#2b4d78);width:26px;border-radius:5px}
 @media(max-width:600px){.review-stack{min-height:340px}.rs-card p{font-size:15.5px}}
+
+
+/* ============================================================
+   RESPONSIVE HARDENING LAYER
+   Appended last so it reinforces (never fights) the styles above.
+   Goal: zero horizontal overflow and graceful scaling on every
+   device from 320px phones through ultrawide monitors.
+   ============================================================ */
+
+/* 1) Global overflow safety ---------------------------------- */
+/* Media & embeds can never exceed their container. */
+img,svg,video,canvas,iframe,embed,object{max-width:100%}
+video,iframe{height:auto}
+/* Long words, URLs and emails wrap instead of forcing page width. */
+body{overflow-wrap:break-word}
+h1,h2,h3,h4,h5,p,a,li,span,blockquote{overflow-wrap:break-word}
+/* Grid & flex children may shrink below their intrinsic content size,
+   which is the single most common cause of layout-breaking overflow. */
+[class*="grid"]>*,.hero-cta>*,.hero-meta>*,.stack-tags>*,.engines>*,
+.foot-cols>*,.co-chips>*,.blog-cats>*{min-width:0}
+
+/* 2) Fluid container gutters --------------------------------- */
+/* Smoothly scale side padding 16px (small phones) -> 24px (desktop),
+   superseding the fixed paddings cleanly at every width. */
+.wrap{padding-left:clamp(16px,4.2vw,24px);padding-right:clamp(16px,4.2vw,24px)}
+.cs-container,.cs-study-hero .cs-container{padding-left:clamp(18px,4.2vw,24px);padding-right:clamp(18px,4.2vw,24px)}
+
+/* 3) Ultrawide comfort --------------------------------------- */
+/* Give the main column a little more room on very large screens so
+   it doesn't read as a narrow strip lost in whitespace. */
+@media(min-width:1800px){:root{--maxw:1440px}}
+
+/* 4) Tables & preformatted content never break layout -------- */
+table{width:100%;max-width:100%;border-collapse:collapse}
+pre{overflow-x:auto;max-width:100%}
+
+/* 5) Floating hero proof cards stay on-screen on tiny phones -- */
+@media(max-width:400px){
+  .fc-speed{width:142px;left:0;padding:12px 13px}
+  .fc-stats{width:152px;right:0;padding:12px 13px}
+  .fc-speed .big{font-size:32px}
+  .fc-live{right:12px}
+}
+
+/* 6) Primary CTAs go full-width on the narrowest phones ------- */
+@media(max-width:380px){
+  .hero-cta,.co-herocta,.cs-study-cta__actions{width:100%}
+  .hero-cta .btn,.co-herocta .btn{flex:1 1 100%;justify-content:center}
+}
