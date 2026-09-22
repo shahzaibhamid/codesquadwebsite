@@ -1,0 +1,57 @@
+<article class="cs-single"><header class="cs-single__header"><div class="cs-post__meta" style="justify-content:center"><span class="cs-post__cat">AI Automation</span><span class="cs-post__date">August 12, 2026</span></div><h1>I Used Claude to Turn a Messy Spreadsheet Into a Useful Dashboard</h1></header><div class="cs-article"><h1>How I Used Claude to Turn a Messy Spreadsheet Into a Useful Dashboard</h1>
+<p>A step-by-step story of cleaning chaotic data and building something my team actually uses</p>
+<p>If you've ever inherited a spreadsheet from someone else — or built one yourself over months of "quick edits" — you know the feeling. Tabs with no names. Columns that mean the same thing but are labeled three different ways. Merged cells that break every formula you try to write. A "Notes" column that somehow became load-bearing.</p>
+<p>That was me a few weeks ago, staring at a sales tracking spreadsheet that had grown out of control. I decided to try something different: instead of spending a weekend manually untangling it, I handed the mess to Claude and asked it to help me turn it into an actual dashboard I could use. Here's how that went.</p>
+<h2>The Spreadsheet From Hell</h2>
+<p>The file in question tracked sales activity across regions, products, and reps. In theory, simple. In practice:</p>
+<img class="cs-article__image" src="https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1786542233373-8ce731fe-4be0-45ba-bd97-2f3801bd3996.png" alt="" loading="lazy" />
+<p>* Dates were stored in at least four different formats</p>
+<p>* "New York," "NY," and "N.Y." all showed up as separate regions</p>
+<p>* Revenue was sometimes typed as text with a dollar sign, sometimes as a raw number</p>
+<p>* There were duplicate rows from copy-pasted updates</p>
+<p>* Empty cells were scattered everywhere, with no consistent way of knowing if they meant zero, unknown, or "forgot to fill in"</p>
+<p>It wasn't a data problem so much as a communication problem — years of different people touching the same file with different habits.</p>
+<h2>Why I Turned to Claude Instead of Doing It Manually</h2>
+<p>I could have cleaned this by hand, but that's hours of tedious find-and-replace work, and it's easy to introduce new mistakes while doing it. What I wanted was something that could look at the whole sheet at once, spot the inconsistencies, ask me questions when something was ambiguous, and actually explain what it was doing — not just silently transform the data and hope for the best.</p>
+<h2>Step 1: Uploading and Asking It to Make Sense of the Mess</h2>
+<p>I uploaded the spreadsheet and asked a simple question:</p>
+<p><strong>"What's going on in this data, and what would need to happen before it's usable?"</strong></p>
+<img class="cs-article__image" src="https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1786542233373-0e3398d3-0d30-4393-ab4d-e8fa2017fadb.png" alt="" loading="lazy" />
+<p>Instead of jumping straight to edits, it gave me a rundown: which columns had inconsistent formatting, where the likely duplicates were, which fields had missing values and roughly how many, and which columns seemed to be tracking the same thing under different names.</p>
+<p>That diagnostic pass mattered more than I expected — it turned an overwhelming file into a short, concrete list of problems.</p>
+<h2>Step 2: Cleaning the Chaos</h2>
+<p>From there, we went problem by problem:</p>
+<img class="cs-article__image" src="https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1786542233373-8132eb50-651f-4318-b1c8-0e3e67ee4fa1.png" alt="" loading="lazy" />
+<p>* Standardized every date into one format</p>
+<p>* Merged the regional name variants into a single consistent label per region</p>
+<p>* Converted all revenue figures into actual numeric values instead of mixed text and numbers</p>
+<p>* Flagged duplicate rows for me to confirm before removing them. This part felt important — I didn't want anything deleted without a second pair of eyes, even a digital one.</p>
+<p>* Filled in or clearly marked missing values instead of leaving blank cells that would quietly break calculations later</p>
+<img class="cs-article__image" src="https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1786542233373-b9f81e42-3d94-4320-aee2-e3b210d4bbe1.png" alt="" loading="lazy" />
+<p>None of this was a black box. At each step, it explained what it was changing and why, which made it easy to catch the one or two places where its assumption about "New York" vs. a typo needed a correction from me.</p>
+<h2>Step 3: From Clean Data to Real Insights</h2>
+<p>Clean data is nice, but it's not the goal — understanding is.</p>
+<p>Once the sheet was consistent, I asked what patterns stood out. It pointed out that one region was quietly outperforming the others despite getting the least attention in review meetings, and that a specific product line had a seasonal dip that had been misread internally as an ongoing decline.</p>
+<img class="cs-article__image" src="https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1786542233373-7faeffbb-2f3c-4d69-83a5-6d13b6cc98c7.png" alt="" loading="lazy" />
+<h2>Step 5: Iterating Like a Real Analyst</h2>
+<p>This is the part that made the difference for me.</p>
+<p>A first draft of any dashboard is rarely the right one. I asked to swap a bar chart for a trend line, group two product categories together, and highlight the top three reps instead of the top ten.</p>
+<p>Each change took a sentence, not a rebuild. It felt less like "using a tool" and more like working with someone who actually understood what I was trying to see.</p>
+<img class="cs-article__image" src="https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1786542233373-da4faa21-6a34-4efb-8fdb-d1704cbae688.png" alt="" loading="lazy" />
+<h2>The Before and After</h2>
+<p><strong>Before:</strong> a sprawling, inconsistent spreadsheet that nobody wanted to open, let alone trust.</p>
+<p><strong>After:</strong> a clean dataset and a live dashboard that answered the actual questions my team kept asking in meetings — which regions needed attention, which products needed restocking, and who was actually driving results.</p>
+<h2>What I Learned</h2>
+<p>A few things stuck with me from this process:</p>
+<p><strong>1. Most "data problems" are really consistency problems.</strong></p>
+<p>The information was almost all there — it just wasn't speaking one language.</p>
+<p><strong>2. Explaining changes matters as much as making them.</strong></p>
+<p>I trusted the cleanup because I could see the reasoning at every step.</p>
+<p><strong>3. A dashboard is only useful if it's easy to adjust.</strong></p>
+<p>The value wasn't the first version — it was how quickly I could reshape it once I saw it.</p>
+<p><strong>4. You don't need to be a data analyst to get analyst-quality output.</strong></p>
+<p>I just needed to know what questions I wanted answered.</p>
+<h2>Final Thoughts</h2>
+<p>I went into this expecting to spend a weekend untangling formulas and cleaning up formatting by hand. Instead, I spent an afternoon having a conversation about my data — and came out the other side with something my whole team could actually use.</p>
+<p>If you've got a spreadsheet sitting in a folder somewhere that you've been dreading opening, that might be worth trying.</p>
+<img class="cs-article__image" src="https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1786542333451-d7b48bf8-741e-40f8-a669-dbd004cc93d1.png" alt="" loading="lazy" /></div><div style="text-align:center;margin-top:48px"><a class="cs-btn cs-btn--ghost" href="/blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>Back to blog</a></div></article>
