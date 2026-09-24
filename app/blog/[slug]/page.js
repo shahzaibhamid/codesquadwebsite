@@ -1,21 +1,23 @@
-import { getContent } from '../../../lib/content';
-import { blogPosts, blogBySlug } from '../../../lib/posts';
+import { notFound } from 'next/navigation';
+import { getPosts, getPost, getPostBody } from '../../../lib/store';
 
-export const dynamic = 'force-static';
-export const dynamicParams = false;
+export const revalidate = 30;
+export const dynamicParams = true;
 
-export function generateStaticParams() {
-  return blogPosts.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  return posts.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }) {
-  const p = blogBySlug[params.slug];
+export async function generateMetadata({ params }) {
+  const p = await getPost(params.slug);
   if (!p) return { title: 'Article | CodeSquad Blog' };
   return { title: `${p.title} | CodeSquad`, description: p.excerpt };
 }
 
-export default function Page({ params }) {
-  const html = getContent(`blog/${params.slug}`);
+export default async function Page({ params }) {
+  const html = await getPostBody(params.slug);
+  if (!html) notFound();
   return (
     <main id="top" className="cs-body cs-reader">
       <div className="wrap cs-reader-top">

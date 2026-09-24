@@ -1,0 +1,98 @@
+[
+  {
+    "slug": "modern-law",
+    "cat": "Family Law",
+    "filter": "Legal Services",
+    "tagline": "4 brands. One publishing engine.",
+    "name": "Modern Law",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788171021277-0fb753a9-3ef4-4a5d-9247-33b71f491201.jpg"
+  },
+  {
+    "slug": "ipromo",
+    "cat": "B2B E-commerce",
+    "filter": "E-commerce",
+    "tagline": "Product-of-the-month, automated.",
+    "name": "iPromo",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788172534365-c70d0198-9904-44d5-a193-c3e27a234382.jpg"
+  },
+  {
+    "slug": "careinn-dental-clinic",
+    "cat": "Dental Care",
+    "filter": "Healthcare & Clinics",
+    "tagline": "How CareInn Dental Clinic Grew Patient Volume From Day One",
+    "name": "CareInn Dental Clinic",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788170923372-fe725d11-6876-459d-83c9-05b87a4fb17b.webp"
+  },
+  {
+    "slug": "gengyveusa",
+    "cat": "Healthcare E-commerce",
+    "filter": "E-commerce",
+    "tagline": "SEO, ads, and reviews — one view.",
+    "name": "GengyveUSA",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788174023587-c89a1b4e-fd04-4d71-938d-493c98ec9c83.webp"
+  },
+  {
+    "slug": "energybits",
+    "cat": "DTC Wellness",
+    "filter": "E-commerce",
+    "tagline": "15+ platforms. One publishing brain.",
+    "name": "ENERGYbits",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788177119808-5ff4663e-9fd1-4c0c-ab1a-fc88dd273fb0.avif"
+  },
+  {
+    "slug": "harmony-medspa-patient-growth-automation",
+    "cat": "Medical Aesthetics",
+    "filter": "Healthcare & Clinics",
+    "tagline": "How Harmony MedSpa Built a 24/7 Patient Growth and Follow-Up System",
+    "name": "Harmony MedSpa",
+    "img": "/uploads/case-studies/harmony-medspa-cover.jpg"
+  },
+  {
+    "slug": "tristate-auto-sales",
+    "cat": "Automotive Retail",
+    "filter": "Automotive",
+    "tagline": "How TriState Auto Sales Unified Every Customer Conversation Into One System",
+    "name": "TriState Auto Sales",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788183910597-39d07f65-876f-4bc0-84f6-c4bbfdaf0bb0.jpg"
+  },
+  {
+    "slug": "rtm-kinetics",
+    "cat": "Remote Patient Monitoring",
+    "filter": "Healthcare & Clinics",
+    "tagline": "How RTM Kinetics Connected Patient Care From Lead to Recovery",
+    "name": "RTM Kinetics",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788189485854-81e06d6e-e27a-4213-914a-1e5ac83cd98a.jpg"
+  },
+  {
+    "slug": "law-signal",
+    "cat": "Legal Media Automation",
+    "filter": "Legal Services",
+    "tagline": "How Law Signal Turned Case Files Into a Media Engine",
+    "name": "Law Signal",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788270859647-2da5a298-a39f-4544-a08f-f8113b16dac1.avif"
+  },
+  {
+    "slug": "mamas-compass",
+    "cat": "Comparison & Aggregation",
+    "filter": "E-commerce",
+    "tagline": "How Mama's Compass Turned Scattered Product Data Into Confident Comparisons",
+    "name": "Mama's Compass",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788256351226-ee7a2f8f-22c3-487b-8344-f6dafd3ef405.jpg"
+  },
+  {
+    "slug": "settlein",
+    "cat": "Document & Eligibility Processing",
+    "filter": "Financial Services",
+    "tagline": "How SettleIn Turned Manual Document Review Into an Automated Eligibility Engine",
+    "name": "SettleIn",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788262148700-eeaf94d2-9b99-4395-a858-ca3960ce342e.jpg"
+  },
+  {
+    "slug": "debate-partners",
+    "cat": "Competitive Debate Platform",
+    "filter": "Education",
+    "tagline": "How Debate Partners Turned Research Into Ready-to-Run Cases",
+    "name": "Debate Partners",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788269644105-6856d8c2-00b9-4b97-99f0-ab4e486f5c38.jpg"
+  }
+]

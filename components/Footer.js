@@ -19,10 +19,11 @@ export default function Footer() {
   return (
     <footer className="cs-footer">
       <div className="cs-container">
+       <div className="cs-footer__card">
         <div className="cs-footer__grid">
           <div className="cs-footer__about">
             <a className="cs-brand" href="/">
-              <img className="cs-logo" src="/logo-dark.png" alt="CodeSquad — AI Solutions" width="190" height="44" />
+              <img className="cs-logo" src="/logo.png" alt="CodeSquad — AI Solutions" width="190" height="44" />
             </a>
             <p>AI automation and software development agency. We build automation engines, AI agents, and custom systems that scale your business inside your existing stack.</p>
             <a className="cs-btn cs-btn--primary" href="https://calendly.com/code_squad/30min" target="_blank" rel="noopener noreferrer"><PhoneIcon /> Book a Free Call</a>
@@ -87,6 +88,7 @@ export default function Footer() {
           <span>© 2026 CodeSquad. All rights reserved.</span>
           <span>Built for scale — AI automation &amp; custom software.</span>
         </div>
+       </div>
       </div>
     </footer>
   );

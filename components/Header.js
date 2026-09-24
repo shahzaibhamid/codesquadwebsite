@@ -11,7 +11,7 @@ export default function Header() {
           <div className="nav-drop">
             <a href="/industry" className="nav-drop-toggle">Industry <span className="car">▾</span></a>
             <div className="nav-menu">
-              <a href="/aesthetics">Aesthetics</a>
+              <a href="/aesthetics">Aesthetics / Medical Clinics</a>
               <a href="/it-engineering">IT &amp; Engineering</a>
               <a href="/ecommerce">E-commerce</a>
             </div>

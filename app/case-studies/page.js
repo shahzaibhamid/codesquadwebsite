@@ -1,5 +1,6 @@
-import { caseStudies, caseCats } from '../../lib/posts';
-export const dynamic = 'force-static';
+import { caseCats } from '../../lib/posts';
+import { getPublishedCases } from '../../lib/store';
+export const revalidate = 30;
 export const metadata = {
   title: 'Case Studies | CodeSquad',
   description: 'Production systems built for healthcare, physical appointment-based businesses, and e-commerce teams — designed around their needs.'
@@ -9,7 +10,8 @@ const Arrow = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 );
 
-export default function Page() {
+export default async function Page() {
+  const caseStudies = await getPublishedCases();
   return (
     <main id="top">
       <section className="cs-section cs-case-section title-navy" style={{ paddingBottom: '44px' }}>

@@ -1,11 +1,13 @@
-import { blogPosts, blogCats } from '../../lib/posts';
-export const dynamic = 'force-static';
+import { blogCats } from '../../lib/posts';
+import { getPosts } from '../../lib/store';
+export const revalidate = 30;
 export const metadata = {
   title: 'CodeSquad Blog | AI Automation, SMEs & Business Growth',
   description: 'Practical, technical perspectives on AI automation, SMEs, AEO/SEO, lead generation, software development and scaling operations.'
 };
 
-export default function Page() {
+export default async function Page() {
+  const blogPosts = await getPosts();
   return (
     <main id="top">
       <section className="sec pg-hero">

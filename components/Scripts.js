@@ -178,52 +178,50 @@ export default function Scripts() {
       });
     }
 
-    // stacked review carousel (card over card)
+    // scroll-driven stacked reviews (cards change as you scroll through the section)
     const stack = document.getElementById('reviewStack');
-    if (stack) {
+    const scrollEl = document.getElementById('rsScroll');
+    if (stack && scrollEl) {
       const cards = Array.from(stack.querySelectorAll('.rs-card'));
       const n = cards.length;
       const dotsWrap = document.getElementById('rsDots');
-      let active = 0;
-      let timer = null;
       const dots = [];
       if (dotsWrap) {
-        cards.forEach((_, i) => {
-          const d = document.createElement('button');
-          d.setAttribute('aria-label', 'Go to review ' + (i + 1));
-          on(d, 'click', () => { active = i; render(); restart(); });
-          dotsWrap.appendChild(d);
-          dots.push(d);
-        });
+        cards.forEach(() => { const d = document.createElement('span'); dotsWrap.appendChild(d); dots.push(d); });
       }
+      let active = -1;
       const sizeStack = () => {
         let h = 0;
         cards.forEach((c) => { h = Math.max(h, c.offsetHeight); });
-        if (h) stack.style.minHeight = (h + 60) + 'px';
+        if (h) stack.style.minHeight = (h + 40) + 'px';
       };
-      const render = () => {
+      const render = (idx) => {
+        if (idx === active) return;
+        active = idx;
         cards.forEach((c, i) => {
-          let off = (i - active + n) % n;
+          const d = i - idx;
           let pos;
-          if (off === 0) pos = '0';
-          else if (off <= 3) pos = String(off);
-          else if (off === n - 1) pos = 'out';
+          if (d < 0) pos = 'out';
+          else if (d === 0) pos = '0';
+          else if (d <= 3) pos = String(d);
           else pos = 'hide';
           c.setAttribute('data-pos', pos);
         });
-        dots.forEach((d, i) => d.classList.toggle('on', i === active));
+        dots.forEach((dd, i) => dd.classList.toggle('on', i === idx));
       };
-      const advance = (dir) => { active = (active + dir + n) % n; render(); };
-      const restart = () => { if (timer) clearInterval(timer); timer = setInterval(() => advance(1), 4200); };
-      stack.parentElement.querySelectorAll('[data-rs]').forEach((b) => {
-        on(b, 'click', () => { advance(b.getAttribute('data-rs') === 'next' ? 1 : -1); restart(); });
-      });
-      on(stack, 'click', () => { advance(1); restart(); });
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        const total = scrollEl.offsetHeight - window.innerHeight;
+        const scrolled = Math.min(Math.max(-scrollEl.getBoundingClientRect().top, 0), Math.max(total, 1));
+        const progress = total > 0 ? scrolled / total : 0;
+        render(Math.min(n - 1, Math.max(0, Math.round(progress * (n - 1)))));
+      };
+      const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
       sizeStack();
-      render();
-      restart();
-      on(window, 'resize', sizeStack);
-      cleanups.push(() => { if (timer) clearInterval(timer); });
+      update();
+      on(window, 'scroll', onScroll, { passive: true });
+      on(window, 'resize', () => { sizeStack(); update(); });
     }
 
     return () => cleanups.forEach((fn) => fn());

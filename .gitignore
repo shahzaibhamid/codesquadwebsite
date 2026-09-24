@@ -6,3 +6,9 @@ npm-debug.log*
 .DS_Store
 /legacy-static
 /.vercel
+.vercel
+
+.env.local
+.env*.local
+
+admin/password.txt

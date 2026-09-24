@@ -6,7 +6,7 @@ const KEY = 'cs_industry_modal_seen';
 const industries = [
   {
     href: '/aesthetics',
-    title: 'Aesthetics',
+    title: 'Aesthetics / Medical Clinics',
     desc: 'Med spas, clinics & wellness — patient growth systems.',
     img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=70&auto=format&fit=crop',
     icon: (
