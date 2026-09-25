@@ -1474,3 +1474,55 @@ pre{overflow-x:auto;max-width:100%}
 
 /* Footer "Book a Free Call" button keeps white text on its navy fill */
 .cs-footer a.cs-btn--primary,.cs-footer a.cs-btn--primary:hover{color:#fff}
+
+/* ===== Aesthetics: typing hero headline + audience chips ===== */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+h1.hero-title--typer{max-width:none;font-size:clamp(28px,3.6vw,48px);line-height:1.12;margin-bottom:10px}
+.hero-title--typer .typer{display:block;white-space:nowrap;min-height:1.15em}
+.hero.has-video .hero-title--typer .typer-text{background:linear-gradient(90deg,#4fe0cc,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 2px 14px rgba(0,0,0,.55))}
+.typer-caret{display:inline-block;width:.07em;min-width:3px;height:.92em;margin-left:.08em;vertical-align:-.08em;background:#4fe0cc;border-radius:2px;box-shadow:0 0 12px rgba(79,224,204,.8);animation:typerBlink 1s steps(1) infinite}
+@keyframes typerBlink{50%{opacity:0}}
+.hero-title--typer .typer-tail{display:block}
+.hero.has-video .hero-sub{max-width:520px;margin:22px 0 28px}
+.aud-strip{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.aud-chip{display:flex;align-items:center;gap:9px;padding:5px 14px 5px 5px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#dbe4f3;font-size:13.5px;font-weight:600;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .35s,border-color .35s,color .35s,box-shadow .35s,transform .35s cubic-bezier(.16,1,.3,1)}
+.aud-chip img{width:30px;height:30px;border-radius:50%;object-fit:cover;flex:none;border:1.5px solid rgba(255,255,255,.35)}
+.aud-chip.on{background:rgba(79,224,204,.16);border-color:#4fe0cc;color:#fff;box-shadow:0 0 0 4px rgba(79,224,204,.12),0 10px 26px -12px rgba(79,224,204,.7);transform:translateY(-2px)}
+@media(max-width:600px){.aud-chip{font-size:12.5px;padding-right:11px}.aud-chip img{width:26px;height:26px}}
+
+/* system grid: audience tag on each image */
+.sys-tag{position:absolute;left:12px;bottom:12px;z-index:2;background:rgba(255,255,255,.92);color:#0b1022;font-size:11.5px;font-weight:800;letter-spacing:.04em;padding:5px 11px;border-radius:999px;box-shadow:0 6px 16px -8px rgba(0,0,0,.5)}
+
+/* ===== Aesthetics: "How we're different" — How It Works timeline with bigger, photo-led cards ===== */
+.differ{background:linear-gradient(180deg,#f7f9fc,#fff)}
+.jtimeline--big{max-width:980px;margin-top:10px}
+.jtimeline--big .jrow{margin-bottom:0;opacity:0;transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+/* cards slide in from their own side as the line reaches them */
+.jtimeline--big .jrow.left{padding-right:56px;transform:translateX(-80px)}
+.jtimeline--big .jrow.right{padding-left:56px;transform:translateX(80px)}
+.jtimeline--big .jrow.in{opacity:1;transform:none}
+/* zig-zag: each card tucks up beside the previous one, so the timeline is much shorter */
+.jtimeline--big .jrow+.jrow{margin-top:-150px}
+.jtimeline--big .jnode{top:36px;width:20px;height:20px}
+.jtimeline--big .jrow.left .jnode{right:-10px}
+.jtimeline--big .jrow.right .jnode{left:-10px}
+.jtimeline--big .jcard{display:block;max-width:none;padding:10px 10px 20px;border-radius:20px}
+.jtimeline--big .jcard>.jstep,.jtimeline--big .jcard>h4,.jtimeline--big .jcard>p{padding:0 10px}
+.jtimeline--big .jcard h4{font-size:19px;line-height:1.25}
+.jtimeline--big .jcard p{font-size:14.5px;line-height:1.55}
+.jmedia{position:relative;height:190px;border-radius:12px;overflow:hidden;margin-bottom:16px;background:#e8edf5}
+.jmedia>img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.jrow.in .jmedia>img{transform:scale(1)}
+.jcard:hover .jmedia>img{transform:scale(1.04)}
+@media(max-width:760px){
+  .jtimeline--big .jrow{padding-left:42px !important}
+  .jtimeline.jtimeline--big .jrow.left,.jtimeline.jtimeline--big .jrow.right{transform:translateX(40px)}
+  .jtimeline.jtimeline--big .jrow.in{transform:none}
+  .jtimeline.jtimeline--big .jrow+.jrow{margin-top:20px}
+  .jtimeline--big .jrow .jnode{left:0 !important}
+  .jmedia{height:180px}
+}
+@media(prefers-reduced-motion:reduce){
+  .typer-caret{animation:none}
+  .jtimeline--big .jrow{opacity:1;transform:none;transition:none}
+}

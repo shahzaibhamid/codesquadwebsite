@@ -48,8 +48,7 @@ export default function Scripts() {
     cleanups.push(() => io.disconnect());
 
     /* vertical scroll timeline: beam follows scroll, cards activate as it passes */
-    const tl = document.querySelector('.jtimeline');
-    if (tl) {
+    document.querySelectorAll('.jtimeline').forEach((tl) => {
       const beam = tl.querySelector('.jbeam');
       const fill = tl.querySelector('.jfill');
       const rows = Array.from(tl.querySelectorAll('.jrow'));
@@ -63,14 +62,15 @@ export default function Scripts() {
         rows.forEach((row) => {
           const n = row.querySelector('.jnode').getBoundingClientRect();
           const nodeY = (n.top + n.height / 2) - rect.top;
-          row.classList.toggle('in', reduce || nodeY <= p + 6);
+          const lit = reduce || nodeY <= p + 6;
+          row.classList.toggle('in', lit);
         });
       };
       const onTl = () => { if (!tlTick) { tlTick = true; requestAnimationFrame(updTl); } };
       on(window, 'scroll', onTl, { passive: true });
       on(window, 'resize', onTl, { passive: true });
       updTl();
-    }
+    });
 
     /* faq */
     document.querySelectorAll('.faq button').forEach((btn) => on(btn, 'click', () => {
@@ -223,6 +223,40 @@ export default function Scripts() {
       on(window, 'scroll', onScroll, { passive: true });
       on(window, 'resize', () => { sizeStack(); update(); });
     }
+
+    // hero typing headline: types each word, pauses, deletes, loops; syncs the audience chips
+    document.querySelectorAll('[data-typer]').forEach((typer) => {
+      const textEl = typer.querySelector('.typer-text');
+      let words = [];
+      try { words = JSON.parse(typer.getAttribute('data-typer')); } catch (e) { /* ignore */ }
+      if (!textEl || words.length < 2) return;
+      const chips = Array.from(document.querySelectorAll('[data-typer-chip]'));
+      const setChip = (wi) => chips.forEach((c) => c.classList.toggle('on', c.getAttribute('data-typer-chip') === String(wi)));
+      let wi = 0, ci = words[0].length, deleting = false, timer = null;
+      const tick = () => {
+        const w = words[wi];
+        if (!deleting) {
+          ci++;
+          textEl.textContent = w.slice(0, ci);
+          if (ci >= w.length) { deleting = true; timer = setTimeout(tick, 1900); return; }
+          timer = setTimeout(tick, 85);
+        } else {
+          ci--;
+          textEl.textContent = w.slice(0, ci);
+          if (ci <= 0) { deleting = false; wi = (wi + 1) % words.length; setChip(wi); timer = setTimeout(tick, 280); return; }
+          timer = setTimeout(tick, 42);
+        }
+      };
+      if (reduce) {
+        // no typing — just swap the word every few seconds
+        const iv = setInterval(() => { wi = (wi + 1) % words.length; textEl.textContent = words[wi]; setChip(wi); }, 2600);
+        cleanups.push(() => clearInterval(iv));
+      } else {
+        deleting = true;
+        timer = setTimeout(tick, 2200);
+        cleanups.push(() => clearTimeout(timer));
+      }
+    });
 
     return () => cleanups.forEach((fn) => fn());
   }, [pathname]);
