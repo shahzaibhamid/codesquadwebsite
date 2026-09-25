@@ -19,7 +19,7 @@ export default function Scripts() {
       const hp = href.replace(/\/+$/, '') || '/';
       if (hp === path) a.classList.add('active');
     });
-    if (['/industry', '/aesthetics', '/ecommerce', '/it-engineering'].indexOf(path) > -1) {
+    if (['/industry', '/aesthetics', '/clinics', '/ecommerce', '/it-engineering'].indexOf(path) > -1) {
       const t = document.querySelector('.nav-drop-toggle'); if (t) t.classList.add('active');
     }
 
@@ -28,7 +28,7 @@ export default function Scripts() {
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
     on(window, 'scroll', onScrollHeader); onScrollHeader();
     // white nav text over dark heros (home, aesthetics, case-study detail) until scrolled
-    const darkPaths = ['/', '/aesthetics', '/ecommerce', '/it-engineering', '/industry', '/visibility-engine', '/blog', '/case-studies'];
+    const darkPaths = ['/', '/aesthetics', '/clinics', '/ecommerce', '/it-engineering', '/industry', '/visibility-engine', '/blog', '/case-studies'];
     const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/');
     if (header) header.classList.toggle('header-on-dark', darkHero);
 
@@ -177,6 +177,20 @@ export default function Scripts() {
         });
       });
     }
+
+    // generic clinic-type toggle (campaign samples, sample messaging, contact-form default —
+    // all keyed off the same data-toggle-group value so one toggle drives every panel on the page)
+    document.querySelectorAll('[data-toggle-group]').forEach((group) => {
+      const groupName = group.getAttribute('data-toggle-group');
+      group.querySelectorAll('[data-toggle]').forEach((btn) => on(btn, 'click', () => {
+        const val = btn.getAttribute('data-toggle');
+        document.querySelectorAll(`[data-toggle-group="${groupName}"] [data-toggle]`).forEach((b) => b.classList.toggle('on', b.getAttribute('data-toggle') === val));
+        document.querySelectorAll('[data-toggle-panel]').forEach((p) => { p.style.display = p.getAttribute('data-toggle-panel') === val ? '' : 'none'; });
+        const clinicOpt = btn.getAttribute('data-clinic-option');
+        const sel = document.getElementById('clinic');
+        if (clinicOpt && sel) sel.value = clinicOpt;
+      }));
+    });
 
     // scroll-driven stacked reviews (cards change as you scroll through the section)
     const stack = document.getElementById('reviewStack');

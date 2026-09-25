@@ -6,6 +6,7 @@
   <url><loc>https://medspa-eight.vercel.app/visibility-engine</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://medspa-eight.vercel.app/industry</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://medspa-eight.vercel.app/aesthetics</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://medspa-eight.vercel.app/clinics</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://medspa-eight.vercel.app/ecommerce</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://medspa-eight.vercel.app/it-engineering</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://medspa-eight.vercel.app/blog/saas-ai-recommendations-seo-ai-search</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
