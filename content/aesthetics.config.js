@@ -27,17 +27,6 @@ export default {
     }
   },
 
-  resultsStrip: {
-    heading: 'Systems that move real numbers.',
-    sub: 'Figures from a live client dashboard — the same infrastructure we build for every med spa and aesthetic clinic.',
-    stats: [
-      { val: '60<em>+</em>', lab: 'Leads generated in 2 months' },
-      { val: '<em>~$</em>50', lab: 'Cost per lead' },
-      { val: '6–7', lab: 'New patients booked in 2 months' },
-      { val: '3<em>s</em>', lab: 'Average lead response time' }
-    ],
-    attribution: 'Results from a live client (Harmony Med Spa) — benchmark, varies by market.'
-  },
 
   flowSamples: {
     reactivation: "Hi [First Name], it's been a few months since your last visit to {Clinic Name} — we'd love to see you again. This {Month}, returning clients get 15% off any treatment. Book your spot: {Booking Link}",
@@ -65,13 +54,17 @@ export default {
         key: null,
         samples: [
           { type: 'Local', name: 'Med Spa Near Me – [City]', keywords: 'med spa near me, med spa [city], aesthetic clinic [city]', headline: 'Top-Rated Med Spa in [City] / Free Consultation', landsOn: 'Main landing page' },
+          { type: 'Local', name: 'Aesthetic Clinic – [Neighborhood]', keywords: 'aesthetic clinic [neighborhood], med spa near [landmark], botox near me', headline: 'Your Neighborhood Med Spa / Book Online Today', landsOn: 'Main landing page' },
+          { type: 'Local', name: 'Med Spa Open Weekends – [City]', keywords: 'med spa open saturday, same-week botox [city], med spa open late', headline: 'Evening & Weekend Appointments / Book Online', landsOn: 'Main landing page' },
           { type: 'Treatment', name: 'Medical Weight Loss', keywords: 'semaglutide [city], weight loss injections near me, GLP-1 clinic', headline: 'Doctor-Led Weight Loss / Start This Week', landsOn: 'Weight-loss page' },
           { type: 'Treatment', name: 'Botox & Fillers', keywords: 'botox [city], lip filler near me, wrinkle injections', headline: 'Natural-Looking Botox / Licensed Injectors', landsOn: 'Injectables page' },
           { type: 'Treatment', name: 'Laser Hair Removal', keywords: 'laser hair removal [city], LHR packages', headline: 'Smooth Skin for Good / Package Pricing', landsOn: 'Laser page' },
           { type: 'Treatment', name: 'Facials & Microneedling', keywords: 'microneedling [city], hydrafacial near me', headline: 'Glowing Skin Starts Here / New-Client Offer', landsOn: 'Skin page' },
           { type: 'Treatment', name: 'IV Vitamin Therapy', keywords: 'iv therapy [city], vitamin drip near me, nad+ therapy', headline: 'Feel Better Fast / IV Drips From $X', landsOn: 'IV Therapy page' },
           { type: 'Treatment', name: 'Skin Tightening & Body Contouring', keywords: 'skin tightening [city], body contouring near me, radiofrequency treatment', headline: 'Sculpt Without Surgery / Free Consultation', landsOn: 'Body Contouring page' },
-          { type: 'Ranking', name: 'Own "Best Botox [City]"', keywords: 'best botox [city], botox cost [city], botox specials', headline: "Botox from $X/Unit / [City]'s Trusted Injectors", landsOn: 'Injectables page + blog' }
+          { type: 'Ranking', name: 'Own "Best Botox [City]"', keywords: 'best botox [city], botox cost [city], botox specials', headline: "Botox from $X/Unit / [City]'s Trusted Injectors", landsOn: 'Injectables page + blog' },
+          { type: 'Ranking', name: 'Own "Best Lip Filler [City]"', keywords: 'best lip filler [city], lip filler cost [city], lip filler specials', headline: 'Soft, Natural-Looking Lips / Free Consultation', landsOn: 'Injectables page + blog' },
+          { type: 'Ranking', name: 'Own "Best Med Spa [City]"', keywords: 'best med spa [city], med spa reviews [city], top rated med spa [city]', headline: "[City]'s Top-Rated Med Spa / Book Your Visit", landsOn: 'Main page + blog' }
         ]
       }
     ]

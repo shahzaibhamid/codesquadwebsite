@@ -192,6 +192,31 @@ export default function Scripts() {
       }));
     });
 
+    // process flow map: hovering (mouse), focusing (keyboard) or tapping a stage opens its detail panel
+    document.querySelectorAll('[data-pflow]').forEach((flow) => {
+      const nodes = Array.from(flow.querySelectorAll('[data-pf]'));
+      const panel = flow.querySelector('.pf-panel');
+      const hoverable = window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches;
+      let timer;
+      const show = (key, scroll) => {
+        nodes.forEach((n) => { const isOn = n.getAttribute('data-pf') === key; n.classList.toggle('on', isOn); n.setAttribute('aria-expanded', String(isOn)); });
+        flow.querySelectorAll('[data-pf-detail]').forEach((d) => { d.hidden = d.getAttribute('data-pf-detail') !== key; });
+        flow.classList.add('pf-open');
+        if (scroll && panel) setTimeout(() => { if (panel.getBoundingClientRect().bottom > window.innerHeight) panel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' }); }, 380);
+      };
+      nodes.forEach((n) => {
+        const key = n.getAttribute('data-pf');
+        if (hoverable) {
+          // short delay so sweeping the mouse across the map doesn't flicker through every stage
+          on(n, 'mouseenter', () => { clearTimeout(timer); timer = setTimeout(() => show(key), 140); });
+          on(n, 'mouseleave', () => clearTimeout(timer));
+        }
+        on(n, 'focus', () => show(key));
+        on(n, 'click', () => show(key, !hoverable));
+      });
+      cleanups.push(() => clearTimeout(timer));
+    });
+
     // scroll-driven stacked reviews (cards change as you scroll through the section)
     const stack = document.getElementById('reviewStack');
     const scrollEl = document.getElementById('rsScroll');

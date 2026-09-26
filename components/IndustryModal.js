@@ -6,11 +6,20 @@ const KEY = 'cs_industry_modal_seen';
 const industries = [
   {
     href: '/aesthetics',
-    title: 'Aesthetics / Medical Clinics',
-    desc: 'Med spas, clinics & wellness — patient growth systems.',
+    title: 'Aesthetics / Med\u00a0Spa',
+    desc: 'Med spas, aesthetic & laser clinics — patient growth systems.',
     img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=70&auto=format&fit=crop',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 3l1.9 4.3L18 9.2l-4.1 1.9L12 15l-1.9-3.9L6 9.2l4.1-1.9L12 3z" /><path d="M19 14l.8 1.8L21.5 17l-1.7.8L19 19.5 18.2 17.8 16.5 17l1.7-.8L19 14z" /><path d="M5 15l.6 1.4L7 17l-1.4.6L5 19l-.6-1.4L3 17l1.4-.6L5 15z" /></svg>
+    ),
+  },
+  {
+    href: '/clinics',
+    title: 'Clinics & Dental',
+    desc: 'Medical clinics & dental practices — more booked patients.',
+    img: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=500&q=70&auto=format&fit=crop',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
     ),
   },
   {

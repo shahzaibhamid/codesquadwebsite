@@ -28,17 +28,6 @@ export default {
     }
   },
 
-  resultsStrip: {
-    heading: 'Systems that move real numbers.',
-    sub: 'Figures from a live client dashboard — the same infrastructure we build for every clinic and dental practice.',
-    stats: [
-      { val: '60<em>+</em>', lab: 'Leads generated in 2 months' },
-      { val: '<em>~$</em>50', lab: 'Cost per lead' },
-      { val: '6–7', lab: 'New patients booked in 2 months' },
-      { val: '3<em>s</em>', lab: 'Average lead response time' }
-    ],
-    attribution: 'Results from a live client (Harmony Med Spa) — benchmark, varies by market.'
-  },
 
   // The flowchart's embedded sample campaign (Step 01 headline + Step 02 card) is pulled from this group.
   flowSampleGroupKey: 'dental',
@@ -72,26 +61,34 @@ export default {
         key: 'medical',
         samples: [
           { type: 'Local', name: 'Clinic Near Me – [City]', keywords: 'doctor near me, walk-in clinic [city], family clinic [city]', headline: 'Same-Week Appointments in [City] / Book Online', landsOn: 'Main landing page' },
+          { type: 'Local', name: 'Walk-In Clinic – [Neighborhood]', keywords: 'walk-in clinic [neighborhood], clinic near [landmark], clinic open now', headline: 'Walk-Ins Welcome / Open 7 Days', landsOn: 'Main landing page' },
+          { type: 'Local', name: 'Doctor Accepting Patients – [City]', keywords: 'doctor accepting new patients [city], new family doctor near me', headline: 'Now Accepting New Patients / Book Online', landsOn: 'Main landing page' },
           { type: 'Treatment', name: 'Weight Loss Program', keywords: 'medical weight loss [city], GLP-1 doctor near me', headline: 'Doctor-Supervised Weight Loss / Book a Consult', landsOn: 'Weight-loss page' },
           { type: 'Treatment', name: 'IV Therapy & Wellness', keywords: 'IV therapy [city], vitamin drip near me', headline: 'IV Hydration in 45 Minutes / Walk-Ins Welcome', landsOn: 'IV page' },
           { type: 'Treatment', name: 'Physio & Back Pain', keywords: 'back pain clinic [city], physiotherapy near me', headline: 'Back Pain Relief Without Surgery / Free Assessment', landsOn: 'Physio page' },
           { type: 'Treatment', name: 'Health Check-Ups', keywords: 'full body checkup [city], annual physical near me', headline: 'Complete Health Check / Results in 48 Hours', landsOn: 'Check-up page' },
           { type: 'Treatment', name: 'Hormone Replacement Therapy', keywords: 'hormone therapy [city], testosterone clinic near me, HRT doctor', headline: 'Feel Like Yourself Again / Free Hormone Panel', landsOn: 'Hormone Therapy page' },
           { type: 'Treatment', name: 'Pediatric & Family Care', keywords: 'family doctor [city], pediatrician near me, same-day sick visit', headline: 'Same-Day Care for the Whole Family / Book Online', landsOn: 'Family Care page' },
-          { type: 'Ranking', name: 'Own "Best Clinic [City]"', keywords: 'best clinic [city], doctor reviews [city], affordable doctor [city]', headline: "[City]'s Top-Rated Family Clinic / 5★ Reviews", landsOn: 'Main page + blog' }
+          { type: 'Ranking', name: 'Own "Best Clinic [City]"', keywords: 'best clinic [city], doctor reviews [city], affordable doctor [city]', headline: "[City]'s Top-Rated Family Clinic / 5★ Reviews", landsOn: 'Main page + blog' },
+          { type: 'Ranking', name: 'Own "Best Weight Loss Clinic [City]"', keywords: 'best weight loss clinic [city], semaglutide cost [city], weight loss doctor reviews', headline: 'Doctor-Supervised Weight Loss / Book a Consult', landsOn: 'Weight-loss page + blog' },
+          { type: 'Ranking', name: 'Own "Best Walk-In Clinic [City]"', keywords: 'best walk-in clinic [city], urgent care reviews [city], shortest wait clinic', headline: 'Short Waits, Real Doctors / Walk In Today', landsOn: 'Main page + blog' }
         ]
       },
       {
         key: 'dental',
         samples: [
           { type: 'Local', name: 'Dentist Near Me – [City]', keywords: 'dentist near me, dental clinic [city], emergency dentist [city]', headline: 'Gentle Dental Care in [City] / New Patients Welcome', landsOn: 'Main landing page' },
+          { type: 'Local', name: 'Dentist – [Neighborhood]', keywords: 'dentist [neighborhood], dentist near [landmark], dental office near me', headline: 'Your Neighborhood Dentist / New Patients Welcome', landsOn: 'Main landing page' },
+          { type: 'Local', name: 'Weekend Dentist – [City]', keywords: 'saturday dentist [city], dentist open weekends, evening dental appointments', headline: 'Evening & Weekend Appointments / Book Online', landsOn: 'Main landing page' },
           { type: 'Treatment', name: 'Dental Implants', keywords: 'dental implants [city], implant cost, missing tooth replacement', headline: 'Permanent Teeth in [City] / Free Implant Consult', landsOn: 'Implants page' },
           { type: 'Treatment', name: 'Invisalign & Aligners', keywords: 'invisalign [city], clear aligners near me', headline: 'Straighter Smile, No Metal / Free Smile Scan', landsOn: 'Aligners page' },
           { type: 'Treatment', name: 'Teeth Whitening & Veneers', keywords: 'teeth whitening [city], veneers cost [city]', headline: 'Whiter Teeth in One Visit / New-Patient Offer', landsOn: 'Cosmetic dental page' },
           { type: 'Treatment', name: 'Emergency Dental', keywords: 'emergency dentist near me, toothache [city]', headline: 'Same-Day Emergency Appointments / Call Now', landsOn: 'Emergency page (call-first)' },
           { type: 'Treatment', name: 'Root Canal Therapy', keywords: 'root canal [city], root canal cost, tooth pain treatment', headline: 'Pain-Free Root Canals / Same-Week Appointments', landsOn: 'Root Canal page' },
           { type: 'Treatment', name: 'Pediatric Dentistry', keywords: 'kids dentist [city], pediatric dentist near me, child dental checkup', headline: 'Gentle Dentistry for Kids / New Patient Exams', landsOn: 'Kids Dentistry page' },
-          { type: 'Ranking', name: 'Own "Best Dentist [City]"', keywords: 'best dentist [city], implant specialist [city]', headline: "[City]'s Most-Reviewed Dentist / Book Today", landsOn: 'Main page + blog' }
+          { type: 'Ranking', name: 'Own "Best Dentist [City]"', keywords: 'best dentist [city], implant specialist [city]', headline: "[City]'s Most-Reviewed Dentist / Book Today", landsOn: 'Main page + blog' },
+          { type: 'Ranking', name: 'Own "Best Implant Dentist [City]"', keywords: 'best dental implants [city], implant dentist reviews, implant cost [city]', headline: 'Implants Done Right / Free Consult in [City]', landsOn: 'Implants page + blog' },
+          { type: 'Ranking', name: 'Own "Best Invisalign [City]"', keywords: 'best invisalign dentist [city], invisalign cost [city], invisalign specials', headline: 'Clear Aligners From $X/mo / Free Smile Scan', landsOn: 'Aligners page + blog' }
         ]
       }
     ]
