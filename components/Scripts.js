@@ -28,7 +28,7 @@ export default function Scripts() {
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
     on(window, 'scroll', onScrollHeader); onScrollHeader();
     // white nav text over dark heros (home, aesthetics, case-study detail) until scrolled
-    const darkPaths = ['/', '/aesthetics', '/clinics', '/ecommerce', '/it-engineering', '/industry', '/visibility-engine', '/blog', '/case-studies'];
+    const darkPaths = ['/', '/aesthetics', '/clinics', '/ecommerce', '/it-engineering', '/industry', '/process', '/visibility-engine', '/blog', '/case-studies'];
     const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/');
     if (header) header.classList.toggle('header-on-dark', darkHero);
 
@@ -190,6 +190,58 @@ export default function Scripts() {
         const sel = document.getElementById('clinic');
         if (clinicOpt && sel) sel.value = clinicOpt;
       }));
+    });
+
+    // industry tabs (/process): WAI-ARIA tabs with arrow/Home/End keys; the URL hash (#clinics,
+    // #ecommerce) selects a tab on load and on hashchange, and clicking a tab updates the hash
+    document.querySelectorAll('[data-tabs]').forEach((list) => {
+      const tabs = Array.from(list.querySelectorAll('[role="tab"]'));
+      const panelFor = (t) => document.getElementById(t.getAttribute('aria-controls'));
+      const select = (tab, focus) => {
+        tabs.forEach((t) => {
+          const isOn = t === tab;
+          t.classList.toggle('on', isOn);
+          t.setAttribute('aria-selected', String(isOn));
+          t.tabIndex = isOn ? 0 : -1;
+          const panel = panelFor(t);
+          if (panel) { panel.classList.toggle('is-active', isOn); panel.hidden = !isOn; }
+        });
+        if (focus) tab.focus();
+      };
+      // a hash can name a tab panel (#ecommerce) or any section inside one (#crm, #campaigns):
+      // open the owning tab, then jump to the tab list or to that section
+      const fromHash = (scroll) => {
+        const id = decodeURIComponent(location.hash.slice(1));
+        if (!id) return;
+        let tab = tabs.find((t) => t.getAttribute('aria-controls') === id);
+        let target = list;
+        if (!tab) {
+          const el = document.getElementById(id);
+          const panel = el && el.closest('[role="tabpanel"]');
+          tab = panel && tabs.find((t) => t.getAttribute('aria-controls') === panel.id);
+          if (!tab) return;
+          target = el;
+        }
+        select(tab);
+        if (scroll) setTimeout(() => target.scrollIntoView({ behavior: 'instant', block: 'start' }), 0);
+      };
+      tabs.forEach((t, i) => {
+        on(t, 'click', () => { select(t); history.replaceState(null, '', '#' + t.getAttribute('aria-controls')); });
+        on(t, 'keydown', (e) => {
+          let j = null;
+          if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+          else if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+          else if (e.key === 'Home') j = 0;
+          else if (e.key === 'End') j = tabs.length - 1;
+          if (j === null) return;
+          e.preventDefault();
+          select(tabs[j], true);
+          history.replaceState(null, '', '#' + tabs[j].getAttribute('aria-controls'));
+        });
+      });
+      select(tabs.find((t) => t.classList.contains('on')) || tabs[0]);
+      fromHash(true);
+      on(window, 'hashchange', () => fromHash(true));
     });
 
     // process flow map: hovering (mouse), focusing (keyboard) or tapping a stage opens its detail panel

@@ -15,6 +15,14 @@ const platforms = [
   { n: 'Zapier', d: 'M12 3v18M4.5 7.5l15 9M19.5 7.5l-15 9' },
 ];
 
+const countries = [
+  { code: 'US', name: 'United States' },
+  { code: 'CA', name: 'Canada' },
+  { code: 'UK', name: 'United Kingdom' },
+  { code: 'UAE', name: 'United Arab Emirates' },
+  { code: 'PK', name: 'Pakistan' },
+];
+
 export default function Footer() {
   return (
     <footer className="cs-footer">
@@ -33,6 +41,7 @@ export default function Footer() {
             <ul>
               <li><a href="/">Home</a></li>
               <li><a href="/industry">Industries</a></li>
+              <li><a href="/process">Process</a></li>
               <li><a href="/case-studies">Case Studies</a></li>
               <li><a href="/blog">Blog</a></li>
               <li><a href="/#contact">Contact</a></li>
@@ -56,20 +65,11 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4>Offices</h4>
-            <ul className="cs-footer__offices">
-              <li>
-                <span className="cs-office__flag">
-                  <svg width="22" height="22" viewBox="0 0 24 24" role="img" aria-label="USA flag" style={{ display: 'block', borderRadius: '50%', flex: '0 0 auto' }}><defs><clipPath id="flag-clip-us"><circle cx="12" cy="12" r="12" /></clipPath></defs><g clipPath="url(#flag-clip-us)"><rect width="24" height="24" fill="#fff" /><rect y="0" width="24" height="1.846" fill="#b22234" /><rect y="3.692" width="24" height="1.846" fill="#b22234" /><rect y="7.384" width="24" height="1.846" fill="#b22234" /><rect y="11.076" width="24" height="1.846" fill="#b22234" /><rect y="14.768" width="24" height="1.846" fill="#b22234" /><rect y="18.46" width="24" height="1.846" fill="#b22234" /><rect y="22.152" width="24" height="1.846" fill="#b22234" /><rect width="10.5" height="12.922" fill="#3c3b6e" /></g><circle cx="12" cy="12" r="11.5" fill="none" stroke="rgba(0,0,0,.12)" strokeWidth="1" /></svg>
-                </span>
-                <span><b>USA</b><a className="cs-office__addr" href="https://www.google.com/maps/search/?api=1&query=8+The+Green+Ste+14681%2C+Dover%2C+DE+19901" target="_blank" rel="noopener noreferrer"><span>8 The Green Ste 14681</span><span>Dover, DE 19901</span></a></span>
-              </li>
-              <li>
-                <span className="cs-office__flag">
-                  <svg width="22" height="22" viewBox="0 0 24 24" role="img" aria-label="Pakistan flag" style={{ display: 'block', borderRadius: '50%', flex: '0 0 auto' }}><defs><clipPath id="flag-clip-pk"><circle cx="12" cy="12" r="12" /></clipPath></defs><g clipPath="url(#flag-clip-pk)"><rect width="24" height="24" fill="#01411c" /><rect width="6" height="24" fill="#fff" /><circle cx="14.6" cy="12" r="4.3" fill="#fff" /><circle cx="16.1" cy="11.1" r="3.6" fill="#01411c" /><path fill="#fff" d="M17.7 12.1l1.02.62-.28-1.16.9-.78-1.19-.1-.45-1.1-.45 1.1-1.19.1.9.78-.28 1.16z" /></g><circle cx="12" cy="12" r="11.5" fill="none" stroke="rgba(0,0,0,.12)" strokeWidth="1" /></svg>
-                </span>
-                <span><b>Pakistan</b><span>Lahore, Pakistan</span></span>
-              </li>
+            <h4>Where we work</h4>
+            <ul className="cs-footer__countries">
+              {countries.map((c) => (
+                <li key={c.code}><span className="cs-country__code" aria-hidden="true">{c.code}</span>{c.name}</li>
+              ))}
             </ul>
           </div>
         </div>
