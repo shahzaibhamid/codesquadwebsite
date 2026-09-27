@@ -4,10 +4,11 @@ export default {
     bgVideo: '/hero.mp4',
     bgImage: null,
     tagline: 'The Growth System for Med Spas · Aesthetic Clinics · Cosmetic Derm',
-    srHeadline: 'The patient acquisition system for med spas and aesthetic clinics',
-    headlinePrefix: 'The patient acquisition system for',
     typerWords: ['med spas', 'aesthetic clinics', 'laser clinics', 'cosmetic derm'],
-    headlineSuffix: '',
+    headline: 'Every enquiry answered in 60 seconds.',
+    headlineAccent: 'More booked patients.',
+    typerLead: 'Built for',
+    sub: 'Treatment-based Google Ads, instant follow-up and booking in one system for med spas and aesthetic clinics, built into the booking software you already use.',
     guaranteeBadge: 'Real results from a live client',
     audienceChips: [
       { img: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=120&q=70&auto=format&fit=crop', label: 'Med Spas' },
@@ -81,32 +82,30 @@ export default {
     customBuiltLine: 'custom-built for aesthetics'
   },
 
-  testimonials: {
-    featureImg: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=900&q=75&auto=format&fit=crop',
-    featureImgAlt: 'Client relaxing during a med spa treatment',
-    featureHeadline: 'Harmony Med Spa, Sarasota FL',
-    featureSub: 'The system live behind the case study below — real bookings, tracked end to end.',
-    quotes: [
-      {
-        text: 'CodeSquad connected our ads, CRM and follow-up into one system. Every enquiry now gets an instant reply, and I can see the exact ad behind each booking — nothing slips through.',
-        initials: 'HM',
-        name: 'Harmony Med Spa',
-        role: 'Sarasota, FL · Aesthetics'
-      },
-      {
-        text: 'We went live with the whole system already running, so our first enquiries got an instant reply and a booking link. The schedule filled from day one.',
-        initials: 'CD',
-        name: 'CareInn Dental Clinic',
-        role: 'Dental Care · Patient Growth'
-      }
-    ],
-    spotlight: {
-      name: 'GengyveUSA',
-      initials: 'GU',
-      desc: 'One intelligence layer unifying SEO, paid ads and review analysis for GengyveUSA — a dental-surgeon-formulated oral care brand.',
-      url: 'https://gengyveusa.com'
-    }
+  whyUs: {
+    title: "Tired of agencies that don't understand your practice?",
+    intro: 'Most agencies have never run a clinic. We have, so we measure what you measure: booked patients.',
+    points: [
+      { icon: '<svg class="svgic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>', title: 'Booked patients, not clicks', text: 'Every booking is traced to the exact ad and keyword behind it, so you see real appointments, not likes.' },
+      { icon: '<svg class="svgic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 2 21 6 17 10"/><path d="M3 12V10a4 4 0 0 1 4-4h14"/><polyline points="7 22 3 18 7 14"/><path d="M21 12v2a4 4 0 0 1-4 4H3"/></svg>', title: 'No switching software', text: 'We build into the booking system and tools you already use. No migration, no retraining your front desk.' },
+      { icon: '<svg class="svgic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><polyline points="9 12 11 14 15 10"/></svg>', title: 'Built for aesthetics', text: 'Three years with healthcare brands. Treatment-based campaigns and health-ad compliance are the default, not an add-on.' }
+    ]
   },
+  faqs: [
+    { q: 'Do I have to switch my booking system or software?', a: 'No. We connect to what already works. Harmony kept PatientNow; we built around it.' },
+    { q: 'How fast do new enquiries get a response?', a: "Within seconds, day or night, by SMS and email. Anyone who doesn't book gets a 14-day nurture that stops the instant they do." },
+    { q: 'How is it priced?', a: "A one-time build fee covers the audit, setup and launch. After that it's a monthly growth retainer with no long-term lock-in. Third-party tools (ad spend, CRM licences, SMS/email credits) are billed separately. <a href=\"/process\" style=\"color:var(--accent-deep);font-weight:700\">See what each phase includes</a>." },
+    { q: 'Is this compliant with health-advertising rules?', a: "Yes. Campaigns follow Google's restricted-health advertising rules, and conversions only count confirmed leads." },
+    { q: 'What kinds of practices is this for?', a: 'Med spas, aesthetic and laser clinics, cosmetic dermatology, weight-loss and wellness studios. Run a medical or dental clinic? <a href="/clinics" style="color:var(--accent-deep);font-weight:700">See Clinics &amp; Dental</a>.' }
+  ],
+  proofQuotes: [
+    {
+      text: 'CodeSquad connected our ads, CRM and follow-up into one system. Every enquiry now gets an instant reply, and I can see the exact ad behind each booking — nothing slips through.',
+      initials: 'HM',
+      name: 'Harmony Med Spa',
+      role: 'Sarasota, FL · Aesthetics'
+    }
+  ],
 
   caseStudy: {
     headline: 'Harmony Med Spa, Sarasota, Florida — a full patient growth system, live today.',
@@ -115,14 +114,12 @@ export default {
       { val: '<em>~$</em>50', lab: 'Cost per lead' },
       { val: '6–7', lab: 'New patients booked' }
     ],
-    intro: "We connected Google Ads, treatment-specific landing pages, a custom CRM, automated follow-up and their existing PatientNow booking into one system — with SEO content and Google Business Profile management on top.",
+    intro: "We connected Google Ads, treatment landing pages, a custom CRM, automated follow-up and their existing PatientNow booking into one system.",
     decision: "we did not replace Harmony's booking system. A growth system should connect what already works, not force a migration that disrupts the clinic for months.",
     points: [
       'Treatment-specific Google Ads &amp; matching landing pages',
-      'Custom CRM with full lead attribution in one view',
       '3-second automated SMS &amp; email follow-up, day or night',
-      '14-day nurture that stops the moment a patient books',
-      'SEO content &amp; Google Business Profile management on top'
+      '14-day nurture that stops the moment a patient books'
     ],
     quote: { text: 'CodeSquad transitioned us from fragmented, manual follow-up to a fully automated system — every lead answered and tracked.', attribution: 'Hayden, Harmony Med Spa' },
     image: '/uploads/case-studies/harmony-medspa-lobby.jpg',

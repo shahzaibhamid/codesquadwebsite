@@ -17,6 +17,7 @@ export default function Header() {
               <a href="/ecommerce">E-commerce</a>
             </div>
           </div>
+          <a href="/process">Process</a>
           <a href="/case-studies">Case Studies</a>
           <a href="/blog">Blog</a>
           <a href="/#contact">Contact</a>
