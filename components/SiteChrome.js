@@ -6,9 +6,9 @@ import MobileCta from './MobileCta';
 import IndustryModal from './IndustryModal';
 import Scripts from './Scripts';
 
-// Industry landing pages are shared as direct links, so the "pick your industry"
+// Industry landing pages and the inquiry page are shared as direct links, so the "pick your industry"
 // popup would only get in the way there.
-const NO_POPUP = ['/aesthetics', '/clinics', '/it-engineering', '/ecommerce'];
+const NO_POPUP = ['/aesthetics', '/clinics', '/it-engineering', '/ecommerce', '/inquiry'];
 
 export default function SiteChrome({ children }) {
   const path = usePathname() || '';
