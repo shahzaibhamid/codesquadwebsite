@@ -2008,3 +2008,6 @@ h1.hero-title--outcome{max-width:18ch;font-size:clamp(30px,4.2vw,54px);line-heig
 .dash-lead-detail{display:flex;flex-wrap:wrap;gap:6px 18px;padding:0 16px 14px;font-size:13px;color:#5b6b7f;border-bottom:1px solid #eef2f7}
 .dash-lead-detail p{flex-basis:100%;margin:2px 0 0;color:#3a4a5f;white-space:pre-wrap}
 .dash-import{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+/* Solid white button for dark heros (home "Inquiry") */
+.btn-solid-light{background:#fff;color:var(--ink);box-shadow:0 14px 34px -14px rgba(0,0,0,.45)}
+.btn-solid-light:hover{transform:translateY(-3px);background:#f1f4f9}
