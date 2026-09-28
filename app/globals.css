@@ -2008,11 +2008,17 @@ h1.hero-title--outcome{max-width:18ch;font-size:clamp(30px,4.2vw,54px);line-heig
 .dash-lead-detail{display:flex;flex-wrap:wrap;gap:6px 18px;padding:0 16px 14px;font-size:13px;color:#5b6b7f;border-bottom:1px solid #eef2f7}
 .dash-lead-detail p{flex-basis:100%;margin:2px 0 0;color:#3a4a5f;white-space:pre-wrap}
 .dash-import{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-/* Solid white button for dark heros (home "Inquiry") */
-.btn-solid-light{background:#fff;color:var(--ink);box-shadow:0 14px 34px -14px rgba(0,0,0,.45)}
-.btn-solid-light:hover{transform:translateY(-3px);background:#f1f4f9}
 /* Header "Inquiry" button: solid white, next to "Book a Free Call" */
 .nav-links a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry{margin-right:-16px;background:#fff;color:var(--ink);border-color:var(--line)}
 .nav-links a.nav-inquiry:hover,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry:hover{background:#eef1f6;color:var(--ink)}
 .nav-links.open a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links.open a.nav-inquiry{margin-right:0;border-color:var(--ink)}
 #header.scrolled .nav-links a.nav-inquiry{border-color:var(--ink)}
+/* Keep the navbar on one line on narrower laptops (it has two buttons now) */
+#header .logo{flex-shrink:0}
+.nav-links>a,.nav-drop-toggle{white-space:nowrap}
+@media (min-width:961px) and (max-width:1200px){
+  .nav-links{gap:18px}
+  .nav-links a{font-size:14px}
+  .nav-links .btn{padding:11px 16px;font-size:14px}
+  .nav-links a.nav-inquiry{margin-right:-8px}
+}
