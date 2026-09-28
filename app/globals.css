@@ -2011,3 +2011,9 @@ h1.hero-title--outcome{max-width:18ch;font-size:clamp(30px,4.2vw,54px);line-heig
 /* Solid white button for dark heros (home "Inquiry") */
 .btn-solid-light{background:#fff;color:var(--ink);box-shadow:0 14px 34px -14px rgba(0,0,0,.45)}
 .btn-solid-light:hover{transform:translateY(-3px);background:#f1f4f9}
+/* Header "Inquiry" button, sits next to "Book a Free Call" */
+.nav-links a.nav-inquiry{margin-right:-16px}
+#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry{color:#fff;border-color:rgba(255,255,255,.6)}
+#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry:hover{background:rgba(255,255,255,.12)}
+.nav-links a.nav-inquiry:hover{color:#fff}
+.nav-links.open a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links.open a.nav-inquiry{margin-right:0;color:var(--ink);border-color:var(--ink)}
