@@ -29,7 +29,9 @@ export default async function Page() {
           <div className="blog-grid" id="blogGrid">
             {blogPosts.map((p) => (
               <a className="bpost reveal" href={`/blog/${p.slug}`} key={p.slug} data-cat={p.cat}>
-                <span className="bthumb"><img src={p.img} alt={p.title} loading="lazy" /></span>
+                <span className={p.img ? 'bthumb' : 'bthumb bthumb--empty'}>
+                  {p.img ? <img src={p.img} alt={p.title} loading="lazy" /> : <span className="bthumb__ph" aria-hidden="true">{p.cat}</span>}
+                </span>
                 <span className="bbody">
                   <span className="bmeta">{p.cat}<span className="bdate">{p.date}</span></span>
                   <h3>{p.title}</h3>

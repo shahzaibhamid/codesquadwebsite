@@ -2,15 +2,22 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
-import { DASH_COOKIE, DASH_PASSWORD, DASH_TOKEN } from '../../lib/dashboard-auth';
+import { revalidatePath, revalidateTag } from 'next/cache';
+import { DASH_COOKIE, DASH_TOKEN, isValidPassword, isValidToken } from '../../lib/dashboard-auth';
+import { CACHE_TAG } from '../../lib/supabase';
 import * as store from '../../lib/store';
+
+// Server actions can be invoked directly (from any route, bypassing middleware),
+// so every action that reads or changes data checks the session cookie itself.
+const isAuthed = () => isValidToken(cookies().get(DASH_COOKIE)?.value);
+const NOT_AUTHED = 'Your dashboard session has expired. Log in again.';
 
 export async function loginAction(formData) {
   const password = String(formData.get('password') || '');
   const next = String(formData.get('next') || '/dashboard');
-  if (password !== DASH_PASSWORD) redirect('/dashboard/login?error=1');
-  cookies().set(DASH_COOKIE, DASH_TOKEN, { httpOnly: true, sameSite: 'lax', path: '/', maxAge: 60 * 60 * 24 * 30 });
+  if (!DASH_TOKEN) redirect('/dashboard/login?error=config');
+  if (!isValidPassword(password)) redirect('/dashboard/login?error=1');
+  cookies().set(DASH_COOKIE, DASH_TOKEN, { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/', maxAge: 60 * 60 * 24 * 30 });
   redirect(next.startsWith('/dashboard') ? next : '/dashboard');
 }
 
@@ -19,55 +26,131 @@ export async function logoutAction() {
   redirect('/dashboard/login');
 }
 
-function guardWrite() {
-  if (!store.canWrite()) {
-    throw new Error('Saving needs Supabase — add your keys as environment variables in Vercel.');
+// Returns an error message when the user may not write, else ''.
+function writeBlocker() {
+  if (!isAuthed()) return NOT_AUTHED;
+  if (!store.canWrite()) return store.NOT_CONFIGURED_MSG;
+  return '';
+}
+
+function refreshPosts(...slugs) {
+  revalidateTag(CACHE_TAG);
+  for (const s of new Set(slugs.filter(Boolean))) revalidatePath(`/blog/${s}`);
+  revalidatePath('/blog'); revalidatePath('/'); revalidatePath('/dashboard');
+}
+function refreshCases(...slugs) {
+  revalidateTag(CACHE_TAG);
+  for (const s of new Set(slugs.filter(Boolean))) revalidatePath(`/case-studies/${s}`);
+  revalidatePath('/case-studies'); revalidatePath('/'); revalidatePath('/dashboard/case-studies');
+}
+
+// ============ POSTS ============
+// Used with useFormState: returns { error } on failure, redirects on success.
+export async function savePostAction(_prev, formData) {
+  const blocked = writeBlocker();
+  if (blocked) return { error: blocked };
+  const original = String(formData.get('original') || '') || null;
+  const title = String(formData.get('title') || '').trim();
+  const slug = store.slugify(formData.get('slug') || title);
+  let saved;
+  try {
+    if (!title) throw new Error('Please enter a title.');
+    const img = await resolveCoverImage(formData, slug);
+    const raw = String(formData.get('content') || '').replace(/\r\n/g, '\n');
+    const bodyHtml = store.looksLikeHtml(raw) ? raw : store.mdLiteToHtml(raw);
+    const post = {
+      title, slug, cat: formData.get('cat'), date: String(formData.get('date') || '').trim(),
+      img, excerpt: String(formData.get('excerpt') || '').trim(),
+    };
+    saved = await store.savePost({ original, post, bodyHtml });
+  } catch (e) {
+    console.error('[dashboard] savePost failed:', e);
+    return { error: e.message || 'Saving failed.' };
+  }
+  refreshPosts(saved, original);
+  redirect(`/dashboard?saved=${encodeURIComponent(saved)}`);
+}
+
+// Priority: uploaded file > pasted image URL > YouTube thumbnail > current image
+// (the hidden "img" field, which the form clears when "Remove image" is used).
+async function resolveCoverImage(formData, slug) {
+  const file = formData.get('coverFile');
+  if (file && typeof file !== 'string' && file.size) return store.uploadImage(file, { folder: 'blog', name: slug || 'post' });
+  const url = String(formData.get('imgUrl') || '').trim();
+  if (url) {
+    if (!/^(https?:\/\/|\/)\S+$/i.test(url)) throw new Error('The image URL must start with https:// (or / for a file on this site).');
+    return url;
+  }
+  const yt = ytThumb(formData.get('youtube'));
+  if (yt) return yt;
+  if (String(formData.get('youtube') || '').trim()) throw new Error('That YouTube link was not recognised. Paste a link like https://youtu.be/VIDEO_ID.');
+  return String(formData.get('img') || '').trim();
+}
+
+// Uploads one image for the article body ("Insert image"). Returns { url } or { error }.
+export async function uploadImageAction(formData) {
+  const blocked = writeBlocker();
+  if (blocked) return { error: blocked };
+  try {
+    const name = store.slugify(formData.get('slug') || '') || 'post';
+    const url = await store.uploadImage(formData.get('file'), { folder: 'blog', name: `${name}-inline` });
+    return { url };
+  } catch (e) {
+    console.error('[dashboard] uploadImage failed:', e);
+    return { error: e.message || 'Upload failed.' };
   }
 }
 
-export async function savePostAction(formData) {
-  guardWrite();
-  const original = formData.get('original') || null;
-  const post = {
-    title: formData.get('title'), slug: formData.get('slug'), cat: formData.get('cat'),
-    date: formData.get('date'), img: ytThumb(formData.get('youtube')) || formData.get('img') || '',
-    excerpt: formData.get('excerpt'),
-  };
-  const raw = String(formData.get('content') || '');
-  const bodyHtml = /<[a-z][\s\S]*>/i.test(raw) ? raw : store.mdLiteToHtml(raw);
-  await store.savePost({ original, post, bodyHtml });
-  revalidatePath('/dashboard'); revalidatePath('/blog'); revalidatePath('/');
-  redirect('/dashboard');
-}
-
 export async function deletePostAction(formData) {
-  guardWrite();
-  await store.deletePost(String(formData.get('slug')));
-  revalidatePath('/dashboard'); revalidatePath('/blog'); revalidatePath('/');
+  const blocked = writeBlocker();
+  if (blocked === NOT_AUTHED) redirect('/dashboard/login');
+  const slug = String(formData.get('slug') || '');
+  let error = blocked;
+  if (!error) {
+    try { await store.deletePost(slug); } catch (e) { console.error('[dashboard] deletePost failed:', e); error = e.message || 'Delete failed.'; }
+  }
+  if (error) redirect(`/dashboard?error=${encodeURIComponent(error)}`);
+  refreshPosts(slug);
+  redirect(`/dashboard?deleted=${encodeURIComponent(slug)}`);
 }
 
-export async function saveCaseAction(formData) {
-  guardWrite();
-  const original = formData.get('original') || null;
-  const item = {
-    name: formData.get('name'), slug: formData.get('slug'), cat: formData.get('cat'),
-    filter: formData.get('filter'), tagline: formData.get('tagline'), img: formData.get('img') || '',
-    published: formData.get('published') !== 'off',
-  };
-  const bodyHtml = String(formData.get('body') || '');
-  await store.saveCase({ original, item, bodyHtml });
-  revalidatePath('/dashboard/case-studies'); revalidatePath('/case-studies'); revalidatePath('/');
+// ============ CASE STUDIES ============
+export async function saveCaseAction(_prev, formData) {
+  const blocked = writeBlocker();
+  if (blocked) return { error: blocked };
+  const original = String(formData.get('original') || '') || null;
+  let saved;
+  try {
+    const item = {
+      name: formData.get('name'), slug: formData.get('slug'), cat: formData.get('cat'),
+      filter: formData.get('filter'), tagline: formData.get('tagline'), img: formData.get('img') || '',
+      published: formData.get('published') !== 'off',
+    };
+    const bodyHtml = String(formData.get('body') || '').replace(/\r\n/g, '\n');
+    saved = await store.saveCase({ original, item, bodyHtml });
+  } catch (e) {
+    console.error('[dashboard] saveCase failed:', e);
+    return { error: e.message || 'Saving failed.' };
+  }
+  refreshCases(saved, original);
   redirect('/dashboard/case-studies');
 }
 
 export async function deleteCaseAction(formData) {
-  guardWrite();
-  await store.deleteCase(String(formData.get('slug')));
-  revalidatePath('/dashboard/case-studies'); revalidatePath('/case-studies'); revalidatePath('/');
+  const blocked = writeBlocker();
+  if (blocked === NOT_AUTHED) redirect('/dashboard/login');
+  const slug = String(formData.get('slug') || '');
+  let error = blocked;
+  if (!error) {
+    try { await store.deleteCase(slug); } catch (e) { console.error('[dashboard] deleteCase failed:', e); error = e.message || 'Delete failed.'; }
+  }
+  if (error) redirect(`/dashboard/case-studies?error=${encodeURIComponent(error)}`);
+  refreshCases(slug);
+  redirect('/dashboard/case-studies');
 }
 
 function ytThumb(url) {
   const u = String(url || '');
-  const m = u.match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/);
+  const m = u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
   return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : '';
 }

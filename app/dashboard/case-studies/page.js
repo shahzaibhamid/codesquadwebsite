@@ -1,23 +1,20 @@
-import { getCases, canWrite, isLive } from '../../../lib/store';
+import { getCases } from '../../../lib/store';
+import StoreStatus from '../../../components/dash/StoreStatus';
 import { deleteCaseAction } from '../actions';
 
 export const dynamic = 'force-dynamic';
 
-export default async function CaseStudiesPage() {
-  const cases = await getCases();
+export default async function CaseStudiesPage({ searchParams }) {
+  let cases = [];
+  let loadError = '';
+  try { cases = await getCases({ strict: true }); } catch (e) { loadError = e.message; }
   return (
     <div className="dash-wrap">
       <div className="dash-head">
         <h1>Case studies</h1>
         <a href="/dashboard/case-studies/new" className="dash-btn dash-btn--primary">+ New case study</a>
       </div>
-      {isLive() ? (
-        <div className="dash-note">✓ Connected to Supabase — changes save live to your site.</div>
-      ) : !canWrite() ? (
-        <div className="dash-note dash-note--warn">Read-only on the live site — connect Supabase to create, edit and delete here.</div>
-      ) : (
-        <div className="dash-note">Saving locally to your project files.</div>
-      )}
+      <StoreStatus loadError={loadError} flash={{ error: searchParams?.error }} />
       <div className="dash-table">
         <div className="dash-tr dash-tr--head"><span>Client</span><span>Category</span><span>Filter</span><span>Actions</span></div>
         {cases.map((c) => (
@@ -32,7 +29,7 @@ export default async function CaseStudiesPage() {
             </span>
           </div>
         ))}
-        {cases.length === 0 ? <div className="dash-empty">No case studies yet.</div> : null}
+        {cases.length === 0 && !loadError ? <div className="dash-empty">No case studies yet.</div> : null}
       </div>
     </div>
   );

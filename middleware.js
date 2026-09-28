@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { DASH_COOKIE, DASH_TOKEN } from './lib/dashboard-auth';
+import { DASH_COOKIE, isValidToken } from './lib/dashboard-auth';
 
 export function middleware(request) {
   const { pathname } = request.nextUrl;
@@ -8,7 +8,7 @@ export function middleware(request) {
   if (pathname === '/dashboard/login') return NextResponse.next();
 
   const token = request.cookies.get(DASH_COOKIE)?.value;
-  if (token === DASH_TOKEN) return NextResponse.next();
+  if (isValidToken(token)) return NextResponse.next();
 
   const url = request.nextUrl.clone();
   url.pathname = '/dashboard/login';

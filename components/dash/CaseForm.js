@@ -1,10 +1,19 @@
+'use client';
+import { useFormState, useFormStatus } from 'react-dom';
 import { saveCaseAction } from '../../app/dashboard/actions';
 
 const FILTERS = ['Healthcare & Clinics', 'E-commerce', 'Legal Services', 'Automotive', 'Education', 'Financial Services'];
 
+function SubmitButton({ label }) {
+  const { pending } = useFormStatus();
+  return <button type="submit" className="dash-btn dash-btn--primary" disabled={pending}>{pending ? 'Saving…' : label}</button>;
+}
+
 export default function CaseForm({ item = {}, body = '', original = '' }) {
+  const [state, formAction] = useFormState(saveCaseAction, {});
   return (
-    <form className="dash-form" action={saveCaseAction}>
+    <form className="dash-form" action={formAction}>
+      {state?.error ? <div className="dash-note dash-note--err" role="alert"><b>Not saved.</b> {state.error}</div> : null}
       {original ? <input type="hidden" name="original" value={original} /> : null}
       <label>Client / project name</label>
       <input name="name" defaultValue={item.name || ''} placeholder="Harmony Med Spa" required />
@@ -35,7 +44,7 @@ export default function CaseForm({ item = {}, body = '', original = '' }) {
       <div className="dash-help">This is the full case-study page body. The rich field-by-field builder is coming next — for now you can edit the HTML directly.</div>
       <textarea name="body" defaultValue={body} rows={16} placeholder="<article class=&quot;cs-study&quot;>…</article>" className="dash-mono" />
 
-      <button type="submit" className="dash-btn dash-btn--primary">{original ? 'Save changes' : 'Create case study'}</button>
+      <SubmitButton label={original ? 'Save changes' : 'Create case study'} />
     </form>
   );
 }

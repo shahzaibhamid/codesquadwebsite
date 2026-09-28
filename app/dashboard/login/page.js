@@ -17,7 +17,7 @@ export default function LoginPage({ searchParams }) {
         <input type="hidden" name="next" value={next} />
         <label htmlFor="password">Password</label>
         <input id="password" name="password" type="password" autoFocus placeholder="••••••••" />
-        {err ? <div className="dash-login__err">Wrong password. Try again.</div> : null}
+        {err ? <div className="dash-login__err">{err === 'config' ? 'The dashboard is not configured: set DASHBOARD_PASSWORD and DASHBOARD_SECRET on the server.' : 'Wrong password. Try again.'}</div> : null}
         <button type="submit" className="dash-btn dash-btn--primary">→ Log in</button>
       </form>
     </div>

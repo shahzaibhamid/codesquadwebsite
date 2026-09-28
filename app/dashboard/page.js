@@ -1,23 +1,24 @@
-import { getPosts, canWrite, isLive } from '../../lib/store';
+import { getPosts } from '../../lib/store';
 import { deletePostAction } from './actions';
+import StoreStatus from '../../components/dash/StoreStatus';
 
 export const dynamic = 'force-dynamic';
 
-export default async function PostsPage() {
-  const posts = await getPosts();
+export default async function PostsPage({ searchParams }) {
+  let posts = [];
+  let loadError = '';
+  try { posts = await getPosts({ strict: true }); } catch (e) { loadError = e.message; }
+  const flash = {
+    error: searchParams?.error,
+    ok: searchParams?.saved ? `✓ Saved “${searchParams.saved}”. It is live on /blog now.` : searchParams?.deleted ? `✓ Deleted “${searchParams.deleted}”.` : '',
+  };
   return (
     <div className="dash-wrap">
       <div className="dash-head">
         <h1>Blog posts</h1>
         <a href="/dashboard/new" className="dash-btn dash-btn--primary">+ New post</a>
       </div>
-      {isLive() ? (
-        <div className="dash-note">✓ Connected to Supabase — create, edit and delete save live to your site.</div>
-      ) : !canWrite() ? (
-        <div className="dash-note dash-note--warn">Read-only on the live site — connect Supabase to create, edit and delete here.</div>
-      ) : (
-        <div className="dash-note">Saving locally to your project files. Create, edit and delete work right away.</div>
-      )}
+      <StoreStatus loadError={loadError} flash={flash} />
       <div className="dash-table">
         <div className="dash-tr dash-tr--head"><span>Title</span><span>Category</span><span>Date</span><span>Actions</span></div>
         {posts.map((p) => (
@@ -32,7 +33,7 @@ export default async function PostsPage() {
             </span>
           </div>
         ))}
-        {posts.length === 0 ? <div className="dash-empty">No posts yet.</div> : null}
+        {posts.length === 0 && !loadError ? <div className="dash-empty">No posts yet.</div> : null}
       </div>
     </div>
   );

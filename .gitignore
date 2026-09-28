@@ -8,7 +8,9 @@ npm-debug.log*
 /.vercel
 .vercel
 
-.env.local
-.env*.local
+# secrets: env files (the names-only template is committed)
+.env
+.env.*
+!.env.example
 
 admin/password.txt

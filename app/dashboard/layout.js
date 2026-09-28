@@ -1,6 +1,8 @@
 import DashNav from '../../components/DashNav';
 
 export const dynamic = 'force-dynamic';
+// Never serve the dashboard from Next's data cache.
+export const fetchCache = 'force-no-store';
 
 export const metadata = {
   title: 'Dashboard | CodeSquad',

@@ -40,14 +40,30 @@ npm run dev
 ```
 Open http://localhost:3000
 
-## Build & deploy
-```bash
-npm run build
-```
-```bash
-vercel --prod
-```
-Vercel builds it as a Next.js app (framework preset: **Next.js**).
+## Deploy on a new host (any Node.js 18+ host)
+The blog, case studies and uploaded images live in **Supabase** (tables `medspa_posts`,
+`medspa_case_studies`, `medspa_leads`, storage bucket `medspa-uploads`). Production never
+writes to the project files. Local-file mode only works in `npm run dev` without Supabase.
+
+1. **Set the environment variables** on the host (names in `.env.example`). They must be set
+   *before* `npm run build`, because `NEXT_PUBLIC_SUPABASE_URL` is baked in at build time.
+   - `NEXT_PUBLIC_SUPABASE_URL`: Supabase → Project Settings → API → Project URL
+   - `SUPABASE_SERVICE_ROLE_KEY`: the **service_role** (secret) key, *not* the anon key. It is server-only.
+   - `DASHBOARD_PASSWORD`: the `/dashboard` login password
+   - `DASHBOARD_SECRET`: a long random string (e.g. `openssl rand -hex 32`); used as the login cookie
+2. **Run `supabase/setup.sql` once** in Supabase → SQL Editor. It is safe to re-run, and it repairs older tables.
+3. **Run the migration once** to copy the original posts and case studies into Supabase:
+   ```bash
+   node scripts/migrate-to-supabase.mjs
+   ```
+   It only adds rows that are missing, so it never overwrites dashboard edits. `--force` resets the rows to the file versions.
+4. **Build and start:**
+   ```bash
+   npm run build && npm start
+   ```
+
+Open `/dashboard`. It must say **✓ Connected to Supabase**. If anything is wrong, it shows the
+exact Supabase error and how to fix it.
 
 ## Editing
 - **Nav / footer / contact details:** edit `components/Header.js` / `Footer.js` once.
