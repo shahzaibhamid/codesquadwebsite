@@ -114,6 +114,20 @@ export async function deletePostAction(formData) {
   redirect(`/dashboard?deleted=${encodeURIComponent(slug)}`);
 }
 
+// Copies the original posts + case studies into Supabase (missing rows only).
+export async function importOriginalsAction() {
+  const blocked = writeBlocker();
+  if (blocked === NOT_AUTHED) redirect('/dashboard/login');
+  let error = blocked;
+  let counts;
+  if (!error) {
+    try { counts = await store.importBundledContent(); } catch (e) { console.error('[dashboard] import failed:', e); error = e.message || 'Import failed.'; }
+  }
+  if (error) redirect(`/dashboard?error=${encodeURIComponent(error)}`);
+  refreshPosts(...store.bundledPostSlugs()); refreshCases(...store.bundledCaseSlugs());
+  redirect(`/dashboard?imported=${counts.posts}-${counts.cases}`);
+}
+
 // ============ CASE STUDIES ============
 export async function saveCaseAction(_prev, formData) {
   const blocked = writeBlocker();

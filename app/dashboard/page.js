@@ -1,5 +1,5 @@
-import { getPosts } from '../../lib/store';
-import { deletePostAction } from './actions';
+import { getPosts, isLive, bundledPostSlugs } from '../../lib/store';
+import { deletePostAction, importOriginalsAction } from './actions';
 import StoreStatus from '../../components/dash/StoreStatus';
 
 export const dynamic = 'force-dynamic';
@@ -10,8 +10,9 @@ export default async function PostsPage({ searchParams }) {
   try { posts = await getPosts({ strict: true }); } catch (e) { loadError = e.message; }
   const flash = {
     error: searchParams?.error,
-    ok: searchParams?.saved ? `✓ Saved “${searchParams.saved}”. It is live on /blog now.` : searchParams?.deleted ? `✓ Deleted “${searchParams.deleted}”.` : '',
+    ok: searchParams?.imported ? `✓ Import finished — Supabase now has ${String(searchParams.imported).replace('-', ' posts and ')} case studies.` : searchParams?.saved ? `✓ Saved “${searchParams.saved}”. It is live on /blog now.` : searchParams?.deleted ? `✓ Deleted “${searchParams.deleted}”.` : '',
   };
+  const missing = isLive() && !loadError ? bundledPostSlugs().filter((s) => !posts.some((p) => p.slug === s)).length : 0;
   return (
     <div className="dash-wrap">
       <div className="dash-head">
@@ -19,6 +20,12 @@ export default async function PostsPage({ searchParams }) {
         <a href="/dashboard/new" className="dash-btn dash-btn--primary">+ New post</a>
       </div>
       <StoreStatus loadError={loadError} flash={flash} />
+      {missing ? (
+        <form action={importOriginalsAction} className="dash-note dash-note--warn dash-import">
+          <span>{missing} of the site&apos;s original posts are not in Supabase yet, so they are missing from /blog.</span>
+          <button type="submit" className="dash-btn dash-btn--primary dash-btn--sm">Import original posts</button>
+        </form>
+      ) : null}
       <div className="dash-table">
         <div className="dash-tr dash-tr--head"><span>Title</span><span>Category</span><span>Date</span><span>Actions</span></div>
         {posts.map((p) => (

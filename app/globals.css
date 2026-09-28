@@ -2007,3 +2007,4 @@ h1.hero-title--outcome{max-width:18ch;font-size:clamp(30px,4.2vw,54px);line-heig
 @media (max-width:760px){.inq-sec{padding-top:110px}}
 .dash-lead-detail{display:flex;flex-wrap:wrap;gap:6px 18px;padding:0 16px 14px;font-size:13px;color:#5b6b7f;border-bottom:1px solid #eef2f7}
 .dash-lead-detail p{flex-basis:100%;margin:2px 0 0;color:#3a4a5f;white-space:pre-wrap}
+.dash-import{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
