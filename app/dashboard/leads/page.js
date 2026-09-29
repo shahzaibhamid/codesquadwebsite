@@ -1,21 +1,26 @@
 import { getLeads, isLive } from '../../../lib/store';
+import { deleteLeadAction } from '../actions';
 
 export const dynamic = 'force-dynamic';
 
-export default async function LeadsPage() {
+export default async function LeadsPage({ searchParams }) {
   let leads = [];
   let loadError = '';
   try { leads = await getLeads(); } catch (e) { loadError = e.message; }
+  const flashError = searchParams?.error;
+  const flashOk = searchParams?.deleted ? '✓ Lead deleted.' : '';
   return (
     <div className="dash-wrap">
       <div className="dash-head"><h1>Leads</h1></div>
+      {flashError ? <div className="dash-note dash-note--err" role="alert">{flashError}</div> : null}
+      {flashOk ? <div className="dash-note dash-note--ok" role="status">{flashOk}</div> : null}
       {loadError ? (
         <div className="dash-note dash-note--err" role="alert">{loadError}</div>
       ) : (
         <div className="dash-note">Inquiries from the <a href="/inquiry" target="_blank" rel="noopener">/inquiry</a> page. {isLive() ? 'Saved in Supabase.' : 'Local development: saved to content/leads.json.'}</div>
       )}
       <div className="dash-table">
-        <div className="dash-tr dash-tr--head dash-tr--leads"><span>Name</span><span>Email</span><span>Source</span><span>Date</span></div>
+        <div className="dash-tr dash-tr--head dash-tr--leads"><span>Name</span><span>Email</span><span>Source</span><span>Date</span><span>Actions</span></div>
         {leads.map((l, i) => {
           const p = l.payload || {};
           return (
@@ -25,6 +30,9 @@ export default async function LeadsPage() {
                 <span className="dash-muted">{l.email ? <a href={`mailto:${l.email}`}>{l.email}</a> : '—'}</span>
                 <span><span className="dash-pill">{l.source || '—'}</span></span>
                 <span className="dash-muted">{l.date || '—'}</span>
+                <span className="dash-actions">
+                  <form action={deleteLeadAction}><input type="hidden" name="id" value={l.id ?? ''} /><button type="submit" className="dash-del">Delete</button></form>
+                </span>
               </div>
               {p.phone || p.business || p.message ? (
                 <div className="dash-lead-detail">

@@ -128,6 +128,19 @@ export async function importOriginalsAction() {
   redirect(`/dashboard?imported=${counts.posts}-${counts.cases}`);
 }
 
+// ============ LEADS ============
+export async function deleteLeadAction(formData) {
+  const blocked = writeBlocker();
+  if (blocked === NOT_AUTHED) redirect('/dashboard/login');
+  const id = String(formData.get('id') || '');
+  let error = blocked;
+  if (!error) {
+    try { await store.deleteLead(id); } catch (e) { console.error('[dashboard] deleteLead failed:', e); error = e.message || 'Delete failed.'; }
+  }
+  revalidatePath('/dashboard/leads');
+  redirect(error ? `/dashboard/leads?error=${encodeURIComponent(error)}` : '/dashboard/leads?deleted=1');
+}
+
 // ============ CASE STUDIES ============
 export async function saveCaseAction(_prev, formData) {
   const blocked = writeBlocker();
