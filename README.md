@@ -2,7 +2,7 @@
 
 Marketing site for **CodeSquad**, built with **Next.js 14 (App Router)**. Converted from the original static HTML site.
 
-**Live:** https://medspa-eight.vercel.app
+**Live:** https://www.codesquad.ai
 
 ## Stack
 - Next.js 14 App Router, React 18 — static-generated (SSG) pages
