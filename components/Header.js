@@ -21,7 +21,7 @@ export default function Header() {
           <a href="/case-studies">Case Studies</a>
           <a href="/blog">Blog</a>
           <a href="/#contact">Contact</a>
-          <a href="/inquiry" className="btn btn-ghost nav-inquiry">Query Form</a>
+          <a href="/inquiry" className="btn btn-ghost nav-inquiry">Inquiry Form</a>
           <a href="https://calendly.com/code_squad/30min" target="_blank" rel="noopener noreferrer" className="btn btn-dark">Book a Free Call</a>
         </nav>
         <button className="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
