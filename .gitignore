@@ -12,5 +12,5 @@ npm-debug.log*
 .env
 .env.*
 !.env.example
-
+.env.local
 admin/password.txt
