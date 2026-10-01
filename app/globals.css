@@ -792,7 +792,13 @@ button,a,.btn{-webkit-tap-highlight-color:transparent}
 .cs-study-benchmark__caption{max-width:780px;margin:22px 0 0;color:#8a8f97;font-size:12.5px;font-style:italic}
 .cs-study-cta{padding:110px 0;background:#e5f0fb;text-align:center}
 .cs-study-cta p{margin:0 0 15px;color:#1e3a5f;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
-.cs-study-cta h2{max-width:800px;margin:0 auto 34px;font-size:clamp(36px,5vw,64px);line-height:1.03;letter-spacing:-.05em;text-wrap:balance}
+.cs-study-cta h2{max-width:800px;margin:0 auto 34px;color:var(--cs-heading);font-size:clamp(36px,5vw,64px);line-height:1.03;letter-spacing:-.05em;text-wrap:balance}
+/* plain-text case study bodies wrapped in the cs-study layout */
+.cs-study .cs-article{max-width:760px;margin:0 auto}
+.cs-study .cs-article h2{color:var(--cs-heading)}
+.cs-study .cs-article ul{padding-left:22px;margin:0 0 20px}
+.cs-study .cs-article blockquote{margin:36px 0;padding:22px 26px;border-left:3px solid #1e3a5f;background:#f4f7fb;border-radius:0 12px 12px 0;color:var(--cs-heading);font-size:19px}
+.cs-study .cs-article blockquote span{display:block;margin-top:10px;color:var(--cs-muted);font-size:14px}
 .cs-study-cta__actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px}
 .cs-study-media{background:#fff}
 .cs-study-media__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:50px}

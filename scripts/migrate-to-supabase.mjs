@@ -2,6 +2,9 @@
 // Run:  node scripts/migrate-to-supabase.mjs            (adds rows that are missing — safe to re-run)
 //       node scripts/migrate-to-supabase.mjs --force    (also OVERWRITES existing rows with the file
 //                                                        versions, undoing edits made in the dashboard)
+//       node scripts/migrate-to-supabase.mjs --restore-case-layouts
+//                                                       (only puts the designed case-study layout back on
+//                                                        rows whose body is plain text; nothing else changes)
 // Env: NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY from the environment or .env.local.
 import { readFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
@@ -10,6 +13,7 @@ import { createClient } from '@supabase/supabase-js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FORCE = process.argv.includes('--force');
+const RESTORE_CASES = process.argv.includes('--restore-case-layouts');
 
 const env = { ...process.env };
 const envFile = join(ROOT, '.env.local');
@@ -29,6 +33,24 @@ const sb = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_
 const readBody = (dir, slug) => { const f = join(ROOT, 'content', dir, `${slug}.html`); return existsSync(f) ? readFileSync(f, 'utf8').replace(/\r\n/g, '\n') : ''; };
 const posts = JSON.parse(readFileSync(join(ROOT, 'lib', 'data', 'blog-posts.json'), 'utf8'));
 const cases = JSON.parse(readFileSync(join(ROOT, 'lib', 'data', 'case-studies.json'), 'utf8'));
+
+// Same as the dashboard's "Restore designed layout" (restoreCaseLayouts in lib/store.js).
+if (RESTORE_CASES) {
+  const designed = (html) => /class="cs-study"/.test(String(html || ''));
+  const { data, error } = await sb.from('medspa_case_studies').select('slug,body');
+  if (error) { console.error('cases error:', error.message, error.code || ''); process.exit(1); }
+  const restored = [];
+  for (const row of data || []) {
+    if (designed(row.body)) continue;
+    const file = readBody('case-studies', row.slug);
+    if (!designed(file)) continue;
+    const up = await sb.from('medspa_case_studies').update({ body: file, updated_at: new Date().toISOString() }).eq('slug', row.slug);
+    if (up.error) { console.error(`restore "${row.slug}" error:`, up.error.message); process.exit(1); }
+    restored.push(row.slug);
+  }
+  console.log(`✓ restored designed layout on ${restored.length} case studies${restored.length ? ': ' + restored.join(', ') : ''}`);
+  process.exit(0);
+}
 
 // Order old posts by their publish date so they sort sensibly next to new ones.
 const base = Date.now();
