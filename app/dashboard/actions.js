@@ -128,6 +128,20 @@ export async function importOriginalsAction() {
   redirect(`/dashboard?imported=${counts.posts}-${counts.cases}`);
 }
 
+// Replaces plain-text case study bodies with the designed layouts bundled with the site.
+export async function restoreCaseLayoutsAction() {
+  const blocked = writeBlocker();
+  if (blocked === NOT_AUTHED) redirect('/dashboard/login');
+  let error = blocked;
+  let restored = [];
+  if (!error) {
+    try { restored = await store.restoreCaseLayouts(); } catch (e) { console.error('[dashboard] restoreCaseLayouts failed:', e); error = e.message || 'Restore failed.'; }
+  }
+  if (error) redirect(`/dashboard/case-studies?error=${encodeURIComponent(error)}`);
+  refreshCases(...restored);
+  redirect(`/dashboard/case-studies?restored=${restored.length}`);
+}
+
 // ============ LEADS ============
 export async function deleteLeadAction(formData) {
   const blocked = writeBlocker();
