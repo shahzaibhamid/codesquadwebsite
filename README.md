@@ -19,7 +19,6 @@ app/
   aesthetics/page.js     /aesthetics
   ecommerce/page.js      /ecommerce
   agriculture/page.js    /agriculture
-  visibility-engine/page.js  /visibility-engine
 components/
   Header.js  Footer.js  MobileCta.js       shared chrome (edit once, applies everywhere)
   Scripts.js ('use client')                reveal, nav dropdown, scroll-spy, count-up, charts
