@@ -1,10 +1,18 @@
 [
   {
+    "slug": "microneedling-seo-med-spas",
+    "cat": "AI Automation",
+    "date": "September 21, 2026",
+    "title": "From “Microneedling Near Me” to Booked: The SEO Strategy for Med Spas",
+    "excerpt": "Discover how med spas can use microneedling SEO, local search, Google Ads, and AI-focused search strategies to turn online searches into new patient opportunities.",
+    "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1790081842932-3deaf036-ad0d-4398-94f9-cc3ef2f55262.jpg"
+  },
+  {
     "slug": "saas-ai-recommendations-seo-ai-search",
     "cat": "AEO / SEO",
     "date": "September 2, 2026",
     "title": "Your SaaS Is Being Recommended by AI — But Is It Being Recommended to Your Customers?",
-    "excerpt": "Traditional SEO gets you into search results. AI-powered discovery is changing the game by deciding which SaaS companies make the shortlist. Learn the 7 strategies that can help your SaaS become easier for AI systems to understand, trust, and recommend.",
+    "excerpt": "Traditional SEO gets you into search results. AI-powered discovery is changing the game by deciding which SaaS companies make the shortlist. Learn the 7 strategies that can help your SaaS become easier for AI systems to understand, trust, and recommend.\r\n",
     "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788357100616-d8383907-32be-40ef-ade7-3103e88b9e85.png"
   },
   {
@@ -36,7 +44,7 @@
     "cat": "AI Automation",
     "date": "August 10, 2026",
     "title": "One Prompt, One Studio: How HyperFrames + Claude Turn Anyone Into a Video Editor",
-    "excerpt": "HyperFrames pairs with Claude Code to replace the editing timeline with plain-English prompts. Here’s how the open-source tool works, and what it means for SMEs producing video on a budget.",
+    "excerpt": "HyperFrames pairs with Claude Code to replace the editing timeline with plain-English prompts. Here's how the open-source tool works, and what it means for SMEs producing video on a budget.",
     "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1786444953594-5301f83a-6d7e-4034-ac05-a5923de4e9c7.jpg"
   },
   {
@@ -52,8 +60,8 @@
     "cat": "AI Automation",
     "date": "August 7, 2026",
     "title": "How Businesses Are Losing Money Without Realizing It: The Hidden Cost of Slow Lead Response",
-    "excerpt": "Businesses can spend thousands of dollars on advertising and generate plenty of leads — yet still lose potential customers because they respond too slowly and lack visibility across their sales and marketing systems. Learn how faster lead response and centralized business visibility can help reduce wasted spending and improve growth.",
-    "img": "https://img.youtube.com/vi/vsZ4OUEkEsI/hqdefault.jpg"
+    "excerpt": "Businesses can spend thousands of dollars on advertising and generate plenty of leads—yet still lose potential customers because they respond too slowly and lack visibility across their sales and marketing systems. Learn how faster lead response and centralized business visibility can help reduce wasted spending and improve growth.",
+    "img": ""
   },
   {
     "slug": "stop-chasing-ai-trends-ai-implementation-guide",
@@ -77,6 +85,6 @@
     "date": "July 6, 2026",
     "title": "Why SMEs Need Digital Transformation to Stay Competitive",
     "excerpt": "Small and medium-sized enterprises are the backbone of every growing economy. But staying competitive in a digital-first market now means adopting automation, AI, and data-driven systems.",
-    "img": "https://img.youtube.com/vi/yNcH6YD7ZBA/hqdefault.jpg"
+    "img": ""
   }
 ]
