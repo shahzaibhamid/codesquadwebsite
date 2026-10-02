@@ -1,0 +1,55 @@
+# CodeSquad
+
+> CodeSquad is an AI automation and software development agency that builds connected growth systems — websites, CRM/dashboards, Google & Meta ads, AI agents/automation, and SEO/AEO/GEO content — for clinics, med spas, dental practices, e-commerce brands, and IT & engineering companies. Systems are built into the client's existing stack (no rip-and-replace) and handed over as theirs to run. Founded by Shahzaib Hamid (PhD, Applied AI); team of 10 engineers based in Lahore, Pakistan, serving clients across the US, Canada, UK and UAE.
+
+For the complete, unabridged text of every page, case study and article on this site in one file, see [/llms-full.txt](https://www.codesquad.ai/llms-full.txt).
+
+## Company
+
+- [Home](https://www.codesquad.ai/): Overview of CodeSquad's growth systems, capabilities (websites/software, CRM & dashboards, Google/Meta ads, SEO·AEO·GEO, AI agents & automation, marketing intelligence), headline case studies, client metrics and testimonials.
+- [Founder — Shahzaib Hamid](https://www.codesquad.ai/founder): Founder & CEO profile — PhD in Applied AI, prior clinical gait-analysis research (IEEE Access 2024, ICT Express 2026), 10-person engineering team, publications and background.
+- [How Our Process Works](https://www.codesquad.ai/process): The two-phase engagement model — a one-time Build phase (audit, CRM/stack setup, website, automations, campaign launch, training) followed by a monthly Grow retainer (ad management, optimization, content/SEO·AEO·GEO, reporting) — plus the 5-step delivery timeline and FAQ on pricing, contracts and timelines.
+- [Send an Inquiry](https://www.codesquad.ai/inquiry): Contact/consultation request form; replies within one business day. Also bookable directly via Calendly (https://calendly.com/code_squad/30min).
+
+## Industries
+
+- [Industry Solutions Overview](https://www.codesquad.ai/industry): The same connected growth engine configured for three verticals — Aesthetics/Medical Clinics, E-commerce, and IT & Engineering.
+- [Aesthetics & Medical Clinics](https://www.codesquad.ai/aesthetics): Patient-acquisition system for med spas, aesthetic/laser clinics and cosmetic dermatology — treatment-based Google Ads, 3-second lead response, 14-day automated nurture, SEO/AEO/GEO content and booking, built into existing booking software (e.g. PatientNow).
+- [Clinics & Dental Practices](https://www.codesquad.ai/clinics): The same patient-growth system tailored to small medical clinics and dental practices — local Google Ads, instant follow-up and online booking built into the practice software already in use.
+- [E-commerce Growth System](https://www.codesquad.ai/ecommerce): Growth system for online stores and DTC brands — Shopping/search ads, abandoned-cart and post-purchase flows, email/SMS marketing, and unified ROAS/LTV analytics.
+- [IT & Engineering Growth System](https://www.codesquad.ai/it-engineering): Web/software development, CRM, AI agents & automation, IoT integrations and SEO/AEO/GEO for IT firms, engineering companies and technical teams; plans from $499/mo.
+
+## Case Studies
+
+- [Harmony MedSpa](https://www.codesquad.ai/case-studies/harmony-medspa-patient-growth-automation): 24/7 patient-growth and follow-up system for a Sarasota, FL med spa — 60-second lead response, 14-day nurture, 60+ leads and 6–7 new patients in 2 months, ~$50 cost per lead.
+- [CareInn Dental Clinic](https://www.codesquad.ai/case-studies/careinn-dental-clinic): Patient-growth system live before the clinic's first day of operation — automated capture, 60-second response, 14-day follow-up, growing patient volume from zero.
+- [ENERGYbits](https://www.codesquad.ai/case-studies/energybits): Marketing-intelligence platform unifying 15+ ad/content platforms with automated blog pipelines and pre-publish SEO/AEO/GEO scoring for a DTC wellness brand.
+- [iPromo](https://www.codesquad.ai/case-studies/ipromo): Automated product-of-the-month image pipeline integrated with Salesforce and email for a 25-year-old B2B promotional-products company.
+- [GengyveUSA](https://www.codesquad.ai/case-studies/gengyveusa): Unified SEO, paid-ads and review-analysis intelligence layer for a veteran-owned healthcare e-commerce/oral-care brand.
+- [Modern Law](https://www.codesquad.ai/case-studies/modern-law): Self-publishing content engine generating blogs, social posts and images across four law-firm brands from one pipeline.
+- [TriState Auto Sales](https://www.codesquad.ai/case-studies/tristate-auto-sales): Omnichannel AI chatbot and CRM system unifying website chat, social and phone conversations into one lead-routing and booking pipeline for an auto dealer.
+- [RTM Kinetics](https://www.codesquad.ai/case-studies/rtm-kinetics): Patient CRM and remote-monitoring system for physical therapy — lead capture, automated reconnect campaigns and real-time therapist dashboards.
+- [Law Signal](https://www.codesquad.ai/case-studies/law-signal): Automated pipeline turning law-firm case files into press-ready videos, releases and SEO/AEO-optimized publishing, synced with the firm's CRM.
+- [Mama's Compass](https://www.codesquad.ai/case-studies/mamas-compass): AI-scored product aggregation and comparison platform pulling live pricing/stock data from multiple retailers, with auto-generated SEO content.
+- [SettleIn](https://www.codesquad.ai/case-studies/settlein): OCR- and AI-driven document processing and eligibility-scoring platform replacing manual application review.
+- [Debate Partners](https://www.codesquad.ai/case-studies/debate-partners): AI case-generation and CRM/billing platform for competitive debate teams — turns research sources into evidence-backed, citation-ready cases.
+- [All Case Studies](https://www.codesquad.ai/case-studies): Full index of production systems built for healthcare, legal, automotive, e-commerce and other clients.
+
+## Blog
+
+- [All Articles](https://www.codesquad.ai/blog): Practical perspectives on AI automation, SMEs, AEO/SEO, lead generation, software development and scaling operations.
+- [Your SaaS Is Being Recommended by AI](https://www.codesquad.ai/blog/saas-ai-recommendations-seo-ai-search): Seven strategies to make a SaaS product easier for AI assistants (ChatGPT, Claude, Gemini) to understand, trust and recommend to buyers.
+- [The Fully-Booked Business](https://www.codesquad.ai/blog/the-fully-booked-business): A ten-question self-assessment for med spas, clinics, salons and wellness businesses to find where interested leads quietly disappear.
+- [SEO Isn't Dead — But Your SaaS SEO Playbook Probably Is](https://www.codesquad.ai/blog/ai-seo-for-saas): The 2026 AI-SEO playbook for SaaS — extractable content, original data, comparison pages, transparent pricing and measuring AI citations.
+- [I Used Claude to Turn a Messy Spreadsheet Into a Useful Dashboard](https://www.codesquad.ai/blog/claude-messy-spreadsheet-to-dashboard): A step-by-step walkthrough of cleaning inconsistent spreadsheet data with Claude and building a live dashboard from it.
+- [One Prompt, One Studio: HyperFrames + Claude Video Creation Guide](https://www.codesquad.ai/blog/hyperframes-claude-ai-video-creation-guide): How the open-source HyperFrames framework paired with Claude Code turns plain-English prompts into edited, rendered video.
+- [SEO, AEO and GEO: A Beginner's Guide to AI Search](https://www.codesquad.ai/blog/seo-aeo-geo-ai-search-guide-2): How SEO, Answer Engine Optimization and Generative Engine Optimization work together to get a business found by Google and recommended by AI Overviews, ChatGPT and Gemini.
+- [How Businesses Lose Money to Slow Lead Response](https://www.codesquad.ai/blog/how-businesses-lose-money-slow-lead-response): Why slow follow-up and fragmented sales/marketing visibility silently cost businesses paid-for leads, and how centralized dashboards fix it.
+- [Stop Chasing AI Trends](https://www.codesquad.ai/blog/stop-chasing-ai-trends-ai-implementation-guide): How to identify the automations that create measurable ROI instead of chasing every new AI trend.
+- [Why SMEs Need Digital Transformation](https://www.codesquad.ai/blog/why-smes-need-digital-transformation): Why small and medium businesses need automation, AI and data-driven systems to stay competitive.
+- [From "Microneedling Near Me" to Booked: The SEO Strategy for Med Spas](https://www.codesquad.ai/blog/microneedling-seo-med-spas): How med spas connect microneedling search demand to booked appointments — service pages, local SEO, AEO/GEO, Google Ads, and lead follow-up automation.
+
+## Optional
+
+- [Sitemap](https://www.codesquad.ai/sitemap.xml): Full XML sitemap of indexable pages.
+- [robots.txt](https://www.codesquad.ai/robots.txt): Crawler access rules (dashboard/admin areas excluded; AI crawlers explicitly allowed).
