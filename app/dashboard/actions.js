@@ -190,6 +190,61 @@ export async function deleteCaseAction(formData) {
   redirect('/dashboard/case-studies');
 }
 
+// ============ VIDEOS ============
+const DESTINATIONS = ['tiktok', 'youtube', 'facebook'];
+
+// Step 1: returns { path, signedUrl } for a direct browser → Supabase upload, or { error }.
+export async function createVideoUploadAction({ name, type, size, topic } = {}) {
+  const blocked = writeBlocker();
+  if (blocked) return { error: blocked };
+  try {
+    return await store.createVideoUpload({ name, type, size, topic });
+  } catch (e) {
+    console.error('[dashboard] createVideoUpload failed:', e);
+    return { error: e.message || 'Could not start the upload.' };
+  }
+}
+
+// Step 2: after the browser upload finishes, sends the public link to Make.com.
+// Also used by the form's "Retry webhook" button (no re-upload needed).
+export async function sendVideoToWebhookAction({ path, destinations, tone } = {}) {
+  const blocked = writeBlocker();
+  if (blocked) return { error: blocked };
+  const webhookUrl = process.env.MAKE_VIDEO_WEBHOOK_URL;
+  if (!webhookUrl) {
+    return { error: 'MAKE_VIDEO_WEBHOOK_URL is not configured in .env', canRetry: true };
+  }
+  const cleanTone = String(tone || '').trim().slice(0, 500);
+  const dest = [...new Set((Array.isArray(destinations) ? destinations : []).map(String))].filter((d) => DESTINATIONS.includes(d));
+  if (!dest.length) return { error: 'Choose at least one destination.' };
+  if (!cleanTone) return { error: 'Please enter a tone.' };
+
+  let video_url;
+  try {
+    video_url = await store.getVideoPublicUrl(path);
+  } catch (e) {
+    console.error('[dashboard] video check failed:', e);
+    return { error: e.message || 'The uploaded video could not be found.' };
+  }
+
+  const payload = { video_url, destinations: dest, tone: cleanTone };
+  try {
+    const res = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      cache: 'no-store',
+      signal: AbortSignal.timeout(20000),
+    });
+    if (!res.ok) throw new Error(`Make.com responded ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  } catch (e) {
+    console.error('[dashboard] video webhook failed:', e);
+    const reason = e.name === 'TimeoutError' ? 'Make.com did not respond within 20 seconds.' : e.message;
+    return { error: `Video saved, but sending it to Make.com failed: ${reason}`, publicUrl: video_url, canRetry: true };
+  }
+  return { ok: true, publicUrl: video_url };
+}
+
 function ytThumb(url) {
   const u = String(url || '');
   const m = u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);

@@ -7,6 +7,7 @@ const links = [
   { href: '/dashboard/new', label: 'New post' },
   { href: '/dashboard/case-studies', label: 'Case studies' },
   { href: '/dashboard/leads', label: 'Leads' },
+  { href: '/dashboard/videos', label: 'Videos' },
 ];
 
 export default function DashNav() {
