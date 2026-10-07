@@ -1,6 +1,7 @@
 'use client';
 import { useFormState, useFormStatus } from 'react-dom';
 import { submitInquiryAction } from '../app/inquiry/actions';
+import { PHONE_PATTERN, PHONE_MAX_LENGTH, PHONE_HINT } from '../lib/phone';
 
 const BUSINESS_TYPES = ['Med spa / aesthetics', 'Medical clinic', 'Dental practice', 'Salon', 'Dermatology', 'Plastic surgery', 'Weight-loss clinic', 'Wellness center', 'E-commerce', 'IT / software', 'Other'];
 
@@ -22,7 +23,7 @@ export default function InquiryForm() {
     <form className="lead-form" action={formAction}>
       <div className="field"><label htmlFor="inq-name">Full name</label><input type="text" id="inq-name" name="name" placeholder="Jane Smith" required maxLength={120} /></div>
       <div className="field"><label htmlFor="inq-email">Email</label><input type="email" id="inq-email" name="email" placeholder="jane@yourcompany.com" required maxLength={200} /></div>
-      <div className="field"><label htmlFor="inq-phone">Phone</label><input type="tel" id="inq-phone" name="phone" placeholder="(941) 555-0100" maxLength={40} /></div>
+      <div className="field"><label htmlFor="inq-phone">Phone</label><input type="tel" id="inq-phone" name="phone" placeholder="(941) 555-0100" maxLength={PHONE_MAX_LENGTH} autoComplete="tel" inputMode="tel" pattern={PHONE_PATTERN} title={PHONE_HINT} /></div>
       <div className="field"><label htmlFor="inq-business">Business type</label>
         <select id="inq-business" name="business" defaultValue="">
           <option value="" disabled>Select your business type</option>

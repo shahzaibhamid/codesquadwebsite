@@ -1,6 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { submitInquiryAction } from '../app/inquiry/actions';
 
 export default function Scripts() {
   const pathname = usePathname();
@@ -81,11 +82,21 @@ export default function Scripts() {
 
     /* lead form */
     const form = document.getElementById('leadForm');
+    // Saved through the same server action as /inquiry, so these leads show up in the dashboard.
     if (form) on(form, 'submit', async (e) => {
-      if (form.action.includes('your-form-id')) { e.preventDefault(); document.getElementById('formFields').style.display = 'none'; document.getElementById('formOk').style.display = 'block'; return; }
       e.preventDefault();
-      try { const r = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } }); if (r.ok) { document.getElementById('formFields').style.display = 'none'; document.getElementById('formOk').style.display = 'block'; } else form.submit(); }
-      catch (err) { form.submit(); }
+      const btn = form.querySelector('button[type="submit"]'), err = document.getElementById('formErr');
+      const label = btn.textContent;
+      const showError = (msg) => { err.textContent = msg; err.hidden = false; };
+      btn.disabled = true; btn.textContent = 'Sending…'; err.hidden = true;
+      const data = new FormData(form);
+      data.set('page', path);
+      try {
+        const res = await submitInquiryAction({}, data);
+        if (res?.ok) { document.getElementById('formFields').style.display = 'none'; document.getElementById('formOk').style.display = 'block'; }
+        else showError(res?.error || 'Sorry, your request could not be sent right now. Please email info@codesquad.ai.');
+      } catch (_) { showError('Sorry, your request could not be sent right now. Please email info@codesquad.ai or call +1 (307) 396-4945.'); }
+      btn.disabled = false; btn.textContent = label;
     });
 
     /* count-up numbers */
