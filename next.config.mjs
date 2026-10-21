@@ -1,6 +1,18 @@
+import { postRedirects } from './lib/redirects.mjs';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: { unoptimized: true },
+  async redirects() {
+    return [
+      // /aesthetics and /clinics were merged into one healthcare page.
+      { source: '/aesthetics', destination: '/industries/healthcare', statusCode: 301 },
+      { source: '/clinics', destination: '/industries/healthcare', statusCode: 301 },
+      ...Object.entries(postRedirects).map(([from, to]) => ({
+        source: `/blog/${from}`, destination: `/blog/${to}`, statusCode: 301,
+      })),
+    ];
+  },
   experimental: {
     // Dashboard forms send cover images (max 5 MB) and long article bodies through
     // server actions; the default 1 MB limit rejects them.

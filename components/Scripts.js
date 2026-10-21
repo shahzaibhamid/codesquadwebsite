@@ -20,17 +20,27 @@ export default function Scripts() {
       const hp = href.replace(/\/+$/, '') || '/';
       if (hp === path) a.classList.add('active');
     });
-    if (['/industry', '/aesthetics', '/clinics', '/ecommerce', '/it-engineering'].indexOf(path) > -1) {
-      const t = document.querySelector('.nav-drop-toggle'); if (t) t.classList.add('active');
+    document.querySelectorAll('.nav-drop').forEach((d) => {
+      if (d.querySelector('.nav-menu a.active')) d.querySelector('.nav-drop-toggle').classList.add('active');
+    });
+    if (['/industry', '/industries/healthcare', '/ecommerce', '/it-engineering'].indexOf(path) > -1) {
+      const t = document.querySelectorAll('.nav-drop-toggle')[1]; if (t) t.classList.add('active');
+    }
+
+    /* /services used to hold every service as a section; forward its old anchors to the service pages */
+    if (path === '/services') {
+      const moved = { 'ai-automation': 'ai-automation', 'custom-software': 'websites-software', 'crm-integration': 'crm-integration', 'seo-geo-aeo': 'seo-geo-aeo', 'digital-marketing': 'digital-marketing' };
+      const id = location.hash.slice(1);
+      if (Object.prototype.hasOwnProperty.call(moved, id)) location.replace('/services/' + moved[id]);
     }
 
     /* header shrink */
     const header = document.getElementById('header');
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
     on(window, 'scroll', onScrollHeader); onScrollHeader();
-    // white nav text over dark heros (home, aesthetics, case-study detail) until scrolled
-    const darkPaths = ['/', '/aesthetics', '/clinics', '/ecommerce', '/it-engineering', '/industry', '/process', '/blog', '/case-studies', '/inquiry'];
-    const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/');
+    // white nav text over dark heros (home, healthcare, case-study detail) until scrolled
+    const darkPaths = ['/', '/services', '/industries/healthcare', '/ecommerce', '/it-engineering', '/industry', '/process', '/blog', '/case-studies', '/inquiry'];
+    const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/') || path.startsWith('/services/');
     if (header) header.classList.toggle('header-on-dark', darkHero);
 
     /* mobile menu + dropdown */

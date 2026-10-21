@@ -11,11 +11,20 @@ For the complete, unabridged text of every page, case study and article on this 
 - [How Our Process Works](https://www.codesquad.ai/process): The two-phase engagement model — a one-time Build phase (audit, CRM/stack setup, website, automations, campaign launch, training) followed by a monthly Grow retainer (ad management, optimization, content/SEO·AEO·GEO, reporting) — plus the 5-step delivery timeline and FAQ on pricing, contracts and timelines.
 - [Send an Inquiry](https://www.codesquad.ai/inquiry): Contact/consultation request form; replies within one business day. Also bookable directly via Calendly (https://calendly.com/code_squad/30min).
 
+## Services
+
+- [All services](https://www.codesquad.ai/services): Overview of every CodeSquad service, with the Build (one-time) / Grow (monthly retainer) engagement model.
+- [Websites & software](https://www.codesquad.ai/services/websites-software)
+- [CRM & dashboards](https://www.codesquad.ai/services/crm-integration)
+- [Ads — Google & Meta](https://www.codesquad.ai/services/digital-marketing)
+- [SEO · AEO · GEO](https://www.codesquad.ai/services/seo-geo-aeo)
+- [AI agents & automation](https://www.codesquad.ai/services/ai-automation)
+- [Marketing intelligence](https://www.codesquad.ai/services/marketing-intelligence)
+
 ## Industries
 
 - [Industry Solutions Overview](https://www.codesquad.ai/industry): The same connected growth engine configured for three verticals — Aesthetics/Medical Clinics, E-commerce, and IT & Engineering.
-- [Aesthetics & Medical Clinics](https://www.codesquad.ai/aesthetics): Patient-acquisition system for med spas, aesthetic/laser clinics and cosmetic dermatology — treatment-based Google Ads, 3-second lead response, 14-day automated nurture, SEO/AEO/GEO content and booking, built into existing booking software (e.g. PatientNow).
-- [Clinics & Dental Practices](https://www.codesquad.ai/clinics): The same patient-growth system tailored to small medical clinics and dental practices — local Google Ads, instant follow-up and online booking built into the practice software already in use.
+- [Healthcare: Med Spas, Clinics & Dental](https://www.codesquad.ai/industries/healthcare): Patient-acquisition system for med spas, aesthetic/laser clinics, cosmetic dermatology, medical clinics and dental practices — treatment-based and local Google Ads, 3-second lead response, 14-day automated nurture, SEO/AEO/GEO content and booking, built into existing booking and practice software (e.g. PatientNow).
 - [E-commerce Growth System](https://www.codesquad.ai/ecommerce): Growth system for online stores and DTC brands — Shopping/search ads, abandoned-cart and post-purchase flows, email/SMS marketing, and unified ROAS/LTV analytics.
 - [IT & Engineering Growth System](https://www.codesquad.ai/it-engineering): Web/software development, CRM, AI agents & automation, IoT integrations and SEO/AEO/GEO for IT firms, engineering companies and technical teams; plans from $499/mo.
 

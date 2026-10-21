@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation';
 import { getPosts, getPost } from '../../../lib/store';
+import { postRedirects } from '../../../lib/redirects.mjs';
 
 export const revalidate = 30;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const posts = await getPosts();
-  return posts.map((p) => ({ slug: p.slug }));
+  return posts.filter((p) => !postRedirects[p.slug]).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }) {

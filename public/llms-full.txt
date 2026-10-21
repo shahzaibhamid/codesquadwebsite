@@ -382,7 +382,7 @@ HyperFrames is a free, open-source video framework built by HeyGen. Paired with 
 **Takeaway:** tools that used to require a specialist and a production budget now run on a laptop and a clear prompt — the same automation shift CodeSquad builds toward, applied to video.
 
 ### SEO Is No Longer Enough: A Beginner's Guide to AEO and GEO in the Age of AI Search
-*AEO / SEO · August 10, 2026 (v2) and July 27, 2026 (original) · /blog/seo-aeo-geo-ai-search-guide-2 and /blog/seo-aeo-geo-ai-search-guide*
+*AEO / SEO · August 10, 2026 · /blog/seo-aeo-geo-ai-search-guide-2*
 
 **Traditional SEO** (Search Engine Optimization) has four areas: Technical SEO (fast loading, mobile-friendly, crawlable, HTTPS, clean architecture, canonical URLs, sitemaps, structured data), On-page SEO (titles, headings, keywords, URLs, internal links, alt text, meta descriptions), Off-page SEO (backlinks, brand mentions, reviews, directories, partnerships, media coverage), Content SEO (service pages, comparison guides, tutorials, case studies, FAQs, original research).
 
@@ -453,8 +453,7 @@ Patients search for microneedling at different decision stages — location-base
 
 - / — Home
 - /industry — Industry Solutions overview
-- /aesthetics — Aesthetics / Medical Clinics
-- /clinics — Clinics & Dental
+- /industries/healthcare — Healthcare (med spas, clinics & dental)
 - /ecommerce — E-commerce
 - /it-engineering — IT & Engineering
 - /process — How the growth system works

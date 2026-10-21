@@ -1,4 +1,4 @@
-// Copy + data for /aesthetics. No markup here — see lib/patientAcquisitionPage.js for rendering.
+// Med spa / aesthetics copy + data, used by /industries/healthcare and the /process clinic tab.
 export default {
   hero: {
     bgVideo: '/hero.mp4',
@@ -96,7 +96,7 @@ export default {
     { q: 'How fast do new enquiries get a response?', a: "Within seconds, day or night, by SMS and email. Anyone who doesn't book gets a 14-day nurture that stops the instant they do." },
     { q: 'How is it priced?', a: "A one-time build fee covers the audit, setup and launch. After that it's a monthly growth retainer with no long-term lock-in. Third-party tools (ad spend, CRM licences, SMS/email credits) are billed separately. <a href=\"/process\" style=\"color:var(--accent-deep);font-weight:700\">See what each phase includes</a>." },
     { q: 'Is this compliant with health-advertising rules?', a: "Yes. Campaigns follow Google's restricted-health advertising rules, and conversions only count confirmed leads." },
-    { q: 'What kinds of practices is this for?', a: 'Med spas, aesthetic and laser clinics, cosmetic dermatology, weight-loss and wellness studios. Run a medical or dental clinic? <a href="/clinics" style="color:var(--accent-deep);font-weight:700">See Clinics &amp; Dental</a>.' }
+    { q: 'What kinds of practices is this for?', a: 'Med spas, aesthetic and laser clinics, cosmetic dermatology, weight-loss and wellness studios.' }
   ],
   proofQuotes: [
     {

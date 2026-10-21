@@ -17,7 +17,6 @@ export default async function Page() {
       <section className="cs-section cs-case-section title-navy" style={{ paddingBottom: '44px' }}>
         <div className="cs-container">
           <div className="cs-heading cs-heading--center reveal">
-            <span className="cs-eyebrow">Selected work</span>
             <h2>Case studies</h2>
             <p>Production systems built for healthcare, appointment-based and e-commerce teams.</p>
           </div>

@@ -90,11 +90,11 @@ export default function Footer() {
           <div>
             <h4>Solutions</h4>
             <ul>
-              <li><a href="/aesthetics">Patient Growth Systems</a></li>
-              <li><a href="/it-engineering">Web, CRM &amp; Software</a></li>
-              <li><a href="/it-engineering">AI &amp; Automation</a></li>
-              <li><a href="/it-engineering">SEO · AEO · GEO</a></li>
-              <li><a href="/ecommerce">Marketing Intelligence</a></li>
+              <li><a href="/services/ai-automation">AI &amp; Automation</a></li>
+              <li><a href="/services/websites-software">Web, CRM &amp; Software</a></li>
+              <li><a href="/services/seo-geo-aeo">SEO · AEO · GEO</a></li>
+              <li><a href="/services/marketing-intelligence">Marketing Intelligence</a></li>
+              <li><a href="/industries/healthcare">Patient Growth Systems</a></li>
             </ul>
           </div>
           <div>

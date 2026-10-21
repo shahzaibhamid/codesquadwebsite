@@ -7,7 +7,7 @@ const clip = (v, n) => String(v || '').trim().slice(0, n);
 
 // Which page a lead came from, shown as its Source in the dashboard. Only known
 // pages get their own label, so a forged value can't put arbitrary text there.
-const SOURCES = { '/aesthetics': 'Aesthetics page', '/clinics': 'Clinics page' };
+const SOURCES = { '/industries/healthcare': 'Healthcare page' };
 
 // Public form: no login, so validate everything and keep it small.
 // Returns { ok: true } or { error }.
