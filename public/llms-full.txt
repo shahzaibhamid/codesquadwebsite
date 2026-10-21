@@ -17,12 +17,11 @@ LinkedIn (founder): https://www.linkedin.com/in/shahzaibhamid/
 CodeSquad builds connected growth systems for clinics, med spas and e-commerce brands — ads, instant follow-up, CRM dashboards, SEO/AEO/GEO and marketing intelligence, built into the client's existing stack. The pitch is explicitly "no rip-and-replace, no new tools to learn": CodeSquad connects to the booking system, store platform or CRM a client already uses rather than forcing a migration.
 
 Core capabilities (from the homepage "What We Do" section):
-- **Websites & software** — fast, modern sites, web apps and custom platforms built to convert and scale.
-- **CRM & dashboards** — every lead, deal and campaign tracked in one live view.
-- **Ads — Google & Meta** — intent-driven campaigns and landing pages.
+- **Websites & Software** — fast, modern sites, web apps and custom platforms built to convert and scale.
+- **CRM & Dashboards** — every lead, deal and campaign tracked in one live view.
 - **SEO · AEO · GEO** — get found on Google and recommended by AI Overviews, ChatGPT and Gemini.
 - **AI agents & automation** — instant follow-up, nurture and internal workflows that run without the client's team.
-- **Marketing intelligence** — spend, ROAS, LTV and content performance unified across every connected platform.
+- **Marketing intelligence** — spend, ROAS, LTV and content performance unified across every connected platform, plus Google & Meta campaigns and landing pages.
 
 By-the-numbers (from live client dashboards, cited on the homepage):
 - 20+ companies served

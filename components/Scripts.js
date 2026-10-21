@@ -27,19 +27,12 @@ export default function Scripts() {
       const t = document.querySelectorAll('.nav-drop-toggle')[1]; if (t) t.classList.add('active');
     }
 
-    /* /services used to hold every service as a section; forward its old anchors to the service pages */
-    if (path === '/services') {
-      const moved = { 'ai-automation': 'ai-automation', 'custom-software': 'websites-software', 'crm-integration': 'crm-integration', 'seo-geo-aeo': 'seo-geo-aeo', 'digital-marketing': 'digital-marketing' };
-      const id = location.hash.slice(1);
-      if (Object.prototype.hasOwnProperty.call(moved, id)) location.replace('/services/' + moved[id]);
-    }
-
     /* header shrink */
     const header = document.getElementById('header');
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
     on(window, 'scroll', onScrollHeader); onScrollHeader();
     // white nav text over dark heros (home, healthcare, case-study detail) until scrolled
-    const darkPaths = ['/', '/services', '/industries/healthcare', '/ecommerce', '/it-engineering', '/industry', '/process', '/blog', '/case-studies', '/inquiry'];
+    const darkPaths = ['/', '/industries/healthcare', '/ecommerce', '/it-engineering', '/industry', '/process', '/blog', '/case-studies', '/inquiry'];
     const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/') || path.startsWith('/services/');
     if (header) header.classList.toggle('header-on-dark', darkHero);
 
@@ -55,8 +48,19 @@ export default function Scripts() {
 
     /* reveal */
     const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 4 * 70) + 'ms'; io.observe(el); });
+    document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (el.hasAttribute('data-i') ? parseInt(el.getAttribute('data-i'), 10) * 80 : i % 4 * 70) + 'ms'; io.observe(el); });
     cleanups.push(() => io.disconnect());
+
+    /* [data-lit]: light up once (workflow nodes), staggered by CSS via --i; shown lit straight away for reduced motion */
+    const litEls = document.querySelectorAll('[data-lit]');
+    if (litEls.length) {
+      if (reduce) litEls.forEach((el) => el.classList.add('lit'));
+      else {
+        const lo = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('lit'); lo.unobserve(e.target); } }), { threshold: 0.35 });
+        litEls.forEach((el) => lo.observe(el));
+        cleanups.push(() => lo.disconnect());
+      }
+    }
 
     /* vertical scroll timeline: beam follows scroll, cards activate as it passes */
     document.querySelectorAll('.jtimeline').forEach((tl) => {
@@ -84,10 +88,16 @@ export default function Scripts() {
     });
 
     /* faq */
+    document.querySelectorAll('.faq button').forEach((btn, n) => {
+      const ans = btn.parentElement.querySelector('.ans');
+      btn.id = btn.id || 'faq-q' + n; ans.id = ans.id || 'faq-a' + n;
+      btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', ans.id);
+      ans.setAttribute('role', 'region'); ans.setAttribute('aria-labelledby', btn.id);
+    });
     document.querySelectorAll('.faq button').forEach((btn) => on(btn, 'click', () => {
       const item = btn.parentElement, ans = item.querySelector('.ans'), open = item.classList.contains('open');
-      document.querySelectorAll('.faq.open').forEach((f) => { f.classList.remove('open'); f.querySelector('.ans').style.maxHeight = null; });
-      if (!open) { item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; }
+      document.querySelectorAll('.faq.open').forEach((f) => { f.classList.remove('open'); f.querySelector('.ans').style.maxHeight = null; f.querySelector('button').setAttribute('aria-expanded', 'false'); });
+      if (!open) { item.classList.add('open'); ans.style.maxHeight = ans.scrollHeight + 'px'; btn.setAttribute('aria-expanded', 'true'); }
     }));
 
     /* lead form */

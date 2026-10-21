@@ -13,10 +13,8 @@ For the complete, unabridged text of every page, case study and article on this 
 
 ## Services
 
-- [All services](https://www.codesquad.ai/services): Overview of every CodeSquad service, with the Build (one-time) / Grow (monthly retainer) engagement model.
-- [Websites & software](https://www.codesquad.ai/services/websites-software)
-- [CRM & dashboards](https://www.codesquad.ai/services/crm-integration)
-- [Ads — Google & Meta](https://www.codesquad.ai/services/digital-marketing)
+- [Websites & Software](https://www.codesquad.ai/services/websites-software)
+- [CRM & Dashboards](https://www.codesquad.ai/services/crm-integration)
 - [SEO · AEO · GEO](https://www.codesquad.ai/services/seo-geo-aeo)
 - [AI agents & automation](https://www.codesquad.ai/services/ai-automation)
 - [Marketing intelligence](https://www.codesquad.ai/services/marketing-intelligence)

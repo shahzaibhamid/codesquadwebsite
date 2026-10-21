@@ -12,11 +12,11 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
   const s = getService(params.slug);
   if (!s) return {};
-  return { title: `${s.title} Services | CodeSquad`, description: s.sub };
+  return { title: `${s.title} Services | CodeSquad`, description: s.meta || s.sub };
 }
 
 export default function Page({ params }) {
   const s = getService(params.slug);
   if (!s) notFound();
-  return <main dangerouslySetInnerHTML={{ __html: renderServicePage(s) }} />;
+  return <main className="svc-page" dangerouslySetInnerHTML={{ __html: renderServicePage(s) }} />;
 }

@@ -10,10 +10,10 @@ export default function Header() {
         </a>
         <nav className="nav-links" id="navLinks">
           <a href="/">Home</a>
+          <a href="/founder">About</a>
           <div className="nav-drop">
-            <a href="/services" className="nav-drop-toggle">Services <span className="car">▾</span></a>
+            <a href="/#capabilities" className="nav-drop-toggle">Services <span className="car">▾</span></a>
             <div className="nav-menu">
-              <a href="/services">All Services</a>
               {services.map((s) => (
                 <a key={s.slug} href={`/services/${s.slug}`}>{s.title}</a>
               ))}
@@ -30,7 +30,7 @@ export default function Header() {
           <a href="/process">Process</a>
           <a href="/case-studies">Case Studies</a>
           <a href="/blog">Blog</a>
-          <a href="/founder">About</a>
+          <a href="https://medgrow.codesquad.ai/" target="_blank" rel="noopener noreferrer">MedGrow ↗</a>
           <a href="/inquiry" className="btn btn-ghost nav-inquiry">Inquiry Form</a>
           <a href="https://calendly.com/code_squad/30min" target="_blank" rel="noopener noreferrer" className="btn btn-dark">Book a Free Call</a>
         </nav>
