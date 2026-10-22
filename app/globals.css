@@ -2740,3 +2740,18 @@ h1 em,h2 em,h3 em,.display em,h1 .co-blue,h2 .co-blue,h1 .hl-teal,h1 .hl-blue,h2
 .cs-footer a.cs-footer__top{color:var(--ink);border-color:rgba(10,10,10,.22)}
 .cs-footer a.cs-footer__top:hover{background:var(--ink);color:#fff}
 .cs-footer a.cs-btn--primary,.cs-footer a.cs-btn--primary:hover{color:#fff}
+
+/* ===== buttons: site gradient instead of black ===== */
+.btn-dark,.btn-blue{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 14px 34px -16px rgba(31,127,192,.65)}
+.btn-dark:hover,.btn-blue:hover{box-shadow:0 20px 40px -16px rgba(37,198,182,.6);filter:brightness(1.06)}
+.btn-ghost{color:#173a8f;border-color:rgba(23,58,143,.45)}
+.btn-ghost:hover{background:var(--grad);color:#fff;border-color:transparent}
+.nav-links a.btn-ghost{color:#173a8f}
+.nav-links a.btn-ghost:hover{color:#fff}
+.nav-links a.btn-dark{color:#fff}
+.dark .btn-dark.fd-cta{background:#fff;color:var(--ink)}
+.co-hero--home .btn-outline-light:hover{background:var(--grad);color:#fff;border-color:transparent}
+.co-hero--home .co-rb-btn:hover,.co-hero--home .co-rb-btn:focus-visible{background:var(--grad);color:#fff;border-color:transparent}
+.cs-footer a.cs-footer__top:hover{background:var(--grad);color:#fff;border-color:transparent}
+.rv-btn:hover,.cr-arrow:hover{background:var(--grad);color:#fff;border-color:transparent}
+.blog-cats button.on,.blog-cats span.on,.ptab.on{background:var(--grad);color:#fff;border-color:transparent}
