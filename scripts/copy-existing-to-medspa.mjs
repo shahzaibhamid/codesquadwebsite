@@ -77,7 +77,7 @@ async function run() {
   if (ce) throw ce;
   const caseRows = cases.map((c, i) => ({
     slug: c.slug, name: c.name || '', cat: c.category || '',
-    filter: c.vertical || c.category || 'Healthcare & Clinics',
+    filter: c.vertical || c.category || 'Healthcare & Wellness',
     tagline: c.headline || c.description || '', img: c.cover_image || '',
     body: caseBody(c), published: c.published !== false,
     ord: c.sort_order ?? i,

@@ -102,7 +102,7 @@ const server = http.createServer(async (req, res) => {
       // clean object with only the fields for that type, in order
       const clean = isBlog
         ? { slug, cat: post.cat || 'AI Automation', date: post.date || '', title: post.title || '', excerpt: post.excerpt || '', img: post.img || '' }
-        : { slug, cat: post.cat || '', filter: post.filter || 'Healthcare & Clinics', tagline: post.tagline || '', name: post.name || '', img: post.img || '' };
+        : { slug, cat: post.cat || '', filter: post.filter || 'Healthcare & Wellness', tagline: post.tagline || '', name: post.name || '', img: post.img || '' };
 
       const idx = list.findIndex(x => x.slug === (oldSlug || slug));
       if (idx >= 0) list[idx] = clean; else list.unshift(clean);

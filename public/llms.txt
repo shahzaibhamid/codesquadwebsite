@@ -22,7 +22,7 @@ For the complete, unabridged text of every page, case study and article on this 
 ## Industries
 
 - [Industry Solutions Overview](https://www.codesquad.ai/industry): The same connected growth engine configured for three verticals — Aesthetics/Medical Clinics, E-commerce, and IT & Engineering.
-- [Healthcare: Med Spas, Clinics & Dental](https://www.codesquad.ai/industries/healthcare): Patient-acquisition system for med spas, aesthetic/laser clinics, cosmetic dermatology, medical clinics and dental practices — treatment-based and local Google Ads, 3-second lead response, 14-day automated nurture, SEO/AEO/GEO content and booking, built into existing booking and practice software (e.g. PatientNow).
+- [MedGrow: Healthcare Growth System](https://medgrow.codesquad.ai/): Explains MedGrow, CodeSquad's specialist patient-growth product for med spas, clinics, dental practices and plastic surgeons — SEO, AEO, GEO, ads, CRM and follow-up in one dashboard. Product site: https://medgrow.codesquad.ai/
 - [E-commerce Growth System](https://www.codesquad.ai/ecommerce): Growth system for online stores and DTC brands — Shopping/search ads, abandoned-cart and post-purchase flows, email/SMS marketing, and unified ROAS/LTV analytics.
 - [IT & Engineering Growth System](https://www.codesquad.ai/it-engineering): Web/software development, CRM, AI agents & automation, IoT integrations and SEO/AEO/GEO for IT firms, engineering companies and technical teams; plans from $499/mo.
 

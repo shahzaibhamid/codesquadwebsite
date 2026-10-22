@@ -7,9 +7,10 @@ const nextConfig = {
     return [
       // The all-services hub page was removed; the homepage lists every service.
       { source: '/services', destination: '/#capabilities', statusCode: 301 },
-      // /aesthetics and /clinics were merged into one healthcare page.
-      { source: '/aesthetics', destination: '/industries/healthcare', statusCode: 301 },
-      { source: '/clinics', destination: '/industries/healthcare', statusCode: 301 },
+      // The healthcare page was removed; healthcare now lives on MedGrow's own site.
+      { source: '/industries/healthcare', destination: 'https://medgrow.codesquad.ai/', statusCode: 301 },
+      { source: '/aesthetics', destination: 'https://medgrow.codesquad.ai/', statusCode: 301 },
+      { source: '/clinics', destination: 'https://medgrow.codesquad.ai/', statusCode: 301 },
       ...Object.entries(serviceRedirects).map(([from, to]) => ({
         source: `/services/${from}`, destination: `/services/${to}`, statusCode: 301,
       })),

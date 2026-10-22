@@ -112,7 +112,7 @@ module.exports = `<!doctype html>
 <script>
 var TOKEN=null, TYPE='blog', DATA={blogPosts:[],caseStudies:[]}, EDITING=null;
 var BLOG_CATS=['AI Automation','SMEs','AEO / SEO','Business Growth','Software Development','Lead Generation'];
-var CASE_FILTERS=['Healthcare & Clinics','E-commerce','Legal Services','Automotive','Education','Financial Services'];
+var CASE_FILTERS=['Healthcare & Wellness','E-commerce','Legal Services','Automotive','Education','Financial Services'];
 
 function toast(m,k){var t=document.getElementById('toast');t.textContent=m;t.className='toast show '+(k||'');setTimeout(function(){t.className='toast';},2600);}
 function api(path,opts){opts=opts||{};opts.headers=Object.assign({'Content-Type':'application/json','x-token':TOKEN||''},opts.headers||{});return fetch(path,opts).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Error');return j;});});}
@@ -183,7 +183,7 @@ function buildBar(){
 function insert(i){var t=window.__bar[i][1].replace(/\\\\n/g,'\\n');insertAtCursor(t);}
 function insertAtCursor(text){var ta=document.getElementById('body');var s=ta.selectionStart,e=ta.selectionEnd;ta.value=ta.value.slice(0,s)+text+ta.value.slice(e);ta.selectionStart=ta.selectionEnd=s+text.length;ta.focus();}
 
-function newItem(){EDITING=null;openEditor(TYPE==='blog'?{cat:'AI Automation'}:{filter:'Healthcare & Clinics'},'');document.getElementById('delBtn').classList.add('hide');}
+function newItem(){EDITING=null;openEditor(TYPE==='blog'?{cat:'AI Automation'}:{filter:'Healthcare & Wellness'},'');document.getElementById('delBtn').classList.add('hide');}
 function edit(i){var it=list()[i];EDITING=it.slug;api('/api/content?type='+(TYPE==='blog'?'blog':'case')+'&slug='+encodeURIComponent(it.slug)).then(function(j){openEditor(it,j.body||'');document.getElementById('delBtn').classList.remove('hide');});}
 
 function openEditor(it,body){
@@ -192,7 +192,7 @@ function openEditor(it,body){
   document.getElementById('fields').innerHTML=fieldHtml();
   buildBar();
   if(TYPE==='blog'){setVal('title',it.title);setVal('slug',it.slug);setVal('date',it.date);setVal('excerpt',it.excerpt);setVal('cat',it.cat||'AI Automation');}
-  else{setVal('name',it.name);setVal('slug',it.slug);setVal('cat',it.cat);setVal('tagline',it.tagline);setVal('filter',it.filter||'Healthcare & Clinics');}
+  else{setVal('name',it.name);setVal('slug',it.slug);setVal('cat',it.cat);setVal('tagline',it.tagline);setVal('filter',it.filter||'Healthcare & Wellness');}
   setVal('img',it.img);var ip=document.getElementById('imgPrev');ip.src=it.img||'';ip.style.visibility=it.img?'visible':'hidden';
   document.getElementById('body').value=body||'';
 }

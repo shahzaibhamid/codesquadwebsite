@@ -1,5 +1,3 @@
-import { services } from '../lib/services';
-
 export default function Header() {
   return (
     <header id="header">
@@ -10,21 +8,13 @@ export default function Header() {
         </a>
         <nav className="nav-links" id="navLinks">
           <a href="/">Home</a>
-          <a href="/founder">About</a>
-          <div className="nav-drop">
-            <a href="/#capabilities" className="nav-drop-toggle">Services <span className="car">▾</span></a>
-            <div className="nav-menu">
-              {services.map((s) => (
-                <a key={s.slug} href={`/services/${s.slug}`}>{s.title}</a>
-              ))}
-            </div>
-          </div>
+          <a href="/founder">Founder</a>
           <div className="nav-drop">
             <a href="/industry" className="nav-drop-toggle">Industries <span className="car">▾</span></a>
             <div className="nav-menu">
+              <a href="https://medgrow.codesquad.ai/" target="_blank" rel="noopener noreferrer">Healthcare &amp; Wellness</a>
               <a href="/it-engineering">IT &amp; Engineering</a>
               <a href="/ecommerce">E-commerce</a>
-              <a href="/industries/healthcare">Healthcare</a>
             </div>
           </div>
           <a href="/process">Process</a>

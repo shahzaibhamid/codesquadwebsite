@@ -16,7 +16,6 @@ app/
   globals.css            full design system + page CSS + hero-video styles
   page.js                /                 (home)
   industry/page.js       /industry
-  industries/healthcare/page.js  /industries/healthcare
   ecommerce/page.js      /ecommerce
   agriculture/page.js    /agriculture
 components/

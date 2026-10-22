@@ -23,8 +23,8 @@ export default function Scripts() {
     document.querySelectorAll('.nav-drop').forEach((d) => {
       if (d.querySelector('.nav-menu a.active')) d.querySelector('.nav-drop-toggle').classList.add('active');
     });
-    if (['/industry', '/industries/healthcare', '/ecommerce', '/it-engineering'].indexOf(path) > -1) {
-      const t = document.querySelectorAll('.nav-drop-toggle')[1]; if (t) t.classList.add('active');
+    if (['/industry', '/ecommerce', '/it-engineering'].indexOf(path) > -1) {
+      const t = document.querySelectorAll('.nav-drop-toggle')[0]; if (t) t.classList.add('active');
     }
 
     /* header shrink */
@@ -32,7 +32,7 @@ export default function Scripts() {
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
     on(window, 'scroll', onScrollHeader); onScrollHeader();
     // white nav text over dark heros (home, healthcare, case-study detail) until scrolled
-    const darkPaths = ['/', '/industries/healthcare', '/ecommerce', '/it-engineering', '/industry', '/process', '/blog', '/case-studies', '/inquiry'];
+    const darkPaths = ['/', '/ecommerce', '/it-engineering', '/industry', '/process', '/blog', '/case-studies', '/inquiry'];
     const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/') || path.startsWith('/services/');
     if (header) header.classList.toggle('header-on-dark', darkHero);
 
@@ -195,16 +195,50 @@ export default function Scripts() {
       on(window, 'scroll', onScrollSpy, { passive: true }); on(window, 'resize', onScrollSpy, { passive: true }); update();
     }
 
+    // blog category filter
+    const blogCatsEl = document.getElementById('blogCats');
+    const blogGridEl = document.getElementById('blogGrid');
+    if (blogCatsEl && blogGridEl) {
+      const posts = Array.from(blogGridEl.querySelectorAll('.bpost'));
+      const empty = document.getElementById('blogEmpty');
+      const btns = Array.from(blogCatsEl.querySelectorAll('button[data-cat]'));
+      btns.forEach((btn) => on(btn, 'click', () => {
+        const cat = btn.getAttribute('data-cat');
+        btns.forEach((b) => { const isOn = b === btn; b.classList.toggle('cs-cat--active', isOn); b.setAttribute('aria-pressed', String(isOn)); });
+        let shown = 0;
+        posts.forEach((post) => { const match = cat === 'All' || post.getAttribute('data-cat') === cat; post.style.display = match ? '' : 'none'; if (match) shown++; });
+        if (empty) empty.hidden = shown > 0;
+      }));
+    }
+
     // case-studies category filter
     const caseCats = document.getElementById('caseCats');
     const caseGrid = document.getElementById('caseGrid');
     if (caseCats && caseGrid) {
       const cards = Array.from(caseGrid.querySelectorAll('.cs-scard'));
+      const activeBtn = caseCats.querySelector('.cs-cat--active') || caseCats.querySelector('.cs-cat');
+      const applyFilter = (cat) => {
+        cards.forEach((card) => {
+          const cardCat = card.getAttribute('data-cat');
+          const match = cat === 'All' ||
+            cardCat === cat ||
+            ((cat === 'Healthcare' || cat === 'Healthcare & Wellness' || cat === 'Healthcare & Clinics') && (cardCat === 'Healthcare' || cardCat === 'Healthcare & Wellness' || cardCat === 'Healthcare & Clinics'));
+          card.style.display = match ? '' : 'none';
+          if (match) card.classList.add('in');
+        });
+      };
+      if (activeBtn) {
+        applyFilter(activeBtn.getAttribute('data-cat'));
+      }
       caseCats.querySelectorAll('.cs-cat').forEach((btn) => {
         on(btn, 'click', () => {
           const cat = btn.getAttribute('data-cat');
-          caseCats.querySelectorAll('.cs-cat').forEach((b) => b.classList.toggle('cs-cat--active', b === btn));
-          cards.forEach((card) => { card.style.display = (cat === 'All' || card.getAttribute('data-cat') === cat) ? '' : 'none'; });
+          caseCats.querySelectorAll('.cs-cat').forEach((b) => {
+            const isOn = b === btn;
+            b.classList.toggle('cs-cat--active', isOn);
+            b.setAttribute('aria-pressed', String(isOn));
+          });
+          applyFilter(cat);
         });
       });
     }
@@ -300,50 +334,220 @@ export default function Scripts() {
       cleanups.push(() => clearTimeout(timer));
     });
 
-    // scroll-driven stacked reviews (cards change as you scroll through the section)
-    const stack = document.getElementById('reviewStack');
-    const scrollEl = document.getElementById('rsScroll');
-    if (stack && scrollEl) {
-      const cards = Array.from(stack.querySelectorAll('.rs-card'));
-      const n = cards.length;
-      const dotsWrap = document.getElementById('rsDots');
-      const dots = [];
-      if (dotsWrap) {
-        cards.forEach(() => { const d = document.createElement('span'); dotsWrap.appendChild(d); dots.push(d); });
+    // reviews: auto-drifting row the visitor can also drag, swipe, scroll or step with the arrows
+    const rv = document.querySelector('.rv-marquee');
+    if (rv) {
+      const track = rv.querySelector('.rv-track');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const half = () => (track.scrollWidth + 22) / 2; // second half is a copy of the first
+      let paused = false, drag = false, sx = 0, sl = 0, raf = 0, resume = 0, pos = 0;
+      const wrap = () => { const h = half(); if (rv.scrollLeft >= h) rv.scrollLeft -= h; else if (rv.scrollLeft <= 0) rv.scrollLeft += h; };
+      const tick = () => {
+        raf = requestAnimationFrame(tick);
+        if (paused || drag) { pos = rv.scrollLeft; return; }
+        pos += 0.5; rv.scrollLeft = pos; pos = rv.scrollLeft; wrap();
+      };
+      const hold = (ms) => { paused = true; clearTimeout(resume); if (ms) resume = setTimeout(() => { paused = false; }, ms); };
+      if (!reduce) {
+        rv.scrollLeft = 1; pos = 1;
+        raf = requestAnimationFrame(tick);
+        on(rv, 'mouseenter', () => hold(0));
+        on(rv, 'mouseleave', () => { if (!drag) hold(300); });
+        on(rv, 'focusin', () => hold(0));
+        on(rv, 'focusout', () => hold(300));
+        on(rv, 'touchstart', () => hold(0), { passive: true });
+        on(rv, 'touchend', () => hold(2500), { passive: true });
+        on(rv, 'wheel', () => hold(2500), { passive: true });
       }
-      let active = -1;
-      const sizeStack = () => {
-        let h = 0;
-        cards.forEach((c) => { h = Math.max(h, c.offsetHeight); });
-        if (h) stack.style.minHeight = (h + 40) + 'px';
+      on(rv, 'scroll', () => { if (!reduce) wrap(); });
+      on(rv, 'pointerdown', (e) => { if (e.pointerType === 'touch') return; drag = true; sx = e.clientX; sl = rv.scrollLeft; rv.classList.add('is-drag'); });
+      on(window, 'pointermove', (e) => { if (drag) rv.scrollLeft = sl - (e.clientX - sx); });
+      on(window, 'pointerup', () => { if (drag) { drag = false; rv.classList.remove('is-drag'); } });
+      const step = (dir) => { hold(3500); rv.scrollBy({ left: dir * 402, behavior: reduce ? 'auto' : 'smooth' }); };
+      const prev = document.getElementById('rvPrev'), next = document.getElementById('rvNext');
+      if (prev) on(prev, 'click', () => step(-1));
+      if (next) on(next, 'click', () => step(1));
+      cleanups.push(() => { cancelAnimationFrame(raf); clearTimeout(resume); });
+    }
+
+    // "What We Do" growth engine: 4s autoplay showcase on desktop (pauses on keyboard focus / off-screen /
+    // hidden tab); below 1024px or with reduced motion the stacked cards + sticky pill bar are used instead.
+    const eng = document.getElementById('capabilities');
+    if (eng && eng.classList.contains('eng')) {
+      const INTERVAL = 4000;
+      const q = (sel) => Array.from(eng.querySelectorAll(sel));
+      const nodes = q('.eng-node'), tps = q('.eng-tpanel'), vps = q('.eng-vpanel');
+      const N = nodes.length;
+      const rail = eng.querySelector('.eng-rail'), desk = eng.querySelector('.eng-desk');
+      const count = eng.querySelector('.eng-count'), status = eng.querySelector('.eng-status');
+      const names = tps.map((p) => p.querySelector('h3').textContent);
+      const reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const stackMq = window.matchMedia('(max-width: 1023px), (prefers-reduced-motion: reduce)');
+      let active = 0, timer = 0, focused = false, inView = false, wasPaused = true;
+
+      const paused = () => focused || !inView || document.hidden || stackMq.matches;
+      const schedule = () => {
+        clearTimeout(timer);
+        wasPaused = paused();
+        eng.classList.toggle('is-paused', wasPaused);
+        if (!wasPaused) timer = setTimeout(() => goTo(active + 1, true), INTERVAL);
       };
-      const render = (idx) => {
-        if (idx === active) return;
-        active = idx;
-        cards.forEach((c, i) => {
-          const d = i - idx;
-          let pos;
-          if (d < 0) pos = 'out';
-          else if (d === 0) pos = '0';
-          else if (d <= 3) pos = String(d);
-          else pos = 'hide';
-          c.setAttribute('data-pos', pos);
+      const sync = () => { if (paused() !== wasPaused) schedule(); };
+
+      function goTo(i, auto) {
+        active = (i + N) % N;
+        nodes.forEach((n, k) => {
+          n.classList.toggle('is-active', k === active);
+          n.classList.toggle('is-done', k < active);
+          n.tabIndex = k === active ? 0 : -1;
+          if (k === active) n.setAttribute('aria-current', 'true'); else n.removeAttribute('aria-current');
         });
-        dots.forEach((dd, i) => dd.classList.toggle('on', i === idx));
+        tps.forEach((p, k) => p.classList.toggle('is-active', k === active));
+        vps.forEach((p, k) => p.classList.toggle('is-active', k === active));
+        rail.style.setProperty('--p', String(active / (N - 1)));
+        count.textContent = '0' + (active + 1) + ' / 0' + N;
+        status.textContent = (active + 1) + ' of ' + N + ': ' + names[active];
+        schedule();
+      }
+
+      nodes.forEach((n, k) => on(n, 'click', () => goTo(k)));
+      on(document.getElementById('engPrev'), 'click', () => goTo(active - 1));
+      on(document.getElementById('engNext'), 'click', () => goTo(active + 1));
+      on(rail, 'keydown', (e) => {
+        const move = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (move) { e.preventDefault(); goTo(active + move); nodes[active].focus(); }
+        else if (e.key === 'Home') { e.preventDefault(); goTo(0); nodes[0].focus(); }
+        else if (e.key === 'End') { e.preventDefault(); goTo(N - 1); nodes[N - 1].focus(); }
+      });
+      // only keyboard focus pauses; a mouse click on a node keeps the 4s timer running (restarted by goTo)
+      on(eng, 'focusin', (e) => { focused = !!(e.target.matches && e.target.matches(':focus-visible')); sync(); });
+      on(eng, 'focusout', (e) => { if (!eng.contains(e.relatedTarget)) { focused = false; sync(); } });
+      on(document, 'visibilitychange', sync);
+      if (stackMq.addEventListener) { stackMq.addEventListener('change', sync); cleanups.push(() => stackMq.removeEventListener('change', sync)); }
+
+      const vio = new IntersectionObserver((es) => {
+        inView = es[0].isIntersecting;
+        eng.classList.toggle('is-visible', inView);
+        sync();
+      }, { threshold: 0.2 });
+      vio.observe(eng);
+
+      // stacked mode: the pill for the card in the middle of the viewport is active; tapping a pill jumps to its card
+      const pills = q('.eng-pill'), scards = q('.eng-scard'), pbar = eng.querySelector('.eng-pbar i');
+      const setStack = (i) => {
+        pills.forEach((p, k) => {
+          p.classList.toggle('is-active', k === i);
+          if (k === i) p.setAttribute('aria-current', 'true'); else p.removeAttribute('aria-current');
+        });
+        scards.forEach((c, k) => c.classList.toggle('is-on', k === i));
+        if (pbar) pbar.style.transform = 'scaleX(' + ((i + 1) / scards.length) + ')';
+        if (pills[i] && pills[i].scrollIntoView) { const row = pills[i].parentNode; row.scrollTo({ left: pills[i].offsetLeft - 24, behavior: 'auto' }); }
       };
-      let ticking = false;
-      const update = () => {
-        ticking = false;
-        const total = scrollEl.offsetHeight - window.innerHeight;
-        const scrolled = Math.min(Math.max(-scrollEl.getBoundingClientRect().top, 0), Math.max(total, 1));
-        const progress = total > 0 ? scrolled / total : 0;
-        render(Math.min(n - 1, Math.max(0, Math.round(progress * (n - 1)))));
+      pills.forEach((p, k) => on(p, 'click', () => scards[k].scrollIntoView({ block: 'center', behavior: reduceMq.matches ? 'auto' : 'smooth' })));
+      const sio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) setStack(scards.indexOf(e.target)); }), { rootMargin: '-35% 0px -35% 0px' });
+      scards.forEach((c) => sio.observe(c));
+      cleanups.push(() => { clearTimeout(timer); vio.disconnect(); sio.disconnect(); });
+      schedule();
+    }
+
+    // case studies: 3D ring that rolls round on its own (autoplay), or by drag / arrows / dots / keys.
+    // Below 1024px or with reduced motion the CSS shows a swipeable row instead and this engine stays idle.
+    const cr = document.querySelector('[data-cr]');
+    if (cr) {
+      const stage = cr.querySelector('.cr-stage'), ring = cr.querySelector('.cr-ring');
+      const cards = Array.from(cr.querySelectorAll('.cr-card')), dots = Array.from(cr.querySelectorAll('.cr-dot'));
+      const status = cr.querySelector('.cr-status'), groupEl = cr.querySelector('.cr-group');
+      const N = cards.length, STEP = 360 / N, INTERVAL = 3500;
+      const names = cards.map((c) => c.querySelector('h3').textContent);
+      const mq = window.matchMedia('(max-width: 1023px), (prefers-reduced-motion: reduce)');
+      const mod = (a, b) => ((a % b) + b) % b;
+      let angle = -120, target = 0, last = 0, raf = 0, timer = 0, active = -1;
+      let focused = false, inView = false, drag = null, moved = false;
+
+      const paint = () => {
+        ring.style.setProperty('--rot', (-angle).toFixed(2) + 'deg');
+        cards.forEach((c, i) => {
+          const d = Math.abs(mod(i * STEP - angle + 180, 360) - 180);
+          c.style.setProperty('--d', d.toFixed(1));
+          c.classList.toggle('is-back', d > 95);
+        });
       };
-      const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-      sizeStack();
-      update();
-      on(window, 'scroll', onScroll, { passive: true });
-      on(window, 'resize', () => { sizeStack(); update(); });
+      const setActive = (announce) => {
+        const a = mod(Math.round(target / STEP), N);
+        if (a === active) return;
+        active = a;
+        cards.forEach((c, i) => { c.classList.toggle('is-front', i === a); c.tabIndex = i === a ? 0 : -1; });
+        dots.forEach((d, i) => d.classList.toggle('on', i === a));
+        if (groupEl) groupEl.textContent = cards[a].getAttribute('data-grp');
+        if (announce) status.textContent = (a + 1) + ' of ' + N + ': ' + names[a];
+      };
+      const frame = (t) => {
+        raf = requestAnimationFrame(frame);
+        const dt = Math.min(0.05, (t - last) / 1000 || 0.016); last = t;
+        if (!drag) {
+          const diff = target - angle;
+          angle = Math.abs(diff) < 0.02 ? target : angle + diff * (1 - Math.exp(-dt * 5));
+        }
+        paint();
+      };
+      const paused = () => focused || !inView || document.hidden || !!drag || mq.matches;
+      const schedule = () => {
+        clearTimeout(timer);
+        if (!paused()) timer = setTimeout(() => { target = (Math.round(target / STEP) + 1) * STEP; setActive(false); schedule(); }, INTERVAL);
+      };
+      const sync = () => {
+        const want = !mq.matches && inView;
+        if (want && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+        if (!want && raf) { cancelAnimationFrame(raf); raf = 0; }
+        schedule();
+      };
+      const goTo = (i) => {
+        const cur = mod(Math.round(target / STEP), N);
+        target += (mod(i - cur + N / 2, N) - N / 2) * STEP;
+        setActive(true); schedule();
+      };
+      const step = (dir) => { target = (Math.round(target / STEP) + dir) * STEP; setActive(true); schedule(); };
+
+      paint(); setActive(false); cards.forEach((c, i) => { c.tabIndex = i === 0 ? 0 : -1; });
+      on(document.getElementById('crPrev'), 'click', () => step(-1));
+      on(document.getElementById('crNext'), 'click', () => step(1));
+      dots.forEach((d, i) => on(d, 'click', () => goTo(i)));
+      on(stage, 'keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      });
+      // clicking a side card rolls it to the front; only the front card follows its link
+      cards.forEach((c, i) => on(c, 'click', (e) => { if (moved) return; if (!mq.matches && i !== active) { e.preventDefault(); goTo(i); } }));
+      on(stage, 'click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+      on(stage, 'pointerdown', (e) => {
+        if (mq.matches || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        drag = { x: e.clientX, a: angle, v: 0, px: e.clientX, pt: performance.now() };
+        moved = false; clearTimeout(timer);
+      });
+      on(window, 'pointermove', (e) => {
+        if (!drag) return;
+        const dx = e.clientX - drag.x;
+        if (Math.abs(dx) > 6) { moved = true; stage.classList.add('is-drag'); }
+        const now = performance.now();
+        drag.v = ((drag.px - e.clientX) * 0.3) / Math.max(1, now - drag.pt) * 1000 * 0.5 + drag.v * 0.5;
+        drag.px = e.clientX; drag.pt = now;
+        angle = drag.a - dx * 0.3; target = angle;
+      });
+      const release = () => {
+        if (!drag) return;
+        const v = drag.v; drag = null; stage.classList.remove('is-drag');
+        if (moved) { target = Math.round((angle + v * 0.15) / STEP) * STEP; setActive(true); setTimeout(() => { moved = false; }, 60); }
+        schedule();
+      };
+      on(window, 'pointerup', release); on(window, 'pointercancel', release);
+      on(cr, 'focusin', (e) => { focused = !!(e.target.matches && e.target.matches(':focus-visible')); schedule(); });
+      on(cr, 'focusout', (e) => { if (!cr.contains(e.relatedTarget)) { focused = false; schedule(); } });
+      on(document, 'visibilitychange', sync);
+      if (mq.addEventListener) { mq.addEventListener('change', sync); cleanups.push(() => mq.removeEventListener('change', sync)); }
+      const crio = new IntersectionObserver((es) => { inView = es[0].isIntersecting; if (inView && target === 0 && angle === -120) target = 0; sync(); }, { threshold: 0.3 });
+      crio.observe(cr);
+      cleanups.push(() => { cancelAnimationFrame(raf); clearTimeout(timer); crio.disconnect(); });
     }
 
     // hero typing headline: types each word, pauses, deletes, loops; syncs the audience chips

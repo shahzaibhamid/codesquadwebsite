@@ -452,7 +452,7 @@ Patients search for microneedling at different decision stages — location-base
 
 - / — Home
 - /industry — Industry Solutions overview
-- /industries/healthcare — Healthcare (med spas, clinics & dental)
+- https://medgrow.codesquad.ai/ — MedGrow, CodeSquad's healthcare product (med spas, clinics, dental & plastic surgeons)
 - /ecommerce — E-commerce
 - /it-engineering — IT & Engineering
 - /process — How the growth system works

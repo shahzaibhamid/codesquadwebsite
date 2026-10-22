@@ -11,22 +11,21 @@ export default async function Page() {
   const blogPosts = (await getPosts()).filter((p) => !postRedirects[p.slug]);
   return (
     <main id="top">
-      <section className="sec pg-hero">
-        <div className="wrap">
-          <div className="sec-head reveal">
-            <span className="eyebrow">CodeSquad Blog</span>
-            <h1 className="display">Insights on AI automation &amp; business growth</h1>
+      <section className="cs-section cs-case-section title-navy" style={{ paddingBottom: '44px' }}>
+        <div className="cs-container">
+          <div className="cs-heading cs-heading--center reveal">
+            <h1>Insights on AI automation &amp; business growth</h1>
             <p>Practical perspectives on AI automation, SEO/AEO/GEO, lead generation and scaling.</p>
+          </div>
+          <div className="cs-cats" id="blogCats" role="group" aria-label="Filter articles by category">
+            {blogCats.map((c, i) => (
+              <button type="button" key={c} className={'cs-cat' + (i === 0 ? ' cs-cat--active' : '')} data-cat={c} aria-pressed={i === 0}>{c}</button>
+            ))}
           </div>
         </div>
       </section>
-      <section className="sec" style={{ paddingTop: 0 }}>
+      <section className="sec blog-body" style={{ paddingTop: '48px' }}>
         <div className="wrap">
-          <div className="blog-cats reveal" id="blogCats">
-            {blogCats.map((c, i) => (
-              <span key={c} className={i === 0 ? 'on' : ''} data-cat={c}>{c}</span>
-            ))}
-          </div>
           <div className="blog-grid" id="blogGrid">
             {blogPosts.map((p) => (
               <a className="bpost reveal" href={`/blog/${p.slug}`} key={p.slug} data-cat={p.cat}>
@@ -42,6 +41,7 @@ export default async function Page() {
               </a>
             ))}
           </div>
+          <p className="blog-empty" id="blogEmpty" hidden>No articles in this category yet.</p>
         </div>
       </section>
       <section className="sec dark" id="contact">
