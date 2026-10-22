@@ -68,6 +68,7 @@ export default function Footer() {
     <footer className="cs-footer">
       <div className="cs-container">
        <div className="cs-footer__card">
+        <div className="cs-footer__aurora" aria-hidden="true"><i className="f1" /><i className="f2" /></div>
         <div className="cs-footer__grid">
           <div className="cs-footer__about">
             <a className="cs-brand" href="/">
@@ -117,6 +118,7 @@ export default function Footer() {
         <div className="cs-footer__bottom">
           <span>© 2026 CodeSquad. All rights reserved.</span>
           <span>Built for scale — AI automation &amp; custom software.</span>
+          <a className="cs-footer__top" href="#header" aria-label="Back to top">Back to top <span aria-hidden="true">↑</span></a>
         </div>
        </div>
       </div>

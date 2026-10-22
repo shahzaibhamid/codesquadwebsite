@@ -31,8 +31,8 @@ export default function Scripts() {
     const header = document.getElementById('header');
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
     on(window, 'scroll', onScrollHeader); onScrollHeader();
-    // white nav text over dark heros (home, healthcare, case-study detail) until scrolled
-    const darkPaths = ['/', '/ecommerce', '/it-engineering', '/industry', '/process', '/blog', '/case-studies', '/inquiry'];
+    // white nav text over dark heros (case-study detail, service pages, ...) until scrolled
+    const darkPaths = ['/ecommerce', '/it-engineering', '/industry', '/process', '/blog', '/case-studies', '/inquiry'];
     const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/') || path.startsWith('/services/');
     if (header) header.classList.toggle('header-on-dark', darkHero);
 
