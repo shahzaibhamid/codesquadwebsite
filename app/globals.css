@@ -2768,3 +2768,7 @@ h1 em,h2 em,h3 em,.display em,h1 .co-blue,h2 .co-blue,h1 .hl-teal,h1 .hl-blue,h2
 .cs-study-refs a{display:block;color:#18202a;font-size:clamp(18px,1.6vw,22px);font-weight:600;line-height:1.35}
 .cs-study-refs a:hover{color:var(--cs-cyan)}
 .cs-study-refs span{display:block;margin-top:8px;color:#5f6974;font-size:14px;line-height:1.6}
+
+/* Gradient buttons: stop the gradient tiling into the transparent border (coloured slivers at the tips) */
+.btn-dark,.btn-blue,.btn-ghost:hover,.eng-cta,.eng-pill.is-active,.rd-btn--primary,.cs-footer a.cs-btn--primary,.cs-footer a.cs-btn--primary:hover,.cs-footer a.cs-footer__top:hover,.co-hero--home .btn-outline-light:hover,.co-hero--home .co-rb-btn:hover,.co-hero--home .co-rb-btn:focus-visible,.rv-btn:hover,.cr-arrow:hover,.blog-cats button.on,.blog-cats span.on,.ptab.on{background-repeat:no-repeat;background-origin:border-box;background-clip:border-box}
+.eng-node.is-active .eng-num,.eng-pill.is-active{background-repeat:no-repeat;background-origin:border-box;background-clip:border-box}
