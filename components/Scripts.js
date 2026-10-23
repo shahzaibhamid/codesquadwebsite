@@ -385,12 +385,25 @@ export default function Scripts() {
       const stackMq = window.matchMedia('(max-width: 1023px), (prefers-reduced-motion: reduce)');
       let active = 0, timer = 0, focused = false, inView = false, wasPaused = true;
 
+      // Step 02 visual: its 3-beat sequence (.is-playing) runs only while its stage is the active one and in view;
+      // leaving the stage resets it, and it freezes (.is-held) whenever the autoplay itself is paused.
+      const seo = q('.g2');
+      function seoSync() {
+        seo.forEach((g) => {
+          const host = g.closest('.eng-vpanel, .eng-scard');
+          const on = !!host && (host.classList.contains('is-active') || host.classList.contains('is-on')) && g.offsetParent !== null && inView && !reduceMq.matches;
+          g.classList.toggle('is-playing', on);
+          g.classList.toggle('is-held', on && !stackMq.matches && wasPaused);
+        });
+      }
+
       const paused = () => focused || !inView || document.hidden || stackMq.matches;
       const schedule = () => {
         clearTimeout(timer);
         wasPaused = paused();
         eng.classList.toggle('is-paused', wasPaused);
         if (!wasPaused) timer = setTimeout(() => goTo(active + 1, true), INTERVAL);
+        seoSync();
       };
       const sync = () => { if (paused() !== wasPaused) schedule(); };
 
@@ -429,6 +442,7 @@ export default function Scripts() {
         inView = es[0].isIntersecting;
         eng.classList.toggle('is-visible', inView);
         sync();
+        seoSync();
       }, { threshold: 0.2 });
       vio.observe(eng);
 
@@ -440,6 +454,7 @@ export default function Scripts() {
           if (k === i) p.setAttribute('aria-current', 'true'); else p.removeAttribute('aria-current');
         });
         scards.forEach((c, k) => c.classList.toggle('is-on', k === i));
+        seoSync();
         if (pbar) pbar.style.transform = 'scaleX(' + ((i + 1) / scards.length) + ')';
         if (pills[i] && pills[i].scrollIntoView) { const row = pills[i].parentNode; row.scrollTo({ left: pills[i].offsetLeft - 24, behavior: 'auto' }); }
       };
