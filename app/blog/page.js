@@ -1,6 +1,6 @@
 import { blogCats } from '../../lib/posts';
 import { getPosts } from '../../lib/store';
-import { postRedirects } from '../../lib/redirects.mjs';
+import { postRedirects, isHiddenPost } from '../../lib/redirects.mjs';
 export const revalidate = 30;
 export const metadata = {
   title: 'CodeSquad Blog | AI Automation, SMEs & Business Growth',
@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default async function Page() {
-  const blogPosts = (await getPosts()).filter((p) => !postRedirects[p.slug]);
+  const blogPosts = (await getPosts()).filter((p) => !postRedirects[p.slug] && !isHiddenPost(p));
   return (
     <main id="top">
       <section className="cs-section cs-case-section title-navy" style={{ paddingBottom: '44px' }}>

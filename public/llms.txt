@@ -46,7 +46,6 @@ For the complete, unabridged text of every page, case study and article on this 
 
 - [All Articles](https://www.codesquad.ai/blog): Practical perspectives on AI automation, SMEs, AEO/SEO, lead generation, software development and scaling operations.
 - [Your SaaS Is Being Recommended by AI](https://www.codesquad.ai/blog/saas-ai-recommendations-seo-ai-search): Seven strategies to make a SaaS product easier for AI assistants (ChatGPT, Claude, Gemini) to understand, trust and recommend to buyers.
-- [The Fully-Booked Business](https://www.codesquad.ai/blog/the-fully-booked-business): A ten-question self-assessment for med spas, clinics, salons and wellness businesses to find where interested leads quietly disappear.
 - [SEO Isn't Dead — But Your SaaS SEO Playbook Probably Is](https://www.codesquad.ai/blog/ai-seo-for-saas): The 2026 AI-SEO playbook for SaaS — extractable content, original data, comparison pages, transparent pricing and measuring AI citations.
 - [I Used Claude to Turn a Messy Spreadsheet Into a Useful Dashboard](https://www.codesquad.ai/blog/claude-messy-spreadsheet-to-dashboard): A step-by-step walkthrough of cleaning inconsistent spreadsheet data with Claude and building a live dashboard from it.
 - [One Prompt, One Studio: HyperFrames + Claude Video Creation Guide](https://www.codesquad.ai/blog/hyperframes-claude-ai-video-creation-guide): How the open-source HyperFrames framework paired with Claude Code turns plain-English prompts into edited, rendered video.
@@ -54,7 +53,6 @@ For the complete, unabridged text of every page, case study and article on this 
 - [How Businesses Lose Money to Slow Lead Response](https://www.codesquad.ai/blog/how-businesses-lose-money-slow-lead-response): Why slow follow-up and fragmented sales/marketing visibility silently cost businesses paid-for leads, and how centralized dashboards fix it.
 - [Stop Chasing AI Trends](https://www.codesquad.ai/blog/stop-chasing-ai-trends-ai-implementation-guide): How to identify the automations that create measurable ROI instead of chasing every new AI trend.
 - [Why SMEs Need Digital Transformation](https://www.codesquad.ai/blog/why-smes-need-digital-transformation): Why small and medium businesses need automation, AI and data-driven systems to stay competitive.
-- [From "Microneedling Near Me" to Booked: The SEO Strategy for Med Spas](https://www.codesquad.ai/blog/microneedling-seo-med-spas): How med spas connect microneedling search demand to booked appointments — service pages, local SEO, AEO/GEO, Google Ads, and lead follow-up automation.
 
 ## Optional
 

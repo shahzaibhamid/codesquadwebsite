@@ -1,18 +1,18 @@
 import { notFound } from 'next/navigation';
 import { getPosts, getPost } from '../../../lib/store';
-import { postRedirects } from '../../../lib/redirects.mjs';
+import { postRedirects, isHiddenPost } from '../../../lib/redirects.mjs';
 
 export const revalidate = 30;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const posts = await getPosts();
-  return posts.filter((p) => !postRedirects[p.slug]).map((p) => ({ slug: p.slug }));
+  return posts.filter((p) => !postRedirects[p.slug] && !isHiddenPost(p)).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const p = await getPost(params.slug);
-  if (!p) return { title: 'Article | CodeSquad Blog' };
+  if (!p || isHiddenPost(p)) return { title: 'Article | CodeSquad Blog' };
   return { title: `${p.title} | CodeSquad`, description: p.excerpt };
 }
 
@@ -31,6 +31,7 @@ function syncHeader(html, post) {
 
 export default async function Page({ params }) {
   const post = await getPost(params.slug);
+  if (isHiddenPost(post)) notFound();
   const html = post?.body || '';
   if (!html) notFound();
   // Older articles store their full layout (<article class="cs-single">…). Posts written
