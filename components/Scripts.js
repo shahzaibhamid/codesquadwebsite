@@ -385,13 +385,16 @@ export default function Scripts() {
       const stackMq = window.matchMedia('(max-width: 1023px), (prefers-reduced-motion: reduce)');
       let active = 0, timer = 0, focused = false, inView = false, wasPaused = true;
 
-      // Step 02 visual: its 3-beat sequence (.is-playing) runs only while its stage is the active one and in view;
+      // Step 02 + marketing-intelligence visuals: their timed sequence (.is-playing) runs only while its stage is the active one and in view;
       // leaving the stage resets it, and it freezes (.is-held) whenever the autoplay itself is paused.
-      const seo = q('.g2');
+      const seo = q('.g2, .mi, .cv');
+      const seoSeen = new Set();
+      const seoIo = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) seoSeen.add(e.target); else seoSeen.delete(e.target); }); seoSync(); }, { threshold: 0.4 });
+      seo.forEach((g) => seoIo.observe(g));
       function seoSync() {
         seo.forEach((g) => {
           const host = g.closest('.eng-vpanel, .eng-scard');
-          const on = !!host && (host.classList.contains('is-active') || host.classList.contains('is-on')) && g.offsetParent !== null && inView && !reduceMq.matches;
+          const on = !!host && (host.classList.contains('is-active') || host.classList.contains('is-on')) && g.offsetParent !== null && (stackMq.matches ? seoSeen.has(g) : inView) && !reduceMq.matches;
           g.classList.toggle('is-playing', on);
           g.classList.toggle('is-held', on && !stackMq.matches && wasPaused);
         });
@@ -461,7 +464,7 @@ export default function Scripts() {
       pills.forEach((p, k) => on(p, 'click', () => scards[k].scrollIntoView({ block: 'center', behavior: reduceMq.matches ? 'auto' : 'smooth' })));
       const sio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) setStack(scards.indexOf(e.target)); }), { rootMargin: '-35% 0px -35% 0px' });
       scards.forEach((c) => sio.observe(c));
-      cleanups.push(() => { clearTimeout(timer); vio.disconnect(); sio.disconnect(); });
+      cleanups.push(() => { clearTimeout(timer); vio.disconnect(); sio.disconnect(); seoIo.disconnect(); });
       schedule();
     }
 

@@ -2438,18 +2438,6 @@ a.cap{color:inherit;text-decoration:none}
 .g4-tiles p i{flex:1;height:var(--h);border-radius:.2em;background:var(--grad)}
 
 /* 5 — intelligence */
-.g5{display:flex;flex-direction:column;gap:1em;justify-content:center}
-.g5-chart{width:100%;height:auto;max-height:46%;overflow:visible}
-.g5-b{fill:rgba(255,255,255,.14);transform-box:fill-box;transform-origin:bottom}
-.g5-rows{display:flex;flex-direction:column;gap:.7em}
-.g5-row{display:grid;grid-template-columns:7em 1fr;align-items:center;gap:1em;font-weight:700;font-size:1em}
-.g5-bar{height:.8em;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden}
-.g5-bar i{display:block;height:100%;width:var(--w);border-radius:999px;background:var(--grad);transform-origin:left}
-.g5-legend{display:flex;gap:1.4em;margin:0;font-size:.95em;font-weight:700;color:rgba(255,255,255,.7)}
-.g5-legend span{display:inline-flex;align-items:center;gap:.5em}
-.g5-legend i{display:block;width:.8em;height:.8em;border-radius:50%;background:#173a8f}
-.g5-legend span:nth-child(2) i{background:#1f7fc0}
-.g5-legend span:nth-child(3) i{background:#25c6b6}
 
 /* graphic motion: only the active, on-screen graphic animates */
 .eng.is-visible .eng-vpanel.is-active .g1-win>*,.eng.is-visible .eng-scard.is-on .g1-win>*{animation:engIn .6s cubic-bezier(.16,1,.3,1) both}
@@ -2472,9 +2460,6 @@ a.cap{color:inherit;text-decoration:none}
 .eng.is-visible .eng-vpanel.is-active .g4-col:nth-child(4),.eng.is-visible .eng-scard.is-on .g4-col:nth-child(4){animation-delay:.24s}
 .eng.is-visible .eng-vpanel.is-active .g4-card:first-of-type,.eng.is-visible .eng-scard.is-on .g4-card:first-of-type{animation:engNudge 4s ease-in-out .8s infinite}
 .eng.is-visible .eng-vpanel.is-active .g4-tiles p i,.eng.is-visible .eng-scard.is-on .g4-tiles p i{animation:engBarUp .9s cubic-bezier(.16,1,.3,1) both;transform-origin:bottom}
-.eng.is-visible .eng-vpanel.is-active .g5-b,.eng.is-visible .eng-scard.is-on .g5-b{animation:engBarUp .8s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d)}
-.eng.is-visible .eng-vpanel.is-active .g5-line,.eng.is-visible .eng-scard.is-on .g5-line{stroke-dasharray:1;stroke-dashoffset:1;animation:engDraw 1.6s cubic-bezier(.16,1,.3,1) .2s forwards}
-.eng.is-visible .eng-vpanel.is-active .g5-bar i,.eng.is-visible .eng-scard.is-on .g5-bar i{animation:engGrow 1.2s cubic-bezier(.16,1,.3,1) var(--d,0s) both}
 @keyframes engIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes engPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,198,182,.0)}50%{box-shadow:0 0 0 .7em rgba(37,198,182,.22)}}
 @keyframes engFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-.6em)}}
@@ -2796,7 +2781,7 @@ h1 em,h2 em,h3 em,.display em,h1 .co-blue,h2 .co-blue,h1 .hl-teal,h1 .hl-blue,h2
 .g2.is-playing .g2-hl::before{animation:seoSweep .5s cubic-bezier(.16,1,.3,1) 2.85s both}
 .g2.is-playing .g2-rec{animation:seoPop .4s cubic-bezier(.16,1,.3,1) 3.2s both}
 .g2.is-playing .g2-sum{animation:seoFade .4s ease 3.3s both}
-.g2.is-held *,.g2.is-held *::before,.g2.is-held *::after{animation-play-state:paused!important}
+.g2.is-held *,.g2.is-held *::before,.g2.is-held *::after,.mi.is-held *,.mi.is-held *::before,.mi.is-held *::after,.cv.is-held *,.cv.is-held *::before,.cv.is-held *::after{animation-play-state:paused!important}
 @keyframes seoChar{from{opacity:0}}
 @keyframes seoCar{from{opacity:1}to{opacity:1}}
 @keyframes seoCarEnd{0%,35%{opacity:1}45%,60%{opacity:0}70%,85%{opacity:1}100%{opacity:0}}
@@ -2807,4 +2792,71 @@ h1 em,h2 em,h3 em,.display em,h1 .co-blue,h2 .co-blue,h1 .hl-teal,h1 .hl-blue,h2
 @keyframes seoIn{from{opacity:0;transform:translateY(8px)}}
 @keyframes seoPop{from{opacity:0;transform:scale(.95)}}
 @keyframes seoSweep{from{transform:scaleX(0)}}
-@media(prefers-reduced-motion:reduce){.g2 *,.g2 *::before,.g2 *::after{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.g2 *,.g2 *::before,.g2 *::after,.mi *,.mi *::before,.mi *::after,.cv *,.cv *::before,.cv *::after{animation:none!important}}
+
+
+/* 5 — Marketing intelligence: scattered platforms in, one clear decision out (plays while the stage is active: .is-playing) */
+.cv{display:flex;flex-direction:column;gap:.5em;font-size:12px;line-height:1.25;min-width:0}
+.g4 .mi-conv svg{height:24px}
+.mi{display:flex;flex-direction:column;justify-content:center;gap:2.1em;font-size:12px;line-height:1.25;min-width:0}
+@media(min-width:1280px){.mi{font-size:13px}}
+.mi-note{margin:0 0 .45em;text-align:center;color:rgba(255,255,255,.6);font-weight:600}
+.mi-chips{display:grid;grid-template-columns:repeat(var(--n,5),minmax(0,1fr));gap:.4em}
+.mi-c{display:flex;flex-direction:column;align-items:center;min-width:0}
+.mi-chip{width:100%;padding:.4em .2em;border-radius:.6em;text-align:center;background:rgba(255,255,255,.08);border:1px solid rgba(15,174,155,.55);font-weight:700;white-space:nowrap;overflow:hidden}
+.mi-mb{display:block;height:4px;width:var(--bw);margin-top:.45em;border-radius:3px;background:rgba(255,255,255,.4);opacity:0;transform-origin:left}
+.mi-conv{display:flex;flex-direction:column;align-items:center}
+.mi-conv svg{display:block;width:100%;height:30px;overflow:visible}
+.mi-line{fill:none;stroke-opacity:.7;stroke-width:1.6;stroke-dasharray:1;stroke-dashoffset:0}
+.mi-dot{fill:none;stroke:#25c6b6;stroke-width:6;stroke-linecap:round;stroke-dasharray:.01 2;opacity:0}
+.mi-hub{position:relative;isolation:isolate;padding:.3em 1.2em;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);font-weight:800}
+.mi-hub::before{content:"";position:absolute;inset:-1px;z-index:-1;border-radius:inherit;background:rgba(15,174,155,.28);border:1px solid var(--accent)}
+.mi-dash{position:relative;display:flex;flex-direction:column;gap:1.1em;padding:2.4em .9em 1.2em;border-radius:.9em;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
+.mi-ill{position:absolute;top:.45em;right:.8em;color:rgba(255,255,255,.55);font-weight:600}
+.mi-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45em}
+@container (min-width:650px){.mi-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.mi-tile{display:flex;flex-direction:column;gap:.4em;padding:.45em .5em;border-radius:.6em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);font-weight:700;min-width:0}
+.mi-tile>span{font-size:12px;letter-spacing:-.01em;white-space:nowrap;overflow:hidden}
+.mi-bar{display:block;height:.55em;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.mi-bar b{display:block;height:100%;width:var(--w);border-radius:inherit;background:var(--grad);transform-origin:left}
+.mi-spark{display:block;width:100%;height:.9em;overflow:visible}
+.mi-spark path{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0}
+.mi-trace{display:flex;align-items:center;justify-content:space-between;gap:.3em;flex-wrap:wrap}
+.mi-n{position:relative;isolation:isolate;padding:.3em .7em;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);font-weight:700;white-space:nowrap}
+.mi-n::before{content:"";position:absolute;inset:-1px;z-index:-1;border-radius:inherit;background:rgba(15,174,155,.28);border:1px solid var(--accent)}
+.mi-n:last-child::before{background:var(--grad);border-color:transparent}
+.mi-ar{color:var(--accent);font-weight:800}
+.mi-score{display:flex;align-items:center;gap:.8em;flex-wrap:wrap}
+.mi-sl{color:rgba(255,255,255,.7);font-weight:700;white-space:nowrap}
+.mi-sbars{display:flex;flex:1;gap:.7em;min-width:0}
+.mi-sb{display:flex;align-items:center;gap:.4em;flex:1;min-width:0;font-weight:700}
+.mi-sb i{display:block;flex:1;height:.55em;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.mi-sb b{display:block;height:100%;width:var(--w);border-radius:inherit;background:var(--grad);transform-origin:left}
+.mi-sum{display:flex;flex-wrap:wrap;justify-content:center;gap:.2em .6em;padding:.45em .8em;border-radius:.7em;background:rgba(15,174,155,.1);border:1px solid rgba(15,174,155,.35);font-weight:800;color:#fff}
+.mi-sum i{font-style:normal;color:var(--accent)}
+.eng-vis,.eng-svis{container-type:inline-size}
+@media(max-width:699px){.mi{font-size:13px}.mi-head .mi-chips{display:flex;flex-wrap:wrap;justify-content:center}.mi-head .mi-chip{flex:0 0 31%}.mi-conv svg{display:none}.mi-conv{margin-top:.1em}.mi-trace{flex-direction:column;align-items:stretch;gap:.1em}.mi-n{text-align:center}.mi-ar{align-self:center;transform:rotate(90deg)}.mi-sbars{flex-direction:column;gap:.35em;flex-basis:100%}}
+
+.cv.is-playing .mi-chip{animation:miAlign .45s cubic-bezier(.16,1,.3,1) calc(1.3s + var(--i)*.09s) both}
+.cv.is-playing .mi-mb{animation:miBarPulse .6s ease calc(.1s + var(--i)*.08s) both,miBarOut .25s ease calc(1.3s + var(--i)*.09s) both}
+.cv.is-playing .mi-line{animation:miDraw .6s ease calc(.7s + var(--i)*.09s) both}
+.cv.is-playing .mi-dot{animation:miTravel .6s linear calc(.7s + var(--i)*.09s) both}
+.cv.is-playing .mi-hub::before{animation:miFade .3s ease 1.7s both}
+.mi.is-playing .mi-dash{animation:miDash .45s ease .3s both}
+.mi.is-playing .mi-tile{animation:miTile .45s cubic-bezier(.16,1,.3,1) calc(.35s + var(--k)*.1s) both}
+.mi.is-playing .mi-bar b{animation:miGrow .6s cubic-bezier(.16,1,.3,1) calc(.45s + var(--k)*.1s) both}
+.mi.is-playing .mi-spark path{animation:miDraw .7s ease calc(.45s + var(--k)*.1s) both}
+.mi.is-playing .mi-n::before{animation:miFade .3s ease calc(.8s + var(--k)*.2s) both}
+.mi.is-playing .mi-ar{animation:miPulse .4s ease calc(.7s + var(--k)*.2s) both}
+.mi.is-playing .mi-sb b{animation:miGrow .5s cubic-bezier(.16,1,.3,1) calc(1.4s + var(--k)*.15s) both}
+.mi.is-playing .mi-sum{animation:miFade .35s ease 1.9s both}
+@keyframes miAlign{from{opacity:.4;transform:translate(var(--ox),var(--oy))}}
+@keyframes miBarPulse{0%{opacity:.9;transform:scaleX(1)}50%{opacity:.9;transform:scaleX(.45)}100%{opacity:.9;transform:scaleX(1)}}
+@keyframes miBarOut{from{opacity:.9}to{opacity:0}}
+@keyframes miDraw{from{stroke-dashoffset:1}}
+@keyframes miTravel{0%{stroke-dashoffset:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{stroke-dashoffset:-1;opacity:0}}
+@keyframes miFade{from{opacity:0}}
+@keyframes miDash{from{opacity:.35}}
+@keyframes miTile{from{transform:translateY(6px)}}
+@keyframes miGrow{from{transform:scaleX(0)}}
+@keyframes miPulse{0%{opacity:.25}50%{opacity:1;transform:scale(1.3)}100%{opacity:1}}
