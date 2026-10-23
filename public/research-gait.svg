@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Walking figure with detected body keypoints and gait curves">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1022"/><stop offset="1" stop-color="#10264f"/></linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#173a8f"/><stop offset=".55" stop-color="#1f7fc0"/><stop offset="1" stop-color="#25c6b6"/></linearGradient>
+    <radialGradient id="glow" cx=".68" cy=".5" r=".45"><stop offset="0" stop-color="#1f7fc0" stop-opacity=".32"/><stop offset="1" stop-color="#1f7fc0" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="58" height="58" patternUnits="userSpaceOnUse"><path d="M58 0H0V58" fill="none" stroke="#fff" stroke-opacity=".05"/></pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+
+  <!-- detection frame -->
+  <g fill="none" stroke="#25c6b6" stroke-width="3" stroke-linecap="round" opacity=".8">
+    <path d="M880 110v-34h34M1320 110v-34h-34M880 790v34h34M1320 790v34h-34"/>
+  </g>
+
+  <!-- floor -->
+  <path d="M820 770H1380" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+  <g stroke="#fff" stroke-opacity=".18" stroke-width="2"><path d="M860 770v12M940 770v12M1020 770v12M1100 770v12M1180 770v12M1260 770v12M1340 770v12"/></g>
+
+  <!-- skeleton -->
+  <g stroke="url(#g)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M1100 250V470"/>
+    <path d="M1098 275L1150 360L1190 440"/>
+    <path d="M1098 275L1040 350L1000 425" opacity=".7"/>
+    <path d="M1095 470L1175 590L1150 720L1215 742"/>
+    <path d="M1095 470L1030 600L940 705L985 746" opacity=".7"/>
+    <path d="M1100 250L1100 224"/>
+  </g>
+  <circle cx="1100" cy="190" r="36" fill="none" stroke="url(#g)" stroke-width="9"/>
+  <g fill="#0b1022" stroke="#25c6b6" stroke-width="4">
+    <circle cx="1100" cy="250" r="9"/><circle cx="1098" cy="275" r="9"/>
+    <circle cx="1150" cy="360" r="9"/><circle cx="1190" cy="440" r="9"/>
+    <circle cx="1040" cy="350" r="9"/><circle cx="1000" cy="425" r="9"/>
+    <circle cx="1095" cy="470" r="11"/>
+    <circle cx="1175" cy="590" r="11"/><circle cx="1150" cy="720" r="11"/><circle cx="1215" cy="742" r="8"/>
+    <circle cx="1030" cy="600" r="11"/><circle cx="940" cy="705" r="11"/><circle cx="985" cy="746" r="8"/>
+  </g>
+
+  <!-- gait curves -->
+  <g fill="none" stroke-linecap="round" stroke-width="5">
+    <path d="M120 640C190 560 250 560 320 640S450 720 520 640S650 560 720 640" stroke="url(#g)"/>
+    <path d="M120 700C190 650 250 650 320 700S450 750 520 700S650 650 720 700" stroke="#fff" stroke-opacity=".35"/>
+    <path d="M120 760C190 735 250 735 320 760S450 785 520 760S650 735 720 760" stroke="#25c6b6" stroke-opacity=".55"/>
+  </g>
+  <g fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="2"><path d="M120 520V790H730"/></g>
+</svg>

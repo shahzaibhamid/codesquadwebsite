@@ -94,5 +94,13 @@
     "filter": "Education",
     "tagline": "How Debate Partners Turned Research Into Ready-to-Run Cases",
     "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788269644105-6856d8c2-00b9-4b97-99f0-ab4e486f5c38.jpg"
+  },
+  {
+    "slug": "gait-analysis-phd-research",
+    "name": "Clinical Gait Analysis",
+    "cat": "Research · PhD",
+    "filter": "Research",
+    "tagline": "Gait analysis from ordinary video.",
+    "img": "/research-gait.svg"
   }
 ]

@@ -2755,3 +2755,16 @@ h1 em,h2 em,h3 em,.display em,h1 .co-blue,h2 .co-blue,h1 .hl-teal,h1 .hl-blue,h2
 .cs-footer a.cs-footer__top:hover{background:var(--grad);color:#fff;border-color:transparent}
 .rv-btn:hover,.cr-arrow:hover{background:var(--grad);color:#fff;border-color:transparent}
 .blog-cats button.on,.blog-cats span.on,.ptab.on{background:var(--grad);color:#fff;border-color:transparent}
+
+/* Research case study: results table + publication list */
+.cs-study-table-wrap{max-width:920px;margin:34px 0;overflow-x:auto}
+.cs-study-table{width:100%;border-collapse:collapse;font-size:16px;color:#d9e2ec}
+.cs-study-table th,.cs-study-table td{padding:16px 18px;text-align:left;border-bottom:1px solid hsla(0,0%,100%,.16);white-space:nowrap}
+.cs-study-table thead th{color:#b9d8fa;font-size:12px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+.cs-study-table tbody th{color:#fff;font-weight:600}
+.cs-study-table td{font-variant-numeric:tabular-nums}
+.cs-study-refs{list-style:none;margin:34px 0 0;padding:0;max-width:920px}
+.cs-study-refs li{padding:22px 0;border-top:1px solid #dedbd3}
+.cs-study-refs a{display:block;color:#18202a;font-size:clamp(18px,1.6vw,22px);font-weight:600;line-height:1.35}
+.cs-study-refs a:hover{color:var(--cs-cyan)}
+.cs-study-refs span{display:block;margin-top:8px;color:#5f6974;font-size:14px;line-height:1.6}
