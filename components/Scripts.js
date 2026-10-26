@@ -27,6 +27,14 @@ export default function Scripts() {
       const t = document.querySelectorAll('.nav-drop-toggle')[0]; if (t) t.classList.add('active');
     }
 
+    /* footer back-to-top (the #header anchor doesn't scroll when the header is fixed/sticky) */
+    on(document, 'click', (e) => {
+      const a = e.target.closest && e.target.closest('.cs-footer__top');
+      if (!a) return;
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+
     /* header shrink */
     const header = document.getElementById('header');
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
