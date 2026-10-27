@@ -2840,3 +2840,11 @@ h1 em,h2 em,h3 em,.display em,h1 .co-blue,h2 .co-blue,h1 .hl-teal,h1 .hl-blue,h2
 @keyframes miTile{from{transform:translateY(6px)}}
 @keyframes miGrow{from{transform:scaleX(0)}}
 @keyframes miPulse{0%{opacity:.25}50%{opacity:1;transform:scale(1.3)}100%{opacity:1}}
+
+/* nav Inquiry button: same look as the "Book a Free Call" button (gradient, white text, glow, lift on hover) */
+.nav-links a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry,#header.scrolled .nav-links a.nav-inquiry{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 14px 34px -16px rgba(31,127,192,.65)}
+.nav-links a.nav-inquiry:hover,.nav-links a.nav-inquiry:focus-visible,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry:hover,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry:focus-visible,#header.scrolled .nav-links a.nav-inquiry:hover{background:var(--grad);color:#fff;border-color:transparent;transform:translateY(-3px);box-shadow:0 20px 40px -16px rgba(37,198,182,.6);filter:brightness(1.06)}
+.nav-links.open a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links.open a.nav-inquiry{border-color:transparent}
+.nav-links a.nav-inquiry{background-repeat:no-repeat;background-origin:border-box;background-clip:border-box}
+.nav-links a.nav-inquiry:hover,.nav-links a.nav-inquiry:focus-visible,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry:hover,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry:focus-visible,#header.scrolled .nav-links a.nav-inquiry:hover{background-repeat:no-repeat;background-origin:border-box;background-clip:border-box}
+.nav-links a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry,#header.scrolled .nav-links a.nav-inquiry,#header.scrolled .nav-links a.nav-inquiry:hover,#header.scrolled .nav-links a.nav-inquiry:focus-visible,.nav-links.open a.nav-inquiry{background-repeat:no-repeat;background-origin:border-box;background-clip:border-box}
