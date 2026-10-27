@@ -7,6 +7,8 @@ const nextConfig = {
     return [
       // The all-services hub page was removed; the homepage lists every service.
       { source: '/services', destination: '/#capabilities', statusCode: 301 },
+      // The process page was removed.
+      { source: '/process', destination: '/', statusCode: 301 },
       // The healthcare page was removed; healthcare now lives on MedGrow's own site.
       { source: '/industries/healthcare', destination: 'https://medgrow.codesquad.ai/', statusCode: 301 },
       { source: '/aesthetics', destination: 'https://medgrow.codesquad.ai/', statusCode: 301 },

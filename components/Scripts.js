@@ -40,7 +40,7 @@ export default function Scripts() {
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
     on(window, 'scroll', onScrollHeader); onScrollHeader();
     // white nav text over dark heros (case-study detail, service pages, ...) until scrolled
-    const darkPaths = ['/ecommerce', '/it-engineering', '/industry', '/process', '/blog', '/case-studies', '/inquiry'];
+    const darkPaths = ['/ecommerce', '/it-engineering', '/industry', '/blog', '/case-studies', '/inquiry'];
     const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/') || path.startsWith('/services/');
     if (header) header.classList.toggle('header-on-dark', darkHero);
 
@@ -265,7 +265,7 @@ export default function Scripts() {
       }));
     });
 
-    // industry tabs (/process): WAI-ARIA tabs with arrow/Home/End keys; the URL hash (#clinics,
+    // industry tabs (data-tabs): WAI-ARIA tabs with arrow/Home/End keys; the URL hash (#clinics,
     // #ecommerce) selects a tab on load and on hashchange, and clicking a tab updates the hash
     document.querySelectorAll('[data-tabs]').forEach((list) => {
       const tabs = Array.from(list.querySelectorAll('[role="tab"]'));

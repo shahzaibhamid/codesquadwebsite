@@ -1,4 +1,4 @@
-// Medical clinic + dental copy + data (toggled), used by /industries/healthcare and the /process clinic tab.
+// Medical clinic + dental copy + data (toggled).
 export default {
   hero: {
     // TODO: swap for a real clinic/dental hero video when one exists — using a static photo for now
@@ -119,7 +119,7 @@ export default {
   faqs: [
     { q: 'Do I have to change my practice management or dental software?', a: "No. We connect to the scheduling and practice software you already use, so your front desk keeps working the way it does today." },
     { q: 'How fast do new patient enquiries get a response?', a: "Within seconds, day or night, by SMS and email with your booking link. Anyone who doesn't book gets a 14-day nurture that stops the moment they do." },
-    { q: 'How is it priced?', a: "A one-time build fee covers the audit, setup and launch. After that it's a monthly growth retainer with no long-term lock-in. Third-party tools (ad spend, CRM licences, SMS/email credits) are billed separately. <a href=\"/process\" style=\"color:var(--accent-deep);font-weight:700\">See what each phase includes</a>." },
+    { q: 'How is it priced?', a: "A one-time build fee covers the audit, setup and launch. After that it's a monthly growth retainer with no long-term lock-in. Third-party tools (ad spend, CRM licences, SMS/email credits) are billed separately." },
     { q: 'Is this compliant with health-advertising rules?', a: "Yes. Campaigns follow Google's restricted-health advertising rules, and conversions only count confirmed leads." },
     { q: 'What kinds of clinics is this for?', a: 'Family and walk-in clinics, dental practices, physiotherapy, weight-loss and wellness clinics.' }
   ],

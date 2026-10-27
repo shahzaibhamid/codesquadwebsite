@@ -69,7 +69,7 @@ CodeSquad's engagement model is two phases: a one-time **Build**, then a monthly
 
 **Pricing model:** a one-time build fee, then a monthly growth retainer with no long-term lock-in. Third-party tools and subscriptions (hosting, ad spend, CRM licences, SMS/email credits, APIs) are billed separately — not included in the package. No setup fee beyond the build; month-to-month; cancel anytime.
 
-**The 5-step delivery timeline** (same steps shown on the homepage and /process):
+**The 5-step delivery timeline** (same steps shown on the homepage):
 1. **Discovery Call** — learn the business, workflows, goals and bottlenecks: where growth is leaking and why.
 2. **Opportunity Assessment** — map the highest-impact automation and AI opportunities, ranked by business value and ROI.
 3. **Build & Deploy** — implement the systems, AI agents and workflows directly into the stack already in use.
@@ -455,7 +455,6 @@ Patients search for microneedling at different decision stages — location-base
 - https://medgrow.codesquad.ai/ — MedGrow, CodeSquad's healthcare product (med spas, clinics, dental & plastic surgeons)
 - /ecommerce — E-commerce
 - /it-engineering — IT & Engineering
-- /process — How the growth system works
 - /founder — Founder profile
 - /inquiry — Contact / consultation request
 - /blog — Blog index

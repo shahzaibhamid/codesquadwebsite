@@ -85,7 +85,6 @@ export default function Footer() {
             <ul>
               <li><a href="/">Home</a></li>
               <li><a href="/industry">Industries</a></li>
-              <li><a href="/process">Process</a></li>
               <li><a href="/case-studies">Case Studies</a></li>
               <li><a href="/blog">Blog</a></li>
               <li><a href="/#contact">Contact</a></li>

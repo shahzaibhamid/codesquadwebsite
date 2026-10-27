@@ -1853,32 +1853,12 @@ h1.hero-title--outcome{max-width:18ch;font-size:clamp(30px,4.2vw,54px);line-heig
 @media(max-width:700px){.fstrip{flex-wrap:wrap;gap:14px 18px;padding:20px}.fstrip-body{flex-basis:calc(100% - 100px)}.fstrip-link{margin-left:94px}}
 @media(max-width:420px){.fstrip-link{margin-left:0}}
 
-/* ---------- /process ---------- */
-.ind-hero--solo .wrap{grid-template-columns:1fr}
-.ind-hero--solo .wrap>div{max-width:760px}
-.phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1040px;margin:0 auto}
-.phase{padding:32px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;border-top:4px solid var(--accent)}
-.phase--grow{border-top-color:#2563eb}
-.phase .jstep{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent-deep);padding:5px 12px;border-radius:999px}
-.phase--grow .jstep{background:#2563eb}
-.phase h3{font-size:28px;font-weight:900;letter-spacing:-.02em;margin:14px 0 8px}
-.phase>p{color:var(--muted);font-size:15px;margin-bottom:18px}
-.phase .case-points{margin-bottom:0}
-.phase-note{max-width:1040px;margin:26px auto 0;font-size:13.5px;border-top:none;padding:16px 18px;background:var(--cream);border-radius:14px;color:var(--muted)}
-@media(max-width:800px){.phase-grid{grid-template-columns:1fr}.phase{padding:26px 22px}}
-.sec--tabs{padding-bottom:0}
-.sec--tabs .sec-head{margin-bottom:34px}
 .ptabs{display:flex;justify-content:center;gap:6px;width:max-content;max-width:100%;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px}
 .ptab{border:none;background:transparent;padding:11px 24px;border-radius:999px;font:inherit;font-weight:700;font-size:15px;color:var(--muted);cursor:pointer;transition:.2s}
 .ptab:hover{color:var(--ink)}
 .ptab.on{background:var(--ink);color:#fff}
 .ptab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.ptab-panel{scroll-margin-top:92px}
-.ptab-panel:focus-visible{outline:none}
-.js .ptab-panel:not(.is-active){display:none}
-.ptab-more{display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:center;padding-top:36px;padding-bottom:56px}
 @media(max-width:480px){.ptab{padding:10px 16px;font-size:14px}}
-.co-process-more{margin-top:34px;text-align:center}
 
 /* ---------- footer: where we work ---------- */
 .cs-footer__countries{gap:10px}
@@ -1887,7 +1867,7 @@ h1.hero-title--outcome{max-width:18ch;font-size:clamp(30px,4.2vw,54px);line-heig
 .cs-country__flag svg{display:block;width:100%;height:100%}
 .quote .who .n,.quote .who .r{display:block}
 
-/* package: service-card links to /process + two-phase strip */
+/* package: service-card links + two-phase strip */
 .svc-links{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:14px}
 .svc-links .svc-link{margin-top:0}
 .svc-link{display:inline-block;margin-top:14px;font-weight:700;font-size:14px;color:var(--accent-deep)}

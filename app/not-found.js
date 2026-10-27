@@ -11,7 +11,6 @@ const Arrow = () => (
 const links = [
   { href: '/', label: 'Home' },
   { href: '/industry', label: 'Industries' },
-  { href: '/process', label: 'Process' },
   { href: '/case-studies', label: 'Case Studies' },
   { href: '/blog', label: 'Blog' },
   { href: '/inquiry', label: 'Send an Inquiry' },

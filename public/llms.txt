@@ -8,7 +8,6 @@ For the complete, unabridged text of every page, case study and article on this 
 
 - [Home](https://www.codesquad.ai/): Overview of CodeSquad's growth systems, capabilities (websites/software, CRM & dashboards, Google/Meta ads, SEO·AEO·GEO, AI agents & automation, marketing intelligence), headline case studies, client metrics and testimonials.
 - [Founder — Shahzaib Hamid](https://www.codesquad.ai/founder): Founder & CEO profile — PhD in Applied AI, prior clinical gait-analysis research (IEEE Access 2024, ICT Express 2026), 10-person engineering team, publications and background.
-- [How Our Process Works](https://www.codesquad.ai/process): The two-phase engagement model — a one-time Build phase (audit, CRM/stack setup, website, automations, campaign launch, training) followed by a monthly Grow retainer (ad management, optimization, content/SEO·AEO·GEO, reporting) — plus the 5-step delivery timeline and FAQ on pricing, contracts and timelines.
 - [Send an Inquiry](https://www.codesquad.ai/inquiry): Contact/consultation request form; replies within one business day. Also bookable directly via Calendly (https://calendly.com/code_squad/30min).
 
 ## Services
