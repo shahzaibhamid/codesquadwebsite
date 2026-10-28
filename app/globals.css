@@ -846,6 +846,7 @@ button,a,.btn{-webkit-tap-highlight-color:transparent}
 .cs-study-proof__figure{max-width:1120px;margin:0 auto}
 .cs-study-proof__figure img{display:block;width:100%;height:auto;border:1px solid rgba(110,130,150,.25);border-radius:16px;background:#fff;box-shadow:0 20px 50px rgba(7,18,31,.14)}
 .cs-study-proof__figure figcaption{margin-top:14px;color:#7a8087;font-size:13px;text-align:center}
+.cs-study-proof__figure--narrow{max-width:720px}
 .cs-study-bigstats{padding:72px 0 24px;background:#fff}
 .cs-study-bigstats__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;text-align:center}
 .cs-study-bigstats strong{display:block;color:#17314f;font-size:clamp(52px,7vw,96px);font-weight:700;line-height:1;letter-spacing:-.05em}
