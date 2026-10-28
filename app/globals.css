@@ -57,10 +57,10 @@
   .nav-links a.btn-dark{color:#fff}
   .nav-links a.btn-ghost{color:var(--ink)}
   /* active / current page */
-  .nav-links>a:not(.btn),.nav-drop-toggle{position:relative}
-  .nav-links>a:not(.btn)::after,.nav-drop-toggle::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:2px;border-radius:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.16,1,.3,1)}
-  .nav-links>a:not(.btn):hover::after,.nav-drop-toggle:hover::after,.nav-links>a.active:not(.btn)::after,.nav-drop-toggle.active::after{transform:scaleX(1)}
-  .nav-links>a.active:not(.btn),.nav-drop-toggle.active{color:var(--ink);font-weight:700}
+  .nav-center>a:not(.btn),.nav-drop-toggle{position:relative}
+  .nav-center>a:not(.btn)::after,.nav-drop-toggle::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:2px;border-radius:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.16,1,.3,1)}
+  .nav-center>a:not(.btn):hover::after,.nav-drop-toggle:hover::after,.nav-center>a.active:not(.btn)::after,.nav-drop-toggle.active::after{transform:scaleX(1)}
+  .nav-center>a.active:not(.btn),.nav-drop-toggle.active{color:var(--ink);font-weight:700}
   .nav-menu a.active{background:var(--cream);color:var(--ink);font-weight:700}
   .nav-menu a::after{display:none}
   .nav-links a:hover{color:var(--ink)}
@@ -1967,18 +1967,18 @@ h1.hero-title--outcome{max-width:18ch;font-size:clamp(30px,4.2vw,54px);line-heig
 .dash-lead-detail p{flex-basis:100%;margin:2px 0 0;color:#3a4a5f;white-space:pre-wrap}
 .dash-import{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
 /* Header "Inquiry" button: solid white, next to "Book a Free Call" */
-.nav-links a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry{margin-right:-16px;background:#fff;color:var(--ink);border-color:var(--line)}
+.nav-links a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry{background:#fff;color:var(--ink);border-color:var(--line)}
 .nav-links a.nav-inquiry:hover,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry:hover{background:#eef1f6;color:var(--ink)}
 .nav-links.open a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links.open a.nav-inquiry{margin-right:0;border-color:var(--ink)}
 #header.scrolled .nav-links a.nav-inquiry{border-color:var(--ink)}
 /* Keep the navbar on one line on narrower laptops (it has two buttons now) */
 #header .logo{flex-shrink:0}
-.nav-links>a,.nav-drop-toggle{white-space:nowrap}
+.nav-center>a,.nav-drop-toggle{white-space:nowrap}
 @media (min-width:961px) and (max-width:1200px){
   .nav-links{gap:18px}
   .nav-links a{font-size:14px}
   .nav-links .btn{padding:11px 16px;font-size:14px}
-  .nav-links a.nav-inquiry{margin-right:-8px}
+
 }
 
 /* ===== Dashboard: video upload form ===== */
@@ -2869,3 +2869,39 @@ h1 em,h2 em,h3 em,.display em,h1 .co-blue,h2 .co-blue,h1 .hl-teal,h1 .hl-blue,h2
 .nav-links a.nav-inquiry{background-repeat:no-repeat;background-origin:border-box;background-clip:border-box}
 .nav-links a.nav-inquiry:hover,.nav-links a.nav-inquiry:focus-visible,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry:hover,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry:focus-visible,#header.scrolled .nav-links a.nav-inquiry:hover{background-repeat:no-repeat;background-origin:border-box;background-clip:border-box}
 .nav-links a.nav-inquiry,#header.header-on-dark:not(.scrolled) .nav-links a.nav-inquiry,#header.scrolled .nav-links a.nav-inquiry,#header.scrolled .nav-links a.nav-inquiry:hover,#header.scrolled .nav-links a.nav-inquiry:focus-visible,.nav-links.open a.nav-inquiry{background-repeat:no-repeat;background-origin:border-box;background-clip:border-box}
+
+/* ===== Header: logo left, links centred, CTAs right ===== */
+.nav-center,.nav-cta{display:flex;align-items:center}
+.nav-cta{gap:10px}
+@media(min-width:961px){
+  .nav{display:grid;grid-template-columns:minmax(max-content,1fr) auto minmax(max-content,1fr);gap:24px}
+  .nav>.logo{justify-self:start}
+  .nav-links{display:contents}
+  .nav-center{justify-self:center;gap:4px;padding:5px;border-radius:999px;background:rgba(15,23,42,.035);border:1px solid rgba(15,23,42,.07);transition:background .3s,border-color .3s}
+  .nav-center>a,.nav-center .nav-drop-toggle{padding:8px 16px;border-radius:999px;transition:background .2s,color .2s}
+  .nav-center .nav-drop{padding:0}
+  .nav-center>a:hover,.nav-center .nav-drop:hover .nav-drop-toggle{background:#fff;color:var(--ink);box-shadow:0 2px 10px -4px rgba(15,23,42,.18)}
+  .nav-center>a:not(.btn)::after,.nav-center .nav-drop-toggle::after{display:none}
+  .nav-center>a.active,.nav-center .nav-drop-toggle.active{background:#fff;box-shadow:0 2px 10px -4px rgba(15,23,42,.18)}
+  .nav-center .nav-menu{top:calc(100% + 10px)}
+  .nav-center .nav-menu::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
+  .nav-cta{justify-self:end}
+  #header.header-on-dark:not(.scrolled) .nav-center{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  #header.header-on-dark:not(.scrolled) .nav-center>a:hover,#header.header-on-dark:not(.scrolled) .nav-center .nav-drop:hover .nav-drop-toggle,#header.header-on-dark:not(.scrolled) .nav-center>a.active,#header.header-on-dark:not(.scrolled) .nav-center .nav-drop-toggle.active{background:rgba(255,255,255,.16);color:#fff;box-shadow:none}
+}
+@media(min-width:961px) and (max-width:1200px){
+  .nav{gap:14px}
+  .nav-center>a,.nav-center .nav-drop-toggle{padding:7px 11px}
+}
+@media(max-width:960px){
+  .nav-links.open .nav-center,.nav-links.open .nav-cta{flex-direction:column;align-items:flex-start;gap:16px;width:100%}
+  .nav-links.open .nav-cta{padding-top:6px}
+}
+@media(min-width:961px) and (max-width:1100px){
+  .nav{gap:10px}
+  #header .logo img{height:28px}
+  .nav-center{gap:0;padding:4px}
+  .nav-center>a,.nav-center .nav-drop-toggle{padding:6px 8px;font-size:13.5px}
+  .nav-cta{gap:8px}
+  .nav-links .nav-cta .btn{padding:10px 13px;font-size:13.5px}
+}

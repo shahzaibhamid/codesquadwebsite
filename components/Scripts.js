@@ -24,7 +24,7 @@ export default function Scripts() {
       if (d.querySelector('.nav-menu a.active')) d.querySelector('.nav-drop-toggle').classList.add('active');
     });
     if (['/industry', '/ecommerce', '/it-engineering'].indexOf(path) > -1) {
-      const t = document.querySelectorAll('.nav-drop-toggle')[0]; if (t) t.classList.add('active');
+      const t = document.querySelector('.nav-drop-toggle[href="/industry"]'); if (t) t.classList.add('active');
     }
 
     /* footer back-to-top (the #header anchor doesn't scroll when the header is fixed/sticky) */
