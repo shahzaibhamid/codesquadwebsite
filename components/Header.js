@@ -19,7 +19,6 @@ export default function Header() {
           </div>
           <a href="/case-studies">Case Studies</a>
           <a href="/blog">Blog</a>
-          <a href="https://medgrow.codesquad.ai/" target="_blank" rel="noopener noreferrer">MedGrow ↗</a>
           <a href="/inquiry" className="btn btn-ghost nav-inquiry">Inquiry Form</a>
           <a href="https://calendly.com/code_squad/30min" target="_blank" rel="noopener noreferrer" className="btn btn-dark">Book a Free Call</a>
         </nav>

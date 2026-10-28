@@ -98,7 +98,6 @@ export default function Footer() {
               <li><a href="/services/crm-integration">CRM &amp; Dashboards</a></li>
               <li><a href="/services/seo-geo-aeo">SEO · AEO · GEO</a></li>
               <li><a href="/services/marketing-intelligence">Marketing Intelligence</a></li>
-              <li><a href="https://medgrow.codesquad.ai/" target="_blank" rel="noopener noreferrer">MedGrow — a CodeSquad product ↗</a></li>
             </ul>
           </div>
           <div>
