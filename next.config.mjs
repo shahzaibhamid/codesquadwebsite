@@ -9,10 +9,13 @@ const nextConfig = {
       { source: '/services', destination: '/#capabilities', statusCode: 301 },
       // The process page was removed.
       { source: '/process', destination: '/', statusCode: 301 },
-      // The healthcare page was removed; healthcare now lives on MedGrow's own site.
-      { source: '/industries/healthcare', destination: 'https://medgrow.codesquad.ai/', statusCode: 301 },
-      { source: '/aesthetics', destination: 'https://medgrow.codesquad.ai/', statusCode: 301 },
-      { source: '/clinics', destination: 'https://medgrow.codesquad.ai/', statusCode: 301 },
+      // The healthcare page was removed; healthcare now lives on its own subdomain.
+      { source: '/industries/healthcare', destination: 'https://healthcare.codesquad.ai/', statusCode: 301 },
+      { source: '/aesthetics', destination: 'https://healthcare.codesquad.ai/', statusCode: 301 },
+      { source: '/clinics', destination: 'https://healthcare.codesquad.ai/', statusCode: 301 },
+      // The engineering and e-commerce pages were removed; each now lives on its own subdomain.
+      { source: '/it-engineering', destination: 'https://engineering.codesquad.ai/', statusCode: 301 },
+      { source: '/ecommerce', destination: 'https://ecommerce.codesquad.ai/', statusCode: 301 },
       ...Object.entries(serviceRedirects).map(([from, to]) => ({
         source: `/services/${from}`, destination: `/services/${to}`, statusCode: 301,
       })),

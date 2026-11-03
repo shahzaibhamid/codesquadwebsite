@@ -83,7 +83,7 @@ export default async function Page() {
               <p>Our specialist patient growth system for med spas, clinics, dental practices and plastic surgeons.</p>
             </div>
             <div className="mg-actions">
-              <a className="btn btn-blue" href="https://medgrow.codesquad.ai/case-studies" target="_blank" rel="noopener noreferrer">Explore MedGrow case studies ↗</a>
+              <a className="btn btn-blue" href="https://healthcare.codesquad.ai/case-studies" target="_blank" rel="noopener noreferrer">Explore MedGrow case studies ↗</a>
             </div>
           </div>
         </div>

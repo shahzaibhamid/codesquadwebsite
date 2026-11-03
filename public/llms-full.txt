@@ -88,7 +88,7 @@ Most clients keep CodeSquad on after launch as their ongoing AI partner, with mo
 
 ## Industry Solutions
 
-One connected growth engine, configured for three fields: Aesthetics/Medical Clinics, E-commerce, and IT & Engineering. The shared wins across all three: reach the right buyer, respond before anyone else, and never lose a lead already paid for — via campaigns built per offer, instant automated follow-up, and content that ranks and converts (SEO/AEO/GEO published from the same dashboard as leads and sales).
+One connected growth engine, configured for three fields: Aesthetics/Medical Clinics, E-commerce, and Engineering & Agri. The shared wins across all three: reach the right buyer, respond before anyone else, and never lose a lead already paid for — via campaigns built per offer, instant automated follow-up, and content that ranks and converts (SEO/AEO/GEO published from the same dashboard as leads and sales).
 
 Proof strip (from a live clinic dashboard, most recent 90-day window): 3s speed to lead · 4.25% click-through rate · $60 cost per lead · 100% email delivery.
 
@@ -125,7 +125,7 @@ Problem framing: roughly 7 in 10 carts are abandoned and most buyers never retur
 
 Package includes: conversion-optimized store design & support, product & category SEO, local SEO, Google Shopping & search ads management, social media content & management, AI automation for carts & follow-up, email & SMS marketing flows, unified analytics/ROAS/LTV reporting, ongoing technical support. Pricing: no setup fee, month-to-month, cancel anytime; ad spend/platform apps/email credits billed separately.
 
-### IT & Engineering
+### Engineering & Agri
 
 Headline: "Engineering-grade software, systems & automation." For IT & engineering teams — web, CRM, AI, automation and IoT, plus SEO/AEO/GEO, built into the existing stack and owned by the client's team. Plans from $499/mo.
 
@@ -452,9 +452,9 @@ Patients search for microneedling at different decision stages — location-base
 
 - / — Home
 - /industry — Industry Solutions overview
-- https://medgrow.codesquad.ai/ — MedGrow, CodeSquad's healthcare product (med spas, clinics, dental & plastic surgeons)
-- /ecommerce — E-commerce
-- /it-engineering — IT & Engineering
+- https://healthcare.codesquad.ai/ — MedGrow, CodeSquad's healthcare product (med spas, clinics, dental & plastic surgeons)
+- https://ecommerce.codesquad.ai/ — E-commerce
+- https://engineering.codesquad.ai/ — Engineering & Agri
 - /founder — Founder profile
 - /inquiry — Contact / consultation request
 - /blog — Blog index

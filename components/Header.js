@@ -23,9 +23,9 @@ export default function Header() {
             <div className="nav-drop">
               <a href="/industry" className="nav-drop-toggle">Industries <span className="car">▾</span></a>
               <div className="nav-menu">
-                <a href="https://medgrow.codesquad.ai/" target="_blank" rel="noopener noreferrer">Healthcare &amp; Wellness</a>
-                <a href="/it-engineering">IT &amp; Engineering</a>
-                <a href="/ecommerce">E-commerce</a>
+                <a href="https://healthcare.codesquad.ai/" target="_blank" rel="noopener noreferrer">Healthcare &amp; Wellness</a>
+                <a href="https://engineering.codesquad.ai/" target="_blank" rel="noopener noreferrer">Engineering &amp; Agri</a>
+                <a href="https://ecommerce.codesquad.ai/" target="_blank" rel="noopener noreferrer">E-commerce</a>
               </div>
             </div>
             <a href="/case-studies">Case Studies</a>

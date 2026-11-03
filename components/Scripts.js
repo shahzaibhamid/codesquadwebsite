@@ -23,7 +23,7 @@ export default function Scripts() {
     document.querySelectorAll('.nav-drop').forEach((d) => {
       if (d.querySelector('.nav-menu a.active')) d.querySelector('.nav-drop-toggle').classList.add('active');
     });
-    if (['/industry', '/ecommerce', '/it-engineering'].indexOf(path) > -1) {
+    if (path === '/industry') {
       const t = document.querySelector('.nav-drop-toggle[href="/industry"]'); if (t) t.classList.add('active');
     }
 
@@ -40,7 +40,7 @@ export default function Scripts() {
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
     on(window, 'scroll', onScrollHeader); onScrollHeader();
     // white nav text over dark heros (case-study detail, service pages, ...) until scrolled
-    const darkPaths = ['/ecommerce', '/it-engineering', '/industry', '/blog', '/case-studies', '/inquiry'];
+    const darkPaths = ['/industry', '/blog', '/case-studies', '/inquiry'];
     const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/') || path.startsWith('/services/');
     if (header) header.classList.toggle('header-on-dark', darkHero);
 

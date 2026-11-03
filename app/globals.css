@@ -1169,8 +1169,6 @@ html,body{overflow-x:clip}
 .plan-note{display:flex;gap:8px;align-items:flex-start;margin-top:16px;padding-top:15px;border-top:1px dashed var(--line);font-size:12px;color:var(--muted-2);line-height:1.5;text-align:left}
 .plan-note svg{width:16px;height:16px;flex:0 0 auto;margin-top:1px;color:#e0952b}
 
-/* IT & Engineering: replace med-spa section bg with a tech image */
-.page-tech .sec.dark{background-image:linear-gradient(rgba(7,10,18,.8),rgba(7,10,18,.86)),url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1500&q=55&auto=format&fit=crop")}
 
 /* === e-commerce hero background video === */
 .ind-hero--video{position:relative;overflow:hidden;background:#070b16;padding:170px 0 92px}
@@ -1181,14 +1179,8 @@ html,body{overflow-x:clip}
 .ind-hero--video .eyebrow{color:#8ad9fb;text-shadow:0 1px 12px rgba(0,0,0,.5)}
 .ind-hero--video h1{color:#fff;text-shadow:0 2px 26px rgba(0,0,0,.85),0 1px 4px rgba(0,0,0,.7)}
 .ind-hero--video p.lead{color:#fff;max-width:640px;text-shadow:0 1px 18px rgba(0,0,0,.95),0 1px 4px rgba(0,0,0,.85)}
-/* IT hero video is brighter — stronger overlay behind the copy (does not affect e-commerce) */
-.page-tech .ind-hero-veil{background:linear-gradient(100deg,rgba(3,6,12,.95) 0%,rgba(3,6,12,.85) 42%,rgba(3,6,12,.55) 66%,rgba(3,6,12,.18) 100%),linear-gradient(180deg,rgba(3,6,12,.3),rgba(3,6,12,.55))}
 @media(max-width:960px){.ind-hero--video{padding:130px 0 64px}}
 
-/* E-commerce: themed color dark sections (no photo background) */
-.page-ecom .sec.dark{background-color:#0a1122;background-image:linear-gradient(135deg,#0b1428 0%,#0a1a34 52%,#0c1122 100%)}
-.page-ecom .sec.dark::before{background:radial-gradient(circle at center,rgba(37,99,235,.24),transparent 60%)}
-.page-ecom .sec.dark::after{background:radial-gradient(circle at center,rgba(15,174,155,.18),transparent 60%)}
 
 /* ===== navy/white title theme (matches home hero) ===== */
 :root{--navy-hero:radial-gradient(60% 60% at 20% 18%,rgba(37,99,235,.30),transparent 60%),radial-gradient(52% 52% at 86% 26%,rgba(15,174,155,.16),transparent 60%),linear-gradient(160deg,#0b1022 0%,#080b16 60%,#060810 100%)}
@@ -1234,8 +1226,6 @@ html,body{overflow-x:clip}
 .hero.has-video .btn-ghost{color:#fff;border-color:rgba(255,255,255,.32)}
 .hero.has-video .btn-ghost:hover{background:rgba(255,255,255,.08)}
 
-/* increase IT hero video visibility (lighter overlay; text stays white + shadowed) */
-.page-tech .ind-hero-veil{background:linear-gradient(100deg,rgba(3,6,12,.86) 0%,rgba(3,6,12,.62) 40%,rgba(3,6,12,.28) 66%,rgba(3,6,12,.06) 100%),linear-gradient(180deg,rgba(3,6,12,.16),rgba(3,6,12,.4))}
 
 /* two-tone hero headline accent (navy-blue + white) */
 .ind-hero--video h1 .hl-blue{background:linear-gradient(120deg,#60a5fa,#93c5fd);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
@@ -2671,6 +2661,8 @@ h1 em,h2 em,h3 em,.display em,h1 .co-blue,h2 .co-blue,h1 .hl-teal,h1 .hl-blue,h2
 .co-hero--home .co-h1 .co-blue{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .co-hero--home .co-sub{color:var(--muted)}
 .co-hero--home .co-chip{color:#2b2b29;border-color:rgba(10,10,10,.14);background:rgba(255,255,255,.7)}
+a.co-chip{text-decoration:none;transition:color .2s,border-color .2s,background .2s}
+.co-hero--home a.co-chip:hover,.co-hero--home a.co-chip:focus-visible{color:#fff;border-color:#2563eb;background:#2563eb}
 .co-hero--home .btn-outline-light{color:var(--ink);border-color:rgba(10,10,10,.28);background:transparent}
 .co-hero--home .btn-outline-light:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 .co-hero--home .co-ribbon{background:rgba(255,255,255,.72);border-top:1px solid rgba(10,10,10,.1)}
