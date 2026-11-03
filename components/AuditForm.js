@@ -9,7 +9,7 @@ const CALENDLY = 'https://calendly.com/code_squad/30min';
 const ADVANCE_DELAY_MS = 200;
 const HEADER_CLEARANCE_PX = 92; // matches scroll-padding-top in globals.css
 
-// Steps: 0 is the intro, 1–7 are the questions, 8 is the contact details.
+// Steps: 1–7 are the questions, 8 is the contact details.
 const TOTAL_QUESTIONS = AUDIT_QUESTIONS.length;
 const CONTACT_STEP = TOTAL_QUESTIONS + 1;
 
@@ -25,8 +25,9 @@ function BackButton({ onClick }) {
 
 export default function AuditForm() {
   const [state, formAction] = useFormState(submitAuditAction, {});
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({});
+  const [otherText, setOtherText] = useState('');
   const [contact, setContact] = useState({ name: '', businessName: '', email: '', phone: '', profile: '' });
   const headingRef = useRef(null);
   const advanceTimer = useRef(null);
@@ -64,11 +65,18 @@ export default function AuditForm() {
     advanceTimer.current = setTimeout(() => goTo(step + 1), ADVANCE_DELAY_MS);
   };
 
+  const typedAnswer = otherText.trim();
+  const submitOther = () => {
+    if (!typedAnswer) return;
+    setAnswers((prev) => ({ ...prev, [AUDIT_QUESTIONS[step - 1].id]: typedAnswer }));
+    goTo(step + 1);
+  };
+
   const updateContact = (e) => setContact((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   if (state?.ok) {
     return (
-      <div className="audit-card audit-done">
+      <div className="audit-card audit-done is-underway">
         <div className="audit-done__icon" aria-hidden="true">✓</div>
         <h2 className="audit-title" ref={headingRef} tabIndex={-1}>Your Growth Audit Request Is In!</h2>
         <p className="audit-text">Thanks for sharing your business details. The CodeSquad team will review your answers and reach out to discuss where you may be missing leads, bookings, or growth opportunities.</p>
@@ -78,25 +86,11 @@ export default function AuditForm() {
     );
   }
 
-  if (step === 0) {
-    return (
-      <div className="audit-card">
-        <div className="audit-step" key="intro">
-          <h2 className="audit-title" ref={headingRef} tabIndex={-1}>Answer 7 quick questions</h2>
-          <p className="audit-text">They help us identify where your business may be losing growth opportunities.</p>
-          <p className="audit-text">Our team will review your answers and contact you to discuss potential improvements to your advertising, lead follow-up, and appointment booking process.</p>
-          <button type="button" className="btn btn-dark audit-start" onClick={() => goTo(1)}>Start My Free Audit →</button>
-          <p className="audit-time">Estimated completion: 1–2 minutes</p>
-        </div>
-      </div>
-    );
-  }
-
   const isContact = step === CONTACT_STEP;
   const current = AUDIT_QUESTIONS[step - 1];
 
   return (
-    <div className="audit-card">
+    <div className={`audit-card${step > 1 ? ' is-underway' : ''}`}>
       <div className="audit-progress">
         <p className="audit-count" aria-live="polite">{isContact ? 'Last step: your details' : `Question ${step} of ${TOTAL_QUESTIONS}`}</p>
         <div className="audit-bar" aria-hidden="true"><span style={{ width: `${(step / CONTACT_STEP) * 100}%` }} /></div>
@@ -115,7 +109,7 @@ export default function AuditForm() {
           <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
             <label htmlFor="audit-website">Website</label><input type="text" id="audit-website" name="website" tabIndex={-1} autoComplete="off" />
           </div>
-          <p className="audit-consent">By submitting, you agree that CodeSquad may contact you about your audit request by phone or email. See our <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+          <p className="audit-consent">By submitting, you agree that CodeSquad may contact you about your audit request by phone or email.</p>
           {state?.error ? <p className="inq-err" role="alert">{state.error}</p> : null}
           <SubmitButton />
           <BackButton onClick={() => goTo(step - 1)} />
@@ -133,9 +127,24 @@ export default function AuditForm() {
                   </button>
                 );
               })}
+              {current.otherMaxLength ? (
+                <div className="audit-other">
+                  <input
+                    type="text"
+                    className={`audit-opt${typedAnswer && answers[current.id] === typedAnswer ? ' is-selected' : ''}`}
+                    aria-label="Other business: type your business"
+                    placeholder="Other business: type yours"
+                    value={otherText}
+                    maxLength={current.otherMaxLength}
+                    onChange={(e) => setOtherText(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') submitOther(); }}
+                  />
+                  {typedAnswer ? <button type="button" className="btn btn-dark audit-other__next" onClick={submitOther}>Continue</button> : null}
+                </div>
+              ) : null}
             </div>
           </fieldset>
-          <BackButton onClick={() => goTo(step - 1)} />
+          {step > 1 ? <BackButton onClick={() => goTo(step - 1)} /> : null}
         </div>
       )}
     </div>

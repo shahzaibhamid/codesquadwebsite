@@ -38,15 +38,16 @@ export async function submitInquiryAction(_prev, formData) {
 }
 
 // The Growth Audit form on /inquiry. Public, so every answer must match a known
-// option. Returns { ok: true, saved, lowIntent } or { error }.
+// option, or be short typed text where a question allows it. Returns { ok: true, saved, lowIntent } or { error }.
 export async function submitAuditAction(_prev, formData) {
   // Honeypot: looks like success to a bot, but nothing is saved or tracked.
   if (clip(formData.get('website'), 200)) return { ok: true };
 
   const answers = [];
-  for (const { id, question, options } of AUDIT_QUESTIONS) {
-    const answer = String(formData.get(id) || '');
-    if (!options.includes(answer)) return { error: 'Please go back and answer every question.' };
+  for (const { id, question, options, otherMaxLength } of AUDIT_QUESTIONS) {
+    const value = String(formData.get(id) || '');
+    const answer = options.includes(value) ? value : clip(value, otherMaxLength || 0);
+    if (!answer) return { error: 'Please go back and answer every question.' };
     answers.push({ id, question, answer });
   }
 
