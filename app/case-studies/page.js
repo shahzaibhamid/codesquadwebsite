@@ -74,20 +74,6 @@ export default async function Page() {
           </div>
         </div>
       </section>
-      <section className="sec mg-banner" aria-label="MedGrow healthcare growth system">
-        <div className="cs-container">
-          <div className="svc-mid reveal">
-            <div>
-              <span className="mg-tag">A product of CodeSquad</span>
-              <h2>MedGrow — Found. Chosen. Booked.</h2>
-              <p>Our specialist patient growth system for med spas, clinics, dental practices and plastic surgeons.</p>
-            </div>
-            <div className="mg-actions">
-              <a className="btn btn-blue" href="https://healthcare.codesquad.ai/case-studies" target="_blank" rel="noopener noreferrer">Explore MedGrow case studies ↗</a>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

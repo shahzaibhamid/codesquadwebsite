@@ -2284,15 +2284,6 @@ a.cap{color:inherit;text-decoration:none}
 }
 @media(prefers-reduced-motion:reduce){.svc-tabpanel.is-active{animation:none}}
 
-/* homepage MedGrow banner (reuses .svc-mid) */
-.sec.mg-banner{padding:72px 0}
-.mg-tag{display:inline-block;margin-bottom:10px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#7dd3fc}
-.mg-actions{display:flex;align-items:center;gap:22px;flex:0 0 auto;flex-wrap:wrap}
-.mg-more{color:#dfe4f0;font-weight:700;font-size:15px}
-.mg-more:hover{color:#fff}
-.mg-more:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
-@media(max-width:640px){.sec.mg-banner{padding-bottom:52px}.mg-actions{flex-direction:column;align-items:flex-start;gap:14px}}
-
 /* blog: filter bar sits below the hero with breathing room; chips are real buttons */
 .pg-hero:has(+ .blog-body){padding-bottom:40px}
 .sec.blog-body{padding-top:36px}
