@@ -1,33 +1,46 @@
-import InquiryForm from '../../components/InquiryForm';
+import AuditForm from '../../components/AuditForm';
 
 export const metadata = {
-  title: 'Send an Inquiry | CodeSquad',
-  description: 'Tell us about your business and goals. CodeSquad replies within one business day with a free consultation call.'
+  title: 'Free Business Growth & Booking Audit | CodeSquad',
+  description: 'Answer 7 quick questions to help us identify where your business may be losing leads, bookings, and growth opportunities.'
 };
+
+const CLIENT_PATH = [
+  { stage: 'Someone looks for what you offer', leak: "You don't show up enough on Google" },
+  { stage: 'They send an inquiry', leak: 'Calls get missed or replies come too slowly' },
+  { stage: 'Your team follows up', leak: 'The lead goes quiet and never books' },
+  { stage: 'They book an appointment' }
+];
 
 export default function InquiryPage() {
   return (
     <main id="top">
       <section className="sec dark inq-sec" id="contact">
-        <div className="wrap contact-grid">
-          <div>
-            <span className="eyebrow">Get Started</span>
-            <h1 className="display">Let&apos;s grow your business.</h1>
-            <p className="lead">Book a free consultation call. We&apos;ll map your funnel, show you a live dashboard, and tell you honestly whether we&apos;re the right fit.</p>
-            <div className="inq-photo">
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1100&q=72&auto=format&fit=crop" alt="A team working together around a table with laptops" loading="eager" />
-            </div>
-            <ul className="contact-pts">
-              <li><span className="ci">✓</span><span><strong>No rip-and-replace</strong>We connect to the tools you already use.</span></li>
-              <li><span className="ci">✓</span><span><strong>See real work</strong>Actual dashboards, ads and content — not slides.</span></li>
-              <li><span className="ci">✓</span><span><strong>Honest fit check</strong>If we&apos;re not right for you, we&apos;ll say so.</span></li>
-            </ul>
-            <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 8, color: '#CFCDC4', fontSize: 15 }}>
-              <span>Prefer to talk now? <a href="tel:+13073964945" style={{ color: 'var(--accent)', fontWeight: 700 }}>+1 (307) 396-4945</a></span>
-              <span>Email <a href="mailto:info@codesquad.ai" style={{ color: 'var(--accent)', fontWeight: 700 }}>info@codesquad.ai</a> · or <a href="https://calendly.com/code_squad/30min" target="_blank" rel="noopener" style={{ color: 'var(--accent)', fontWeight: 700 }}>book on Calendly →</a></span>
-            </div>
+        <div className="wrap audit-hero">
+          <div className="audit-hero__head">
+            <p className="audit-hero__kicker">Free Business Growth &amp; Booking Audit</p>
+            <h1 className="audit-hero__title">Are You Losing Potential Clients Without Knowing It?</h1>
+            <p className="audit-hero__lead">Getting inquiries is one thing. Turning them into booked appointments is another.</p>
           </div>
-          <InquiryForm />
+
+          <div className="audit-hero__form">
+            <AuditForm />
+          </div>
+
+          <div className="audit-hero__path">
+            <h2 className="audit-path__title">Where clients slip away</h2>
+            <ol className="audit-path">
+              {CLIENT_PATH.map(({ stage, leak }) => (
+                <li key={stage} className="audit-path__stage">
+                  <span className="audit-path__name">{stage}</span>
+                  {leak ? <span className="audit-path__leak">{leak}</span> : null}
+                </li>
+              ))}
+            </ol>
+            <p className="audit-alt">
+              Prefer to talk now? Call <a href="tel:+13073964945">+1 (307) 396-4945</a>, email <a href="mailto:info@codesquad.ai">info@codesquad.ai</a>, or <a href="https://calendly.com/code_squad/30min" target="_blank" rel="noopener">book on Calendly</a>.
+            </p>
+          </div>
         </div>
       </section>
     </main>

@@ -40,7 +40,7 @@ export default function Scripts() {
     const onScrollHeader = () => header && header.classList.toggle('scrolled', window.scrollY > 20);
     on(window, 'scroll', onScrollHeader); onScrollHeader();
     // white nav text over dark heros (case-study detail, service pages, ...) until scrolled
-    const darkPaths = ['/industry', '/blog', '/case-studies', '/inquiry'];
+    const darkPaths = ['/industry', '/blog', '/case-studies', '/inquiry', '/privacy'];
     const darkHero = darkPaths.indexOf(path) > -1 || path.startsWith('/case-studies/') || path.startsWith('/services/');
     if (header) header.classList.toggle('header-on-dark', darkHero);
 

@@ -17,7 +17,7 @@ export default async function LeadsPage({ searchParams }) {
       {loadError ? (
         <div className="dash-note dash-note--err" role="alert">{loadError}</div>
       ) : (
-        <div className="dash-note">Inquiries from the <a href="/inquiry" target="_blank" rel="noopener">/inquiry</a> page. {isLive() ? 'Saved in Supabase.' : 'Local development: saved to content/leads.json.'}</div>
+        <div className="dash-note">Growth Audit requests from the <a href="/inquiry" target="_blank" rel="noopener">/inquiry</a> page, plus earlier inquiries. {isLive() ? 'Saved in Supabase.' : 'Local development: saved to content/leads.json.'}</div>
       )}
       <div className="dash-table">
         <div className="dash-tr dash-tr--head dash-tr--leads"><span>Name</span><span>Email</span><span>Source</span><span>Date</span><span>Actions</span></div>
@@ -28,17 +28,26 @@ export default async function LeadsPage({ searchParams }) {
               <div className="dash-tr dash-tr--leads">
                 <span className="dash-td--title">{l.name || '—'}</span>
                 <span className="dash-muted">{l.email ? <a href={`mailto:${l.email}`}>{l.email}</a> : '—'}</span>
-                <span><span className="dash-pill">{l.source || '—'}</span></span>
+                <span className="dash-pills"><span className="dash-pill">{l.source || '—'}</span>{p.lowIntent ? <span className="dash-pill dash-pill--low">{p.lowIntent}</span> : null}</span>
                 <span className="dash-muted">{l.date || '—'}</span>
                 <span className="dash-actions">
                   <form action={deleteLeadAction}><input type="hidden" name="id" value={l.id ?? ''} /><button type="submit" className="dash-del">Delete</button></form>
                 </span>
               </div>
-              {p.phone || p.business || p.message ? (
+              {p.phone || p.business || p.businessName || p.message || p.answers?.length ? (
                 <div className="dash-lead-detail">
                   {p.phone ? <span><b>Phone:</b> {p.phone}</span> : null}
+                  {p.businessName ? <span><b>Business:</b> {p.businessName}</span> : null}
                   {p.business ? <span><b>Business:</b> {p.business}</span> : null}
+                  {p.profile ? <span><b>Website / Instagram:</b> {p.profile}</span> : null}
                   {p.message ? <p>{p.message}</p> : null}
+                  {p.answers?.length ? (
+                    <dl className="dash-lead-answers">
+                      {p.answers.map((a) => (
+                        <div key={a.id}><dt>{a.question}</dt><dd>{a.answer}</dd></div>
+                      ))}
+                    </dl>
+                  ) : null}
                 </div>
               ) : null}
             </div>
