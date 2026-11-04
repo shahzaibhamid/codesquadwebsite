@@ -102,5 +102,13 @@
     "filter": "Research",
     "tagline": "Gait analysis from ordinary video.",
     "img": "/research-gait.svg"
+  },
+  {
+    "slug": "robotic-search-team-rl-research",
+    "name": "Multi-Agent Robotic Search Team",
+    "cat": "Research · PhD",
+    "filter": "Research",
+    "tagline": "Robot search teams that learn and survive failures.",
+    "img": "/research-robotics.svg"
   }
 ]

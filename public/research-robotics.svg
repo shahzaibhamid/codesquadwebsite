@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Grid of search partitions with a leader agent linked to member agents">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1022"/><stop offset="1" stop-color="#10264f"/></linearGradient>
+    <radialGradient id="glow" cx=".68" cy=".5" r=".45"><stop offset="0" stop-color="#1f7fc0" stop-opacity=".32"/><stop offset="1" stop-color="#1f7fc0" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="58" height="58" patternUnits="userSpaceOnUse"><path d="M58 0H0V58" fill="none" stroke="#fff" stroke-opacity=".05"/></pattern>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <g transform="translate(850 130)" stroke="#25c6b6" stroke-opacity=".6" stroke-width="3" fill="none">
+    <rect x="0" y="0" width="560" height="560" rx="6"/>
+    <path d="M187 0V560M373 0V560M0 187H560M0 373H560"/>
+  </g>
+  <g transform="translate(850 130)">
+    <rect x="193" y="193" width="174" height="174" fill="#e5484d" fill-opacity=".28"/>
+    <rect x="379" y="6" width="175" height="175" fill="#e5484d" fill-opacity=".28"/>
+    <rect x="6" y="379" width="175" height="175" fill="#25c6b6" fill-opacity=".14"/>
+    <rect x="379" y="379" width="175" height="175" fill="#25c6b6" fill-opacity=".14"/>
+  </g>
+  <g stroke="#1f7fc0" stroke-width="3" stroke-dasharray="8 8" opacity=".85">
+    <path d="M1130 830L943 223M1130 830L1130 460M1130 830L1316 647"/>
+  </g>
+  <g fill="#0b1022" stroke="#25c6b6" stroke-width="5">
+    <circle cx="943" cy="223" r="20"/><circle cx="1130" cy="460" r="20"/><circle cx="1316" cy="647" r="20"/>
+    <circle cx="1130" cy="830" r="30" stroke="#1f7fc0"/>
+  </g>
+  <circle cx="1130" cy="830" r="10" fill="#1f7fc0"/>
+</svg>
