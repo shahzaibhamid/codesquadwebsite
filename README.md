@@ -62,6 +62,33 @@ writes to the project files. Local-file mode only works in `npm run dev` without
 Open `/dashboard`. It must say **✓ Connected to Supabase**. If anything is wrong, it shows the
 exact Supabase error and how to fix it.
 
+## Meta Ads dashboard (`/dashboard/meta-ads`)
+A mini Meta Ads Manager inside the dashboard. It reads **two private Google Sheets** (daily ad
+stats + Facebook lead-form leads) through the **Google Sheets API** with a read-only service
+account. It never calls the Meta/Facebook API — Google Sheets is the only data source. A
+Make.com automation fills the sheets (ad stats daily at 8 AM PKT; leads instantly on form submit).
+
+**Setup**
+1. In `.env.local`, paste the service account's `private_key` into `GOOGLE_PRIVATE_KEY`
+   (keep the surrounding quotes and the literal `\n` sequences — the code converts them).
+   All Meta Ads keys are listed in `.env.example`.
+2. Share **both** spreadsheets with `GOOGLE_SERVICE_ACCOUNT_EMAIL` as **Viewer**
+   (the sheets stay private — do not "publish to web", do not use an API key).
+3. The page is admin-only: it uses the same `/dashboard` login. Data is cached for
+   `META_ADS_CACHE_SECONDS` (default 30 min); the in-page **Refresh** button clears the cache.
+
+> **⚠️ Hosting reminder:** the Meta Ads variables (`GOOGLE_PROJECT_ID`,
+> `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`, the `META_ADS_*` / `META_LEADS_*` keys,
+> `DASHBOARD_TIMEZONE`, `META_ADS_CURRENCY`, `META_ADS_CACHE_SECONDS`) must also be added to your
+> host — **Vercel → Settings → Environment Variables** — for production. These are server-only
+> secrets: never prefix them with `NEXT_PUBLIC_`. In Vercel, paste `GOOGLE_PRIVATE_KEY` with real
+> newlines **or** with `\n` escapes — both work. If any variable is missing, the page shows a clear
+> error naming it (the value is never printed).
+
+Logic lives in `lib/metaSheets.ts` (fetch/parse), `lib/metaMetrics.ts` (all math, with tests —
+run `npm test`), and `lib/metaFilters.ts` (date ranges + filtering). API: `GET /api/meta-ads`
+and `POST /api/meta-ads/refresh`, both admin-gated.
+
 ## Editing
 - **Nav / footer / contact details:** edit `components/Header.js` / `Footer.js` once.
 - **Page copy & sections:** edit the matching file in `content/*.html`.

@@ -1,5 +1,6 @@
 /node_modules
 /.next
+*.tsbuildinfo
 /out
 /build
 npm-debug.log*
@@ -14,3 +15,6 @@ npm-debug.log*
 !.env.example
 .env.local
 admin/password.txt
+
+# Next.js generated
+next-env.d.ts

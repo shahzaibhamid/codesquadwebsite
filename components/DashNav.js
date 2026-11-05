@@ -8,6 +8,7 @@ const links = [
   { href: '/dashboard/case-studies', label: 'Case studies' },
   { href: '/dashboard/leads', label: 'Leads' },
   { href: '/dashboard/videos', label: 'Videos' },
+  { href: '/dashboard/meta-ads', label: 'Meta Ads' },
 ];
 
 export default function DashNav() {
