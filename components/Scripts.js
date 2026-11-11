@@ -610,6 +610,134 @@ export default function Scripts() {
       }
     });
 
+    const shorts = document.querySelector('.shorts-track');
+    if (shorts) {
+      let ids = [];
+      try { ids = JSON.parse(document.getElementById('shorts-video-ids').textContent); } catch {}
+      ids = Array.isArray(ids) ? [...new Set(ids)].filter((id) => typeof id === 'string' && /^[\w-]{11}$/.test(id)) : [];
+      if (ids.length) {
+        shorts.hidden = false;
+        let open = null;
+        const closeOpen = () => {
+          if (!open) return;
+          open.frame.remove();
+          open.trigger.hidden = false;
+          open = null;
+        };
+        const buildCard = (id, index, clone) => {
+          const label = `CodeSquad YouTube Short ${index + 1}`;
+          const card = document.createElement('article');
+          card.className = 'shorts-card';
+          if (clone) card.setAttribute('aria-hidden', 'true');
+          const viewport = document.createElement('div');
+          viewport.className = 'shorts-video-window';
+          const trigger = document.createElement('button');
+          trigger.type = 'button';
+          trigger.className = 'shorts-play';
+          trigger.setAttribute('aria-label', `Play ${label}`);
+          if (clone) trigger.tabIndex = -1;
+          const poster = document.createElement('img');
+          poster.className = 'shorts-poster';
+          poster.alt = '';
+          poster.loading = 'lazy';
+          poster.decoding = 'async';
+          poster.width = 1280; poster.height = 720;
+          poster.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+          on(poster, 'error', () => {
+            if (poster.dataset.fallback) return;
+            poster.dataset.fallback = '1';
+            poster.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+          });
+          const icon = document.createElement('span');
+          icon.className = 'shorts-play-icon';
+          icon.setAttribute('aria-hidden', 'true');
+          // The YouTube cover art is written as an educational hook, so the card states what
+          // the video actually is. Remove once the thumbnails themselves carry the label.
+          const badge = document.createElement('span');
+          badge.className = 'shorts-badge';
+          badge.textContent = 'Client Review';
+          trigger.append(poster, icon, badge);
+          on(trigger, 'click', () => {
+            closeOpen();
+            const frame = document.createElement('iframe');
+            frame.title = label;
+            frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0`;
+            frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+            frame.allowFullscreen = true;
+            frame.referrerPolicy = 'strict-origin-when-cross-origin';
+            trigger.hidden = true;
+            viewport.append(frame);
+            open = { frame, trigger };
+          });
+          viewport.append(trigger); card.append(viewport);
+          return card;
+        };
+        const appendSet = (clone) => ids.forEach((id, i) => shorts.append(buildCard(id, i, clone)));
+        appendSet(false);
+
+        // Seamless marquee: repeat the set until the track holds a full viewport beyond one
+        // set, then wrap by exactly one set width so the reset is invisible. Reduced motion
+        // keeps a single centred set, since nothing scrolls there.
+        let loopStep = 0;
+        const relayout = () => {
+          if (reduce) return;
+          shorts.classList.add('is-looping');
+          // One set width must be re-measured on resize: card width derives from svh, so a
+          // height change alters it and a stale step would make the wrap visibly jump.
+          const cards = shorts.children;
+          if (cards.length > ids.length) {
+            loopStep = cards[ids.length].offsetLeft - cards[0].offsetLeft;
+          } else {
+            const gap = parseFloat(getComputedStyle(shorts).columnGap) || 0;
+            loopStep = shorts.scrollWidth ? shorts.scrollWidth + gap : 0;
+          }
+          if (!loopStep) return;
+          let guard = 20;
+          while (shorts.scrollWidth < shorts.clientWidth + loopStep && guard--) appendSet(true);
+        };
+        relayout();
+        let resizeRaf = 0;
+        on(window, 'resize', () => {
+          cancelAnimationFrame(resizeRaf);
+          resizeRaf = requestAnimationFrame(relayout);
+        });
+        cleanups.push(() => cancelAnimationFrame(resizeRaf));
+
+        let touching = false, hover = false, focused = false, visible = false, last = 0, raf;
+        on(shorts, 'mouseenter', () => { hover = true; });
+        on(shorts, 'mouseleave', () => { hover = false; });
+        on(shorts, 'focusin', () => { focused = true; });
+        on(shorts, 'focusout', (e) => { focused = shorts.contains(e.relatedTarget); });
+        on(shorts, 'pointerdown', () => { touching = true; });
+        on(window, 'pointerup', () => { touching = false; });
+        on(window, 'pointercancel', () => { touching = false; });
+        const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
+        observer.observe(shorts);
+        let scrollPosition = shorts.scrollLeft;
+        const tick = (now) => {
+          const elapsed = Math.min(now - (last || now), 50); last = now;
+          if (visible && !document.hidden && !reduce && !touching && !hover && !focused && !open) {
+            scrollPosition += elapsed * .05;
+            if (loopStep > 0) {
+              while (scrollPosition >= loopStep) scrollPosition -= loopStep;
+            } else {
+              const maxScroll = shorts.scrollWidth - shorts.clientWidth;
+              if (maxScroll <= 0 || scrollPosition >= maxScroll) scrollPosition = 0;
+            }
+            shorts.scrollLeft = scrollPosition;
+          } else scrollPosition = shorts.scrollLeft;
+          raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+        cleanups.push(() => {
+          cancelAnimationFrame(raf); observer.disconnect();
+          open = null;
+          shorts.classList.remove('is-looping');
+          shorts.replaceChildren();
+        });
+      }
+    }
+
     return () => cleanups.forEach((fn) => fn());
   }, [pathname]);
 
