@@ -58,9 +58,9 @@
   {
     "slug": "rtm-kinetics",
     "name": "RTM Kinetics",
-    "cat": "Remote Patient Monitoring",
+    "cat": "Computer Vision",
     "filter": "Healthcare & Wellness",
-    "tagline": "How RTM Kinetics Connected Patient Care From Lead to Recovery",
+    "tagline": "Real-Time AI Motion Tracking & Remote Monitoring for Physical Therapy",
     "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788189485854-81e06d6e-e27a-4213-914a-1e5ac83cd98a.jpg"
   },
   {
