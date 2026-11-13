@@ -3242,3 +3242,8 @@ a.co-chip{text-decoration:none;transition:color .2s,border-color .2s,background 
 @keyframes cs-cv-pulse{70%{box-shadow:0 0 0 8px rgba(255,90,95,0)}100%{box-shadow:0 0 0 0 rgba(255,90,95,0)}}
 @media (prefers-reduced-motion:reduce){.cs-study-cv__dot{animation:none}}
 @media (max-width:900px){.cs-study-cv__grid{grid-template-columns:1fr;gap:44px;margin-top:40px}.cs-study-cv__media{position:static;order:-1}}
+/* Case-study data panels: tables in place of the CV demo video, wrapping table cells, divider between stacked ink sections */
+.cs-study-cv__media--data .cs-study-table-wrap{margin:0 0 28px}
+.cs-study-table--wrap th,.cs-study-table--wrap td{white-space:normal}
+.cs-study-section--ink+.cs-study-section--ink{border-top:1px solid rgba(141,188,240,.14)}
+@media (max-width:900px){.cs-study-cv__media--data{order:0}}

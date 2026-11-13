@@ -257,6 +257,17 @@ Stats: 1 CRM for the full patient lifecycle · automated reconnect campaigns for
 
 **Quote:** "I had the pleasure of working with Shahzaib on developing an AI platform, where he showcased exceptional technical skills, creativity, and professionalism... highly collaborative, communicative, and consistently delivered high-quality work on time." — Kennard Smith, RTM
 
+### Eight Orbit Urban Farms — AI Crop Disease Detection & Real-Time Sensor Alerts
+**Industry:** Agriculture / AgriTech · **Services:** Computer Vision, Threshold & Alert Engines, IoT Data, Cloud Platform · **URL:** /case-studies/eight-orbit-urban-farms
+
+Stats: 1,450–1,500 acres across 18 fields · 1,800–2,100 soil sensors, 22–45 weather sensors, 4–8 aerial crop health sensors · 5-month MVP in 10 Agile sprints across 5 milestones.
+
+**Challenge:** Eight Orbit farms without pesticides (95% less water, up to 6x higher yields), so disease has to be caught and isolated early rather than sprayed. At 1,500 acres, manual scouting was too slow and thousands of sensor readings buried the anomalies that mattered.
+
+**Solution:** A dual-stage computer vision pipeline (S3 → AI → results → portal): drone-mounted MicaSense RedEdge multispectral and FLIR Vue TZ20 thermal cameras plus RGB imagery; EfficientNetB5 classifies diseases such as Blight and Powdery Mildew, and a UNet with ResNet backbone produces pixel-level masks of diseased areas. A threshold & alert engine ingests Decagon EC-5, Yara N-Tester, PT1000, Davis Vantage Pro2 and Campbell Scientific ARG100 telemetry (Field API → time-series → stats in PostgreSQL); Django APIs and async background workers evaluate live stats, CV masks and LightGBM / Random Forest / GBM moisture and rainfall forecasts against agronomy thresholds and push alerts to a React + TypeScript dashboard (Soil Health Score, NPK charts, yield, precipitation vs. moisture). Runs on AWS ECS/EC2 and S3 with CloudWatch, TLS, RBAC and CI/CD across Dev, Staging and Production.
+
+**Key capabilities:** Classify (EfficientNetB5 names the disease) · Segment (UNet + ResNet maps where it is) · Alert (thresholds on sensors, masks and forecasts become dashboard notifications).
+
 ### Law Signal — Media & Case Management Automation for Law Firms
 **Industry:** Legal Media Automation · **Services:** Video Automation, PR, CRM Sync · **URL:** /case-studies/law-signal
 

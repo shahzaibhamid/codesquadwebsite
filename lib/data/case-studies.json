@@ -64,6 +64,14 @@
     "img": "https://qqxqwcnkyafwflxipmyn.supabase.co/storage/v1/object/public/case-study-media/1788189485854-81e06d6e-e27a-4213-914a-1e5ac83cd98a.jpg"
   },
   {
+    "slug": "eight-orbit-urban-farms",
+    "name": "Eight Orbit Urban Farms",
+    "cat": "Computer Vision",
+    "filter": "Agriculture",
+    "tagline": "AI Crop Disease Detection & Real-Time Sensor Alerts at 1,500-Acre Scale",
+    "img": "/eight-orbit-hero.jpg"
+  },
+  {
     "slug": "law-signal",
     "name": "Law Signal",
     "cat": "Legal Media Automation",
