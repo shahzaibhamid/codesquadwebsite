@@ -457,22 +457,71 @@ export default function Scripts() {
       }, { threshold: 0.2 });
       vio.observe(eng);
 
-      // stacked mode: the pill for the card in the middle of the viewport is active; tapping a pill jumps to its card
+      // stacked mode. Below 1024px the cards sit in a horizontal swipe carousel: pills are tabs, the card
+      // snapped into view is active, and pills/arrows scroll the row only (the page never jumps).
+      // At >=1024px with reduced motion the cards are a 2-col grid instead: pills scroll the page to a card.
       const pills = q('.eng-pill'), scards = q('.eng-scard'), pbar = eng.querySelector('.eng-pbar i');
+      const srow = eng.querySelector('.eng-scards'), scount = eng.querySelector('.eng-scount');
+      const carMq = window.matchMedia('(max-width: 1023px)');
+      let sActive = 0, sRaf = 0;
+      // carousel: the row takes the active card's height, so shorter cards don't sit above an empty gap
+      const fitRow = () => { srow.style.height = carMq.matches ? scards[sActive].offsetHeight + 'px' : ''; };
+      const ro = window.ResizeObserver ? new ResizeObserver(fitRow) : null;
+      if (ro) scards.forEach((c) => ro.observe(c));
+      if (carMq.addEventListener) { carMq.addEventListener('change', fitRow); cleanups.push(() => carMq.removeEventListener('change', fitRow)); }
       const setStack = (i) => {
+        if (i < 0 || i >= scards.length) return;
+        sActive = i;
+        fitRow();
         pills.forEach((p, k) => {
           p.classList.toggle('is-active', k === i);
-          if (k === i) p.setAttribute('aria-current', 'true'); else p.removeAttribute('aria-current');
+          p.setAttribute('aria-selected', k === i ? 'true' : 'false');
+          p.tabIndex = k === i ? 0 : -1;
         });
         scards.forEach((c, k) => c.classList.toggle('is-on', k === i));
         seoSync();
         if (pbar) pbar.style.transform = 'scaleX(' + ((i + 1) / scards.length) + ')';
-        if (pills[i] && pills[i].scrollIntoView) { const row = pills[i].parentNode; row.scrollTo({ left: pills[i].offsetLeft - 24, behavior: 'auto' }); }
+        if (scount) scount.textContent = '0' + (i + 1) + ' / 0' + scards.length;
+        if (pills[i]) { const prow = pills[i].parentNode; prow.scrollTo({ left: pills[i].offsetLeft - 24, behavior: 'auto' }); }
       };
-      pills.forEach((p, k) => on(p, 'click', () => scards[k].scrollIntoView({ block: 'center', behavior: reduceMq.matches ? 'auto' : 'smooth' })));
-      const sio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) setStack(scards.indexOf(e.target)); }), { rootMargin: '-35% 0px -35% 0px' });
+      const showCard = (i) => {
+        const k = Math.max(0, Math.min(scards.length - 1, i));
+        if (carMq.matches) {
+          srow.scrollTo({ left: scards[k].offsetLeft - (srow.clientWidth - scards[k].offsetWidth) / 2, behavior: reduceMq.matches ? 'auto' : 'smooth' });
+          setStack(k);
+        } else {
+          scards[k].scrollIntoView({ block: 'center', behavior: reduceMq.matches ? 'auto' : 'smooth' });
+        }
+      };
+      pills.forEach((p, k) => on(p, 'click', () => showCard(k)));
+      on(pills[0].parentNode, 'keydown', (e) => {
+        const move = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        let k = -1;
+        if (move) k = (sActive + move + pills.length) % pills.length;
+        else if (e.key === 'Home') k = 0;
+        else if (e.key === 'End') k = pills.length - 1;
+        if (k < 0) return;
+        e.preventDefault(); showCard(k); setStack(k); pills[k].focus();
+      });
+      const sPrev = document.getElementById('engSPrev'), sNext = document.getElementById('engSNext');
+      if (sPrev) on(sPrev, 'click', () => showCard(sActive - 1));
+      if (sNext) on(sNext, 'click', () => showCard(sActive + 1));
+      // carousel: the card whose centre is closest to the row's centre is active (covers swipes and programmatic scrolls)
+      on(srow, 'scroll', () => {
+        if (!carMq.matches || sRaf) return;
+        sRaf = requestAnimationFrame(() => {
+          sRaf = 0;
+          const mid = srow.scrollLeft + srow.clientWidth / 2;
+          let best = 0, bestD = Infinity;
+          scards.forEach((c, k) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bestD) { bestD = d; best = k; } });
+          if (best !== sActive) setStack(best);
+        });
+      });
+      // grid mode: the card in the middle of the viewport is active
+      const sio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && !carMq.matches) setStack(scards.indexOf(e.target)); }), { rootMargin: '-35% 0px -35% 0px' });
       scards.forEach((c) => sio.observe(c));
-      cleanups.push(() => { clearTimeout(timer); vio.disconnect(); sio.disconnect(); seoIo.disconnect(); });
+      fitRow();
+      cleanups.push(() => { clearTimeout(timer); cancelAnimationFrame(sRaf); if (ro) ro.disconnect(); vio.disconnect(); sio.disconnect(); seoIo.disconnect(); });
       schedule();
     }
 
