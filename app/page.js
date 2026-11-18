@@ -1,4 +1,5 @@
 import { getContent } from '../lib/content';
+import { renderClientStories } from '../lib/clientStories';
 export const dynamic = 'force-static';
 
 const title = 'AI Automation, Custom Software & Growth Marketing Agency | CodeSquad';
@@ -31,5 +32,5 @@ export const metadata = {
   },
 };
 export default function Home() {
-  return <main id="top" dangerouslySetInnerHTML={{ __html: getContent('home') }} />;
+  return <main id="top" dangerouslySetInnerHTML={{ __html: getContent('home').replace('<!--#client-stories-->', () => renderClientStories()) }} />;
 }

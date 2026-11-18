@@ -342,42 +342,6 @@ export default function Scripts() {
       cleanups.push(() => clearTimeout(timer));
     });
 
-    // reviews: auto-drifting row the visitor can also drag, swipe, scroll or step with the arrows
-    const rv = document.querySelector('.rv-marquee');
-    if (rv) {
-      const track = rv.querySelector('.rv-track');
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const half = () => (track.scrollWidth + 22) / 2; // second half is a copy of the first
-      let paused = false, drag = false, sx = 0, sl = 0, raf = 0, resume = 0, pos = 0;
-      const wrap = () => { const h = half(); if (rv.scrollLeft >= h) rv.scrollLeft -= h; else if (rv.scrollLeft <= 0) rv.scrollLeft += h; };
-      const tick = () => {
-        raf = requestAnimationFrame(tick);
-        if (paused || drag) { pos = rv.scrollLeft; return; }
-        pos += 0.5; rv.scrollLeft = pos; pos = rv.scrollLeft; wrap();
-      };
-      const hold = (ms) => { paused = true; clearTimeout(resume); if (ms) resume = setTimeout(() => { paused = false; }, ms); };
-      if (!reduce) {
-        rv.scrollLeft = 1; pos = 1;
-        raf = requestAnimationFrame(tick);
-        on(rv, 'mouseenter', () => hold(0));
-        on(rv, 'mouseleave', () => { if (!drag) hold(300); });
-        on(rv, 'focusin', () => hold(0));
-        on(rv, 'focusout', () => hold(300));
-        on(rv, 'touchstart', () => hold(0), { passive: true });
-        on(rv, 'touchend', () => hold(2500), { passive: true });
-        on(rv, 'wheel', () => hold(2500), { passive: true });
-      }
-      on(rv, 'scroll', () => { if (!reduce) wrap(); });
-      on(rv, 'pointerdown', (e) => { if (e.pointerType === 'touch') return; drag = true; sx = e.clientX; sl = rv.scrollLeft; rv.classList.add('is-drag'); });
-      on(window, 'pointermove', (e) => { if (drag) rv.scrollLeft = sl - (e.clientX - sx); });
-      on(window, 'pointerup', () => { if (drag) { drag = false; rv.classList.remove('is-drag'); } });
-      const step = (dir) => { hold(3500); rv.scrollBy({ left: dir * 402, behavior: reduce ? 'auto' : 'smooth' }); };
-      const prev = document.getElementById('rvPrev'), next = document.getElementById('rvNext');
-      if (prev) on(prev, 'click', () => step(-1));
-      if (next) on(next, 'click', () => step(1));
-      cleanups.push(() => { cancelAnimationFrame(raf); clearTimeout(resume); });
-    }
-
     // "What We Do" growth engine: 4s autoplay showcase on desktop (pauses on keyboard focus / off-screen /
     // hidden tab); below 1024px or with reduced motion the stacked cards + sticky pill bar are used instead.
     const eng = document.getElementById('capabilities');
@@ -525,106 +489,6 @@ export default function Scripts() {
       schedule();
     }
 
-    // case studies: 3D ring that rolls round on its own (autoplay), or by drag / arrows / dots / keys.
-    // Below 1024px or with reduced motion the CSS shows a swipeable row instead and this engine stays idle.
-    const cr = document.querySelector('[data-cr]');
-    if (cr) {
-      const stage = cr.querySelector('.cr-stage'), ring = cr.querySelector('.cr-ring');
-      const cards = Array.from(cr.querySelectorAll('.cr-card')), dots = Array.from(cr.querySelectorAll('.cr-dot'));
-      const status = cr.querySelector('.cr-status'), groupEl = cr.querySelector('.cr-group');
-      const N = cards.length, STEP = 360 / N, INTERVAL = 3500;
-      const names = cards.map((c) => c.querySelector('h3').textContent);
-      const mq = window.matchMedia('(max-width: 1023px), (prefers-reduced-motion: reduce)');
-      const mod = (a, b) => ((a % b) + b) % b;
-      let angle = -120, target = 0, last = 0, raf = 0, timer = 0, active = -1;
-      let focused = false, inView = false, drag = null, moved = false;
-
-      const paint = () => {
-        ring.style.setProperty('--rot', (-angle).toFixed(2) + 'deg');
-        cards.forEach((c, i) => {
-          const d = Math.abs(mod(i * STEP - angle + 180, 360) - 180);
-          c.style.setProperty('--d', d.toFixed(1));
-          c.classList.toggle('is-back', d > 95);
-        });
-      };
-      const setActive = (announce) => {
-        const a = mod(Math.round(target / STEP), N);
-        if (a === active) return;
-        active = a;
-        cards.forEach((c, i) => { c.classList.toggle('is-front', i === a); c.tabIndex = i === a ? 0 : -1; });
-        dots.forEach((d, i) => d.classList.toggle('on', i === a));
-        if (groupEl) groupEl.textContent = cards[a].getAttribute('data-grp');
-        if (announce) status.textContent = (a + 1) + ' of ' + N + ': ' + names[a];
-      };
-      const frame = (t) => {
-        raf = requestAnimationFrame(frame);
-        const dt = Math.min(0.05, (t - last) / 1000 || 0.016); last = t;
-        if (!drag) {
-          const diff = target - angle;
-          angle = Math.abs(diff) < 0.02 ? target : angle + diff * (1 - Math.exp(-dt * 5));
-        }
-        paint();
-      };
-      const paused = () => focused || !inView || document.hidden || !!drag || mq.matches;
-      const schedule = () => {
-        clearTimeout(timer);
-        if (!paused()) timer = setTimeout(() => { target = (Math.round(target / STEP) + 1) * STEP; setActive(false); schedule(); }, INTERVAL);
-      };
-      const sync = () => {
-        const want = !mq.matches && inView;
-        if (want && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
-        if (!want && raf) { cancelAnimationFrame(raf); raf = 0; }
-        schedule();
-      };
-      const goTo = (i) => {
-        const cur = mod(Math.round(target / STEP), N);
-        target += (mod(i - cur + N / 2, N) - N / 2) * STEP;
-        setActive(true); schedule();
-      };
-      const step = (dir) => { target = (Math.round(target / STEP) + dir) * STEP; setActive(true); schedule(); };
-
-      paint(); setActive(false); cards.forEach((c, i) => { c.tabIndex = i === 0 ? 0 : -1; });
-      on(document.getElementById('crPrev'), 'click', () => step(-1));
-      on(document.getElementById('crNext'), 'click', () => step(1));
-      dots.forEach((d, i) => on(d, 'click', () => goTo(i)));
-      on(stage, 'keydown', (e) => {
-        if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
-        else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
-      });
-      // clicking a side card rolls it to the front; only the front card follows its link
-      cards.forEach((c, i) => on(c, 'click', (e) => { if (moved) return; if (!mq.matches && i !== active) { e.preventDefault(); goTo(i); } }));
-      on(stage, 'click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
-
-      on(stage, 'pointerdown', (e) => {
-        if (mq.matches || (e.pointerType === 'mouse' && e.button !== 0)) return;
-        drag = { x: e.clientX, a: angle, v: 0, px: e.clientX, pt: performance.now() };
-        moved = false; clearTimeout(timer);
-      });
-      on(window, 'pointermove', (e) => {
-        if (!drag) return;
-        const dx = e.clientX - drag.x;
-        if (Math.abs(dx) > 6) { moved = true; stage.classList.add('is-drag'); }
-        const now = performance.now();
-        drag.v = ((drag.px - e.clientX) * 0.3) / Math.max(1, now - drag.pt) * 1000 * 0.5 + drag.v * 0.5;
-        drag.px = e.clientX; drag.pt = now;
-        angle = drag.a - dx * 0.3; target = angle;
-      });
-      const release = () => {
-        if (!drag) return;
-        const v = drag.v; drag = null; stage.classList.remove('is-drag');
-        if (moved) { target = Math.round((angle + v * 0.15) / STEP) * STEP; setActive(true); setTimeout(() => { moved = false; }, 60); }
-        schedule();
-      };
-      on(window, 'pointerup', release); on(window, 'pointercancel', release);
-      on(cr, 'focusin', (e) => { focused = !!(e.target.matches && e.target.matches(':focus-visible')); schedule(); });
-      on(cr, 'focusout', (e) => { if (!cr.contains(e.relatedTarget)) { focused = false; schedule(); } });
-      on(document, 'visibilitychange', sync);
-      if (mq.addEventListener) { mq.addEventListener('change', sync); cleanups.push(() => mq.removeEventListener('change', sync)); }
-      const crio = new IntersectionObserver((es) => { inView = es[0].isIntersecting; if (inView && target === 0 && angle === -120) target = 0; sync(); }, { threshold: 0.3 });
-      crio.observe(cr);
-      cleanups.push(() => { cancelAnimationFrame(raf); clearTimeout(timer); crio.disconnect(); });
-    }
-
     // hero typing headline: types each word, pauses, deletes, loops; syncs the audience chips
     document.querySelectorAll('[data-typer]').forEach((typer) => {
       const textEl = typer.querySelector('.typer-text');
@@ -659,131 +523,94 @@ export default function Scripts() {
       }
     });
 
-    const shorts = document.querySelector('.shorts-track');
-    if (shorts) {
-      let ids = [];
-      try { ids = JSON.parse(document.getElementById('shorts-video-ids').textContent); } catch {}
-      ids = Array.isArray(ids) ? [...new Set(ids)].filter((id) => typeof id === 'string' && /^[\w-]{11}$/.test(id)) : [];
-      if (ids.length) {
-        shorts.hidden = false;
-        let open = null;
-        const closeOpen = () => {
-          if (!open) return;
-          open.frame.remove();
-          open.trigger.hidden = false;
-          open = null;
-        };
-        const buildCard = (id, index, clone) => {
-          const label = `CodeSquad YouTube Short ${index + 1}`;
-          const card = document.createElement('article');
-          card.className = 'shorts-card';
-          if (clone) card.setAttribute('aria-hidden', 'true');
-          const viewport = document.createElement('div');
-          viewport.className = 'shorts-video-window';
-          const trigger = document.createElement('button');
-          trigger.type = 'button';
-          trigger.className = 'shorts-play';
-          trigger.setAttribute('aria-label', `Play ${label}`);
-          if (clone) trigger.tabIndex = -1;
-          const poster = document.createElement('img');
-          poster.className = 'shorts-poster';
-          poster.alt = '';
-          poster.loading = 'lazy';
-          poster.decoding = 'async';
-          poster.width = 1280; poster.height = 720;
-          poster.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-          on(poster, 'error', () => {
-            if (poster.dataset.fallback) return;
-            poster.dataset.fallback = '1';
-            poster.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-          });
-          const icon = document.createElement('span');
-          icon.className = 'shorts-play-icon';
-          icon.setAttribute('aria-hidden', 'true');
-          // The YouTube cover art is written as an educational hook, so the card states what
-          // the video actually is. Remove once the thumbnails themselves carry the label.
-          const badge = document.createElement('span');
-          badge.className = 'shorts-badge';
-          badge.textContent = 'Client Review';
-          trigger.append(poster, icon, badge);
-          on(trigger, 'click', () => {
-            closeOpen();
-            const frame = document.createElement('iframe');
-            frame.title = label;
-            frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0`;
-            frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
-            frame.allowFullscreen = true;
-            frame.referrerPolicy = 'strict-origin-when-cross-origin';
-            trigger.hidden = true;
-            viewport.append(frame);
-            open = { frame, trigger };
-          });
-          viewport.append(trigger); card.append(viewport);
-          return card;
-        };
-        const appendSet = (clone) => ids.forEach((id, i) => shorts.append(buildCard(id, i, clone)));
-        appendSet(false);
+    // client stories (homepage): rail of wide client cards (they widen on hover via CSS). Swipe /
+    // trackpad scroll it natively; the header arrows step one card and disable at either end.
+    // Video testimonials open in a modal player; the iframe exists only while it is open.
+    const cst = document.querySelector('[data-cst]');
+    if (cst) {
+      const rail = cst.querySelector('.cst-rail');
+      const [prev, next] = cst.querySelectorAll('.cst-arrow');
+      const stepSize = () => {
+        // measure a card at rest: a hovered / focused card is temporarily wider
+        const cards = Array.from(rail.querySelectorAll('.cst-card'));
+        const c = cards.find((x) => !x.matches(':hover') && !x.contains(document.activeElement)) || cards[0];
+        return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(rail).columnGap) || 0) : rail.clientWidth;
+      };
+      const sync = () => {
+        const max = rail.scrollWidth - rail.clientWidth - 2;
+        if (prev) prev.disabled = rail.scrollLeft <= 2;
+        if (next) next.disabled = rail.scrollLeft >= max;
+      };
+      [prev, next].forEach((b) => b && on(b, 'click', () => rail.scrollBy({ left: Number(b.dataset.dir) * stepSize(), behavior: reduce ? 'auto' : 'smooth' })));
+      on(rail, 'scroll', sync, { passive: true });
+      on(window, 'resize', sync);
+      sync();
 
-        // Seamless marquee: repeat the set until the track holds a full viewport beyond one
-        // set, then wrap by exactly one set width so the reset is invisible. Reduced motion
-        // keeps a single centred set, since nothing scrolls there.
-        let loopStep = 0;
-        const relayout = () => {
-          if (reduce) return;
-          shorts.classList.add('is-looping');
-          // One set width must be re-measured on resize: card width derives from svh, so a
-          // height change alters it and a stale step would make the wrap visibly jump.
-          const cards = shorts.children;
-          if (cards.length > ids.length) {
-            loopStep = cards[ids.length].offsetLeft - cards[0].offsetLeft;
-          } else {
-            const gap = parseFloat(getComputedStyle(shorts).columnGap) || 0;
-            loopStep = shorts.scrollWidth ? shorts.scrollWidth + gap : 0;
-          }
-          if (!loopStep) return;
-          let guard = 20;
-          while (shorts.scrollWidth < shorts.clientWidth + loopStep && guard--) appendSet(true);
-        };
-        relayout();
-        let resizeRaf = 0;
-        on(window, 'resize', () => {
-          cancelAnimationFrame(resizeRaf);
-          resizeRaf = requestAnimationFrame(relayout);
-        });
-        cleanups.push(() => cancelAnimationFrame(resizeRaf));
+      // mouse: click-and-drag scrolls the rail. A plain click still follows links / plays videos;
+      // once the pointer has moved past a small threshold it becomes a drag and the click is cancelled.
+      let drag = null;
+      on(rail, 'pointerdown', (e) => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        drag = { id: e.pointerId, x: e.clientX, left: rail.scrollLeft, moved: false, v: 0, lx: e.clientX, lt: e.timeStamp };
+      });
+      on(rail, 'pointermove', (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const dx = e.clientX - drag.x;
+        if (!drag.moved) {
+          if (Math.abs(dx) < 6) return;
+          drag.moved = true;
+          rail.setPointerCapture(e.pointerId); // only now, so plain clicks still reach their target
+          rail.classList.add('is-drag');
+        }
+        rail.scrollLeft = drag.left - dx;
+        const dt = e.timeStamp - drag.lt;
+        if (dt > 0) { drag.v = (drag.lx - e.clientX) / dt; drag.lx = e.clientX; drag.lt = e.timeStamp; }
+      });
+      const endDrag = (e) => {
+        if (!drag || (e && e.pointerId !== drag.id)) return;
+        const { moved, v } = drag;
+        drag = null;
+        if (!moved) return;
+        rail.classList.remove('is-drag'); // snapping comes back on and settles on the nearest card
+        // a quick flick carries on a little further, then snaps
+        if (!reduce && Math.abs(v) > 0.4) rail.scrollBy({ left: Math.max(-1, Math.min(1, v)) * 420, behavior: 'smooth' });
+        const swallow = (ev) => { ev.preventDefault(); ev.stopPropagation(); };
+        rail.addEventListener('click', swallow, { capture: true, once: true });
+        setTimeout(() => rail.removeEventListener('click', swallow, { capture: true }), 0);
+      };
+      on(rail, 'pointerup', endDrag);
+      on(rail, 'pointercancel', endDrag);
+      on(rail, 'lostpointercapture', endDrag);
+      on(rail, 'dragstart', (e) => e.preventDefault()); // stop the browser dragging images / links instead
 
-        let touching = false, hover = false, focused = false, visible = false, last = 0, raf;
-        on(shorts, 'mouseenter', () => { hover = true; });
-        on(shorts, 'mouseleave', () => { hover = false; });
-        on(shorts, 'focusin', () => { focused = true; });
-        on(shorts, 'focusout', (e) => { focused = shorts.contains(e.relatedTarget); });
-        on(shorts, 'pointerdown', () => { touching = true; });
-        on(window, 'pointerup', () => { touching = false; });
-        on(window, 'pointercancel', () => { touching = false; });
-        const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
-        observer.observe(shorts);
-        let scrollPosition = shorts.scrollLeft;
-        const tick = (now) => {
-          const elapsed = Math.min(now - (last || now), 50); last = now;
-          if (visible && !document.hidden && !reduce && !touching && !hover && !focused && !open) {
-            scrollPosition += elapsed * .05;
-            if (loopStep > 0) {
-              while (scrollPosition >= loopStep) scrollPosition -= loopStep;
-            } else {
-              const maxScroll = shorts.scrollWidth - shorts.clientWidth;
-              if (maxScroll <= 0 || scrollPosition >= maxScroll) scrollPosition = 0;
-            }
-            shorts.scrollLeft = scrollPosition;
-          } else scrollPosition = shorts.scrollLeft;
-          raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-        cleanups.push(() => {
-          cancelAnimationFrame(raf); observer.disconnect();
-          open = null;
-          shorts.classList.remove('is-looping');
-          shorts.replaceChildren();
-        });
+      // poster that fails to load (e.g. a non-Shorts video has no vertical thumbnail) falls back once
+      cst.querySelectorAll('img[data-fallback-src]').forEach((img) => on(img, 'error', () => { if (img.src !== img.dataset.fallbackSrc) { img.classList.remove('is-short'); img.src = img.dataset.fallbackSrc; } }));
+
+      const modal = cst.querySelector('.cst-modal');
+      const holder = modal && modal.querySelector('.cst-modal-frame');
+      let opener = null;
+      if (modal && holder && typeof modal.showModal === 'function') {
+        const close = () => { if (modal.open) modal.close(); };
+        on(modal, 'close', () => { holder.replaceChildren(); if (opener) opener.focus(); opener = null; });
+        on(modal.querySelector('.cst-modal-x'), 'click', close);
+        on(modal, 'click', (e) => { if (e.target === modal) close(); }); // backdrop
+        cst.querySelectorAll('[data-video]').forEach((btn) => on(btn, 'click', () => {
+          const id = btn.dataset.video;
+          if (!/^[\w-]{11}$/.test(id || '')) return;
+          const frame = document.createElement('iframe');
+          frame.title = btn.getAttribute('aria-label').replace(/^Watch /, '');
+          frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0`;
+          frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+          frame.allowFullscreen = true;
+          frame.referrerPolicy = 'strict-origin-when-cross-origin';
+          holder.replaceChildren(frame);
+          opener = btn;
+          modal.showModal();
+        }));
+        cleanups.push(close);
+      } else {
+        // no <dialog> support: open the video on YouTube instead
+        cst.querySelectorAll('[data-video]').forEach((btn) => on(btn, 'click', () => window.open(`https://www.youtube.com/shorts/${btn.dataset.video}`, '_blank', 'noopener')));
       }
     }
 
