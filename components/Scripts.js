@@ -536,10 +536,17 @@ export default function Scripts() {
         const c = cards.find((x) => !x.matches(':hover') && !x.contains(document.activeElement)) || cards[0];
         return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(rail).columnGap) || 0) : rail.clientWidth;
       };
+      const bar = cst.querySelector('.cst-progress span');
+      const cur = cst.querySelector('[data-cst-cur]');
+      const total = rail.querySelectorAll('.cst-card').length;
       const sync = () => {
         const max = rail.scrollWidth - rail.clientWidth - 2;
         if (prev) prev.disabled = rail.scrollLeft <= 2;
         if (next) next.disabled = rail.scrollLeft >= max;
+        // progress track + "03 / 09" counter
+        const p = max > 0 ? Math.min(1, Math.max(0, rail.scrollLeft / max)) : 1;
+        if (bar) bar.style.transform = `scaleX(${Math.max(p, 1 / Math.max(total, 1))})`;
+        if (cur && total) cur.textContent = String(Math.min(total, Math.round(p * (total - 1)) + 1)).padStart(2, '0');
       };
       [prev, next].forEach((b) => b && on(b, 'click', () => rail.scrollBy({ left: Number(b.dataset.dir) * stepSize(), behavior: reduce ? 'auto' : 'smooth' })));
       on(rail, 'scroll', sync, { passive: true });
