@@ -342,151 +342,251 @@ export default function Scripts() {
       cleanups.push(() => clearTimeout(timer));
     });
 
-    // "What We Do" growth engine: 4s autoplay showcase on desktop (pauses on keyboard focus / off-screen /
-    // hidden tab); below 1024px or with reduced motion the stacked cards + sticky pill bar are used instead.
+    // "What We Do" growth engine: the five services on a 3D ring that rolls round on its own (4s autoplay),
+    // or by drag / arrows / dots / keys. Pauses on keyboard focus, off-screen or a hidden tab. With reduced
+    // motion the CSS shows a swipeable row instead and the ring engine stays idle.
     const eng = document.getElementById('capabilities');
-    if (eng && eng.classList.contains('eng')) {
+    const engRing = eng && eng.querySelector('[data-eng-ring]');
+    if (engRing) {
       const INTERVAL = 4000;
-      const q = (sel) => Array.from(eng.querySelectorAll(sel));
-      const nodes = q('.eng-node'), tps = q('.eng-tpanel'), vps = q('.eng-vpanel');
-      const N = nodes.length;
-      const rail = eng.querySelector('.eng-rail'), desk = eng.querySelector('.eng-desk');
-      const count = eng.querySelector('.eng-count'), status = eng.querySelector('.eng-status');
-      const names = tps.map((p) => p.querySelector('h3').textContent);
-      const reduceMq = window.matchMedia('(prefers-reduced-motion: reduce)');
-      const stackMq = window.matchMedia('(max-width: 1023px), (prefers-reduced-motion: reduce)');
-      let active = 0, timer = 0, focused = false, inView = false, wasPaused = true;
+      const stage = engRing.querySelector('.cr-stage'), ring = engRing.querySelector('.cr-ring');
+      const cards = Array.from(engRing.querySelectorAll('.cr-card')), dots = Array.from(engRing.querySelectorAll('.cr-dot'));
+      const status = engRing.querySelector('.cr-status'), groupEl = engRing.querySelector('.cr-group');
+      const ctas = cards.map((c) => c.querySelector('.eng-cta'));
+      const N = cards.length, STEP = 360 / N;
+      const names = cards.map((c) => c.querySelector('h3').textContent);
+      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const mod = (a, b) => ((a % b) + b) % b;
+      let angle = -STEP * 2, target = 0, last = 0, raf = 0, timer = 0, active = -1;
+      let focused = false, inView = false, drag = null, moved = false;
 
-      // Step 02 + marketing-intelligence visuals: their timed sequence (.is-playing) runs only while its stage is the active one and in view;
-      // leaving the stage resets it, and it freezes (.is-held) whenever the autoplay itself is paused.
-      const seo = q('.g2, .mi, .cv');
-      const seoSeen = new Set();
-      const seoIo = new IntersectionObserver((es) => { es.forEach((e) => { if (e.isIntersecting) seoSeen.add(e.target); else seoSeen.delete(e.target); }); seoSync(); }, { threshold: 0.4 });
-      seo.forEach((g) => seoIo.observe(g));
-      function seoSync() {
+      // timed illustration sequences (.is-playing) run only on the front card while the section is in view;
+      // they freeze (.is-held) whenever the autoplay is paused.
+      const seo = Array.from(eng.querySelectorAll('.g2, .mi, .cv'));
+      const seoSync = () => {
+        const held = paused();
         seo.forEach((g) => {
-          const host = g.closest('.eng-vpanel, .eng-scard');
-          const on = !!host && (host.classList.contains('is-active') || host.classList.contains('is-on')) && g.offsetParent !== null && (stackMq.matches ? seoSeen.has(g) : inView) && !reduceMq.matches;
-          g.classList.toggle('is-playing', on);
-          g.classList.toggle('is-held', on && !stackMq.matches && wasPaused);
+          const card = g.closest('.cr-card');
+          const on = !!card && (mq.matches || (card.classList.contains('is-front') && inView));
+          g.classList.toggle('is-playing', on && !mq.matches);
+          g.classList.toggle('is-held', on && !mq.matches && held);
         });
-      }
+      };
 
-      const paused = () => focused || !inView || document.hidden || stackMq.matches;
-      const schedule = () => {
-        clearTimeout(timer);
-        wasPaused = paused();
-        eng.classList.toggle('is-paused', wasPaused);
-        if (!wasPaused) timer = setTimeout(() => goTo(active + 1, true), INTERVAL);
+      const paint = () => {
+        ring.style.setProperty('--rot', (-angle).toFixed(2) + 'deg');
+        cards.forEach((c, i) => {
+          const d = Math.abs(mod(i * STEP - angle + 180, 360) - 180);
+          c.style.setProperty('--d', d.toFixed(1));
+          c.classList.toggle('is-back', d > 110);
+        });
+      };
+      const setActive = (announce) => {
+        const a = mod(Math.round(target / STEP), N);
+        if (a === active) return;
+        active = a;
+        cards.forEach((c, i) => {
+          const front = i === a, open = front || mq.matches;
+          c.classList.toggle('is-front', front);
+          if (open) c.removeAttribute('aria-hidden'); else c.setAttribute('aria-hidden', 'true');
+          if (ctas[i]) ctas[i].tabIndex = open ? 0 : -1;
+        });
+        dots.forEach((d, i) => d.classList.toggle('on', i === a));
+        if (groupEl) groupEl.textContent = cards[a].getAttribute('data-grp');
+        if (announce && status) status.textContent = (a + 1) + ' of ' + N + ': ' + names[a];
         seoSync();
       };
-      const sync = () => { if (paused() !== wasPaused) schedule(); };
-
-      function goTo(i, auto) {
-        active = (i + N) % N;
-        nodes.forEach((n, k) => {
-          n.classList.toggle('is-active', k === active);
-          n.classList.toggle('is-done', k < active);
-          n.tabIndex = k === active ? 0 : -1;
-          if (k === active) n.setAttribute('aria-current', 'true'); else n.removeAttribute('aria-current');
-        });
-        tps.forEach((p, k) => p.classList.toggle('is-active', k === active));
-        vps.forEach((p, k) => p.classList.toggle('is-active', k === active));
-        rail.style.setProperty('--p', String(active / (N - 1)));
-        count.textContent = '0' + (active + 1) + ' / 0' + N;
-        status.textContent = (active + 1) + ' of ' + N + ': ' + names[active];
+      const frame = (t) => {
+        raf = requestAnimationFrame(frame);
+        const dt = Math.min(0.05, (t - last) / 1000 || 0.016); last = t;
+        if (!drag) {
+          const diff = target - angle;
+          angle = Math.abs(diff) < 0.02 ? target : angle + diff * (1 - Math.exp(-dt * 5));
+        }
+        paint();
+      };
+      function paused() { return focused || !inView || document.hidden || !!drag || mq.matches; }
+      const schedule = () => {
+        clearTimeout(timer);
+        eng.classList.toggle('is-paused', paused());
+        if (!paused()) timer = setTimeout(() => { target = (Math.round(target / STEP) + 1) * STEP; setActive(false); schedule(); }, INTERVAL);
+        seoSync();
+      };
+      const sync = () => {
+        const want = !mq.matches && inView;
+        if (want && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+        if (!want && raf) { cancelAnimationFrame(raf); raf = 0; }
         schedule();
-      }
+      };
+      const goTo = (i) => {
+        const cur = mod(Math.round(target / STEP), N);
+        target += (mod(i - cur + Math.floor(N / 2), N) - Math.floor(N / 2)) * STEP;
+        setActive(true); schedule();
+      };
+      const step = (dir) => { target = (Math.round(target / STEP) + dir) * STEP; setActive(true); schedule(); };
 
-      nodes.forEach((n, k) => on(n, 'click', () => goTo(k)));
-      on(document.getElementById('engPrev'), 'click', () => goTo(active - 1));
-      on(document.getElementById('engNext'), 'click', () => goTo(active + 1));
-      on(rail, 'keydown', (e) => {
-        const move = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
-        if (move) { e.preventDefault(); goTo(active + move); nodes[active].focus(); }
-        else if (e.key === 'Home') { e.preventDefault(); goTo(0); nodes[0].focus(); }
-        else if (e.key === 'End') { e.preventDefault(); goTo(N - 1); nodes[N - 1].focus(); }
+      // scale each illustration down (never up) so it fits the fixed-height top half of its card
+      const fit = () => cards.forEach((c) => {
+        const v = c.querySelector('.eng-svis'), g = v && v.querySelector(':scope > .g');
+        if (!g) return;
+        const cs = getComputedStyle(v);
+        const availH = v.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+        const availW = v.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        const k = Math.min(1, availH / g.scrollHeight, availW / g.scrollWidth);
+        g.style.setProperty('--fit', k > 0 ? k.toFixed(3) : '1');
       });
-      // only keyboard focus pauses; a mouse click on a node keeps the 4s timer running (restarted by goTo)
-      on(eng, 'focusin', (e) => { focused = !!(e.target.matches && e.target.matches(':focus-visible')); sync(); });
-      on(eng, 'focusout', (e) => { if (!eng.contains(e.relatedTarget)) { focused = false; sync(); } });
-      on(document, 'visibilitychange', sync);
-      if (stackMq.addEventListener) { stackMq.addEventListener('change', sync); cleanups.push(() => stackMq.removeEventListener('change', sync)); }
+      const fitRo = window.ResizeObserver ? new ResizeObserver(() => fit()) : null;
+      if (fitRo) cards.forEach((c) => fitRo.observe(c.querySelector('.eng-svis')));
+      fit();
+      cleanups.push(() => { if (fitRo) fitRo.disconnect(); });
 
-      const vio = new IntersectionObserver((es) => {
+      paint(); setActive(false);
+      on(document.getElementById('engPrev'), 'click', () => step(-1));
+      on(document.getElementById('engNext'), 'click', () => step(1));
+      dots.forEach((d, i) => on(d, 'click', () => goTo(i)));
+      on(stage, 'keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      });
+      // clicking a side card rolls it to the front; only the front card's CTA follows its link
+      cards.forEach((c, i) => on(c, 'click', (e) => { if (moved) return; if (!mq.matches && i !== active) { e.preventDefault(); goTo(i); } }));
+      on(stage, 'click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+      // drag: a horizontal gesture rolls the ring; a mostly vertical one is left to the page (touch-action:pan-y)
+      on(stage, 'pointerdown', (e) => {
+        if (mq.matches || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        drag = { x: e.clientX, y: e.clientY, a: angle, v: 0, px: e.clientX, pt: performance.now(), axis: e.pointerType === 'mouse' ? 'x' : null };
+        moved = false; clearTimeout(timer);
+      });
+      on(window, 'pointermove', (e) => {
+        if (!drag) return;
+        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (!drag.axis) {
+          if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+          drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        }
+        if (drag.axis === 'y') return;
+        if (Math.abs(dx) > 6) { moved = true; stage.classList.add('is-drag'); }
+        const now = performance.now();
+        drag.v = ((drag.px - e.clientX) * 0.3) / Math.max(1, now - drag.pt) * 1000 * 0.5 + drag.v * 0.5;
+        drag.px = e.clientX; drag.pt = now;
+        angle = drag.a - dx * 0.3; target = angle;
+      });
+      const release = () => {
+        if (!drag) return;
+        const v = drag.axis === 'x' ? drag.v : 0; drag = null; stage.classList.remove('is-drag');
+        if (moved) { target = Math.round((angle + v * 0.15) / STEP) * STEP; setActive(true); setTimeout(() => { moved = false; }, 60); }
+        schedule();
+      };
+      on(window, 'pointerup', release); on(window, 'pointercancel', release);
+      // only keyboard focus pauses; a mouse click keeps the 4s timer running
+      on(engRing, 'focusin', (e) => { focused = !!(e.target.matches && e.target.matches(':focus-visible')); schedule(); });
+      on(engRing, 'focusout', (e) => { if (!engRing.contains(e.relatedTarget)) { focused = false; schedule(); } });
+      on(document, 'visibilitychange', sync);
+      const onMq = () => { active = -1; setActive(false); sync(); };
+      if (mq.addEventListener) { mq.addEventListener('change', onMq); cleanups.push(() => mq.removeEventListener('change', onMq)); }
+      const engIo = new IntersectionObserver((es) => {
         inView = es[0].isIntersecting;
         eng.classList.toggle('is-visible', inView);
         sync();
-        seoSync();
-      }, { threshold: 0.2 });
-      vio.observe(eng);
+      }, { threshold: 0.3 });
+      engIo.observe(engRing);
+      cleanups.push(() => { cancelAnimationFrame(raf); clearTimeout(timer); engIo.disconnect(); });
+    }
 
-      // stacked mode. Below 1024px the cards sit in a horizontal swipe carousel: pills are tabs, the card
-      // snapped into view is active, and pills/arrows scroll the row only (the page never jumps).
-      // At >=1024px with reduced motion the cards are a 2-col grid instead: pills scroll the page to a card.
-      const pills = q('.eng-pill'), scards = q('.eng-scard'), pbar = eng.querySelector('.eng-pbar i');
-      const srow = eng.querySelector('.eng-scards'), scount = eng.querySelector('.eng-scount');
-      const carMq = window.matchMedia('(max-width: 1023px)');
-      let sActive = 0, sRaf = 0;
-      // carousel: the row takes the active card's height, so shorter cards don't sit above an empty gap
-      const fitRow = () => { srow.style.height = carMq.matches ? scards[sActive].offsetHeight + 'px' : ''; };
-      const ro = window.ResizeObserver ? new ResizeObserver(fitRow) : null;
-      if (ro) scards.forEach((c) => ro.observe(c));
-      if (carMq.addEventListener) { carMq.addEventListener('change', fitRow); cleanups.push(() => carMq.removeEventListener('change', fitRow)); }
-      const setStack = (i) => {
-        if (i < 0 || i >= scards.length) return;
-        sActive = i;
-        fitRow();
-        pills.forEach((p, k) => {
-          p.classList.toggle('is-active', k === i);
-          p.setAttribute('aria-selected', k === i ? 'true' : 'false');
-          p.tabIndex = k === i ? 0 : -1;
-        });
-        scards.forEach((c, k) => c.classList.toggle('is-on', k === i));
-        seoSync();
-        if (pbar) pbar.style.transform = 'scaleX(' + ((i + 1) / scards.length) + ')';
-        if (scount) scount.textContent = '0' + (i + 1) + ' / 0' + scards.length;
-        if (pills[i]) { const prow = pills[i].parentNode; prow.scrollTo({ left: pills[i].offsetLeft - 24, behavior: 'auto' }); }
+    // "Ready to build?" inline Calendly (tablet/desktop only; phones use the Book a Free Call button and load nothing).
+    // The card has a fixed height (the section never grows); longer Calendly views scroll inside with the scrollbar clipped.
+    // Chrome pauses cross-origin iframes while they are off-screen, so a calendar loaded below the fold only starts
+    // rendering once scrolled to (~2s of Calendly's own loader). To avoid that, once the page is idle the calendar is
+    // pre-rendered in an invisible holder pinned inside the viewport (outside the section, whose transform/overflow
+    // would hide it), then moved into its card with moveBefore(), which keeps the loaded iframe instead of reloading.
+    // Browsers without moveBefore() load it in place as the section is approached.
+    // If it can't load, the placeholder keeps a link to the booking page.
+    const cal = document.querySelector('[data-calendly]');
+    if (cal && !cal.querySelector('iframe')) {
+      const slot = cal.parentElement;
+      const url = cal.getAttribute('data-calendly') + '?hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1&primary_color=0fae9b';
+      const phoneMq = window.matchMedia('(max-width: 640px)');
+      const canMove = typeof cal.moveBefore === 'function';
+      let failTimer = 0, revealTimer = 0, started = false, near = false, frame = null, holder = null, rendered = false;
+      const fail = () => { if (!rendered) cal.classList.add('is-failed'); };
+      const ready = () => {
+        clearTimeout(failTimer); clearTimeout(revealTimer); rendered = true;
+        if (!holder) cal.classList.add('is-ready');
       };
-      const showCard = (i) => {
-        const k = Math.max(0, Math.min(scards.length - 1, i));
-        if (carMq.matches) {
-          srow.scrollTo({ left: scards[k].offsetLeft - (srow.clientWidth - scards[k].offsetWidth) / 2, behavior: reduceMq.matches ? 'auto' : 'smooth' });
-          setStack(k);
-        } else {
-          scards[k].scrollIntoView({ block: 'center', behavior: reduceMq.matches ? 'auto' : 'smooth' });
+      // Calendly posts calendly.page_height once its page has rendered; ignore the tiny interim heights while it boots
+      on(window, 'message', (e) => {
+        if (!frame || e.source !== frame.contentWindow || !/^https:\/\/([\w-]+\.)?calendly\.com$/.test(e.origin)) return;
+        if (!e.data || e.data.event !== 'calendly.page_height') return;
+        const h = parseInt(e.data.payload && e.data.payload.height, 10);
+        if (h < 300) return;
+        cal.classList.toggle('is-tall', h > 612);
+        ready();
+      });
+      // move the pre-rendered iframe from the holder into the card (state-preserving), or fall back to a fresh load
+      const settle = () => {
+        if (!holder) return;
+        const h = holder; holder = null;
+        if (frame && frame.parentNode === h) {
+          try { cal.moveBefore(frame, cal.firstChild); } catch (err) { frame = null; started = false; }
         }
+        h.remove();
+        if (frame) { if (rendered) cal.classList.add('is-ready'); } else load(cal);
       };
-      pills.forEach((p, k) => on(p, 'click', () => showCard(k)));
-      on(pills[0].parentNode, 'keydown', (e) => {
-        const move = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-        let k = -1;
-        if (move) k = (sActive + move + pills.length) % pills.length;
-        else if (e.key === 'Home') k = 0;
-        else if (e.key === 'End') k = pills.length - 1;
-        if (k < 0) return;
-        e.preventDefault(); showCard(k); setStack(k); pills[k].focus();
+      const mount = (target) => {
+        if (!window.Calendly || frame) return;
+        window.Calendly.initInlineWidget({ url, parentElement: target });
+        frame = target.querySelector('iframe');
+        if (frame) {
+          frame.setAttribute('title', 'Book a free 30-minute call with CodeSquad');
+          on(frame, 'load', () => { revealTimer = setTimeout(ready, 4000); });
+        }
+        failTimer = setTimeout(() => { if (!rendered) fail(); }, 15000);
+        if (target === holder && near) settle();
+      };
+      const load = (target) => {
+        if (started || phoneMq.matches) return;
+        started = true;
+        if (window.Calendly) { mount(target); return; }
+        let s = document.querySelector('script[data-calendly-widget]');
+        if (!s) {
+          s = document.createElement('script');
+          s.src = 'https://assets.calendly.com/assets/external/widget.js';
+          s.async = true;
+          s.setAttribute('data-calendly-widget', '');
+          document.head.appendChild(s);
+        }
+        on(s, 'load', () => mount(target));
+        on(s, 'error', fail);
+      };
+      // open the connections early so the script and iframe start faster
+      if (!phoneMq.matches) ['https://assets.calendly.com', 'https://calendly.com'].forEach((href) => {
+        if (document.querySelector('link[rel="preconnect"][href="' + href + '"]')) return;
+        const l = document.createElement('link'); l.rel = 'preconnect'; l.href = href; l.crossOrigin = ''; document.head.appendChild(l);
       });
-      const sPrev = document.getElementById('engSPrev'), sNext = document.getElementById('engSNext');
-      if (sPrev) on(sPrev, 'click', () => showCard(sActive - 1));
-      if (sNext) on(sNext, 'click', () => showCard(sActive + 1));
-      // carousel: the card whose centre is closest to the row's centre is active (covers swipes and programmatic scrolls)
-      on(srow, 'scroll', () => {
-        if (!carMq.matches || sRaf) return;
-        sRaf = requestAnimationFrame(() => {
-          sRaf = 0;
-          const mid = srow.scrollLeft + srow.clientWidth / 2;
-          let best = 0, bestD = Infinity;
-          scards.forEach((c, k) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bestD) { bestD = d; best = k; } });
-          if (best !== sActive) setStack(best);
-        });
-      });
-      // grid mode: the card in the middle of the viewport is active
-      const sio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && !carMq.matches) setStack(scards.indexOf(e.target)); }), { rootMargin: '-35% 0px -35% 0px' });
-      scards.forEach((c) => sio.observe(c));
-      fitRow();
-      cleanups.push(() => { clearTimeout(timer); cancelAnimationFrame(sRaf); if (ro) ro.disconnect(); vio.disconnect(); sio.disconnect(); seoIo.disconnect(); });
-      schedule();
+      const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
+      const cancelIdle = window.cancelIdleCallback || clearTimeout;
+      let idleId = 0;
+      const warm = () => { idleId = idle(() => {
+        if (started || phoneMq.matches || near || !canMove) return;
+        holder = document.createElement('div');
+        holder.className = 'rd-cal-warm';
+        holder.setAttribute('aria-hidden', 'true');
+        holder.setAttribute('inert', '');
+        holder.style.width = (slot.clientWidth || 540) + 'px';
+        document.body.appendChild(holder);
+        load(holder);
+      }, { timeout: 4000 }); };
+      if (document.readyState === 'complete') warm(); else on(window, 'load', warm);
+      // as the section is approached: drop the pre-rendered calendar into place, or load it now
+      const calIo = new IntersectionObserver((es) => {
+        near = es[0].isIntersecting;
+        if (!near || phoneMq.matches) return;
+        calIo.disconnect();
+        if (holder) { if (frame) settle(); } else load(cal);
+      }, { rootMargin: '900px 0px' });
+      calIo.observe(slot);
+      cleanups.push(() => { calIo.disconnect(); clearTimeout(failTimer); clearTimeout(revealTimer); cancelIdle(idleId); if (holder) holder.remove(); });
     }
 
     // hero typing headline: types each word, pauses, deletes, loops; syncs the audience chips
@@ -523,7 +623,7 @@ export default function Scripts() {
       }
     });
 
-    // client stories (homepage): rail of wide client cards (they widen on hover via CSS). Swipe /
+    // client stories (homepage): review cards expand on desktop hover or keyboard focus. Swipe /
     // trackpad scroll it natively; the header arrows step one card and disable at either end.
     // Video testimonials open in a modal player; the iframe exists only while it is open.
     const cst = document.querySelector('[data-cst]');
@@ -531,7 +631,7 @@ export default function Scripts() {
       const rail = cst.querySelector('.cst-rail');
       const [prev, next] = cst.querySelectorAll('.cst-arrow');
       const stepSize = () => {
-        // measure a card at rest: a hovered / focused card is temporarily wider
+        // Use an unexpanded card so hovering doesn't change the carousel step.
         const cards = Array.from(rail.querySelectorAll('.cst-card'));
         const c = cards.find((x) => !x.matches(':hover') && !x.contains(document.activeElement)) || cards[0];
         return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(rail).columnGap) || 0) : rail.clientWidth;
@@ -611,13 +711,14 @@ export default function Scripts() {
           frame.allowFullscreen = true;
           frame.referrerPolicy = 'strict-origin-when-cross-origin';
           holder.replaceChildren(frame);
+          modal.classList.toggle('is-wide', btn.hasAttribute('data-wide'));
           opener = btn;
           modal.showModal();
         }));
         cleanups.push(close);
       } else {
         // no <dialog> support: open the video on YouTube instead
-        cst.querySelectorAll('[data-video]').forEach((btn) => on(btn, 'click', () => window.open(`https://www.youtube.com/shorts/${btn.dataset.video}`, '_blank', 'noopener')));
+        cst.querySelectorAll('[data-video]').forEach((btn) => on(btn, 'click', () => window.open(btn.hasAttribute('data-wide') ? `https://www.youtube.com/watch?v=${btn.dataset.video}` : `https://www.youtube.com/shorts/${btn.dataset.video}`, '_blank', 'noopener')));
       }
     }
 
