@@ -3299,6 +3299,7 @@ a.co-chip{text-decoration:none;transition:color .2s,border-color .2s,background 
 .cst-modal::backdrop{background:rgba(6,9,18,.78);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .cst-modal-frame{aspect-ratio:9/16;max-height:88svh;border-radius:18px;overflow:hidden}
 .cst-modal-frame iframe{display:block;width:100%;height:100%;border:0}
+.cst-modal-frame iframe[hidden]{display:none}
 /* landscape (long-form) testimonial videos */
 .cst-av--video[data-wide] .cst-play-ic{top:auto;bottom:12px;margin-top:0}
 .cst-modal.is-wide{width:min(1000px,92vw,calc(84svh * 16 / 9))}

@@ -3,6 +3,31 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { submitInquiryAction } from '../app/inquiry/actions';
 
+let youtubeApi;
+function loadYouTubeAPI() {
+  if (window.YT?.Player) return Promise.resolve(window.YT);
+  if (!youtubeApi) {
+    youtubeApi = new Promise((resolve, reject) => {
+      const previous = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        window.onYouTubeIframeAPIReady = previous;
+        resolve(window.YT);
+        previous?.();
+      };
+      const script = document.createElement('script');
+      script.src = 'https://www.youtube.com/iframe_api';
+      script.onerror = () => {
+        window.onYouTubeIframeAPIReady = previous;
+        youtubeApi = undefined;
+        script.remove();
+        reject(new Error('YouTube controls unavailable'));
+      };
+      document.head.appendChild(script);
+    });
+  }
+  return youtubeApi;
+}
+
 export default function Scripts() {
   const pathname = usePathname();
   useEffect(() => {
@@ -506,11 +531,10 @@ export default function Scripts() {
 
     // "Ready to build?" inline Calendly (tablet/desktop only; phones use the Book a Free Call button and load nothing).
     // The card has a fixed height (the section never grows); longer Calendly views scroll inside with the scrollbar clipped.
-    // Fetch the third-party app only as the visitor approaches the booking section.
+    // Start loading as soon as the homepage mounts at a width that shows the widget.
     // The placeholder keeps a working link if the calendar cannot load.
     const cal = document.querySelector('[data-calendly]');
     if (cal && !cal.querySelector('iframe')) {
-      const slot = cal.parentElement;
       const url = cal.getAttribute('data-calendly') + '?hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1&primary_color=0fae9b';
       const phoneMq = window.matchMedia('(max-width: 640px)');
       let failTimer = 0, revealTimer = 0, started = false, frame = null, rendered = false;
@@ -557,13 +581,9 @@ export default function Scripts() {
         on(s, 'load', () => mount(target));
         on(s, 'error', fail);
       };
-      const calIo = new IntersectionObserver((es) => {
-        if (!es[0].isIntersecting || phoneMq.matches) return;
-        calIo.disconnect();
-        load(cal);
-      }, { rootMargin: '300px 0px' });
-      calIo.observe(slot);
-      cleanups.push(() => { calIo.disconnect(); clearTimeout(failTimer); clearTimeout(revealTimer); });
+      load(cal);
+      on(phoneMq, 'change', () => load(cal));
+      cleanups.push(() => { clearTimeout(failTimer); clearTimeout(revealTimer); });
     }
 
     // hero typing headline: types each word, pauses, deletes, loops; syncs the audience chips
@@ -602,7 +622,7 @@ export default function Scripts() {
 
     // client stories (homepage): review cards expand on desktop hover or keyboard focus. Swipe /
     // trackpad scroll it natively; the header arrows step one card and disable at either end.
-    // Video testimonials open in a modal player; the iframe exists only while it is open.
+    // Testimonial players preload silently and share one dialog.
     const cst = document.querySelector('[data-cst]');
     if (cst) {
       const rail = cst.querySelector('.cst-rail');
@@ -675,24 +695,60 @@ export default function Scripts() {
       let opener = null;
       if (modal && holder && typeof modal.showModal === 'function') {
         const close = () => { if (modal.open) modal.close(); };
-        on(modal, 'close', () => { holder.replaceChildren(); if (opener) opener.focus(); opener = null; });
+        let active = null;
+        const players = new Map();
+        on(modal, 'close', () => {
+          if (modal.open) return;
+          if (active) {
+            if (active.ready) active.player.stopVideo();
+            else active.frame.src = active.frame.src; // Also stops playback with native controls alone.
+            active.frame.hidden = true;
+            active = null;
+          }
+          opener?.focus();
+          opener = null;
+        });
         on(modal.querySelector('.cst-modal-x'), 'click', close);
         on(modal, 'click', (e) => { if (e.target === modal) close(); }); // backdrop
-        cst.querySelectorAll('[data-video]').forEach((btn) => on(btn, 'click', () => {
+        cst.querySelectorAll('[data-video]').forEach((btn) => {
           const id = btn.dataset.video;
           if (!/^[\w-]{11}$/.test(id || '')) return;
-          const frame = document.createElement('iframe');
-          frame.title = btn.getAttribute('aria-label').replace(/^Watch /, '');
-          frame.src = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0`;
-          frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
-          frame.allowFullscreen = true;
-          frame.referrerPolicy = 'strict-origin-when-cross-origin';
-          holder.replaceChildren(frame);
-          modal.classList.toggle('is-wide', btn.hasAttribute('data-wide'));
-          opener = btn;
-          modal.showModal();
-        }));
-        cleanups.push(close);
+          let entry = players.get(id);
+          if (!entry) {
+            const frame = document.createElement('iframe');
+            frame.title = btn.getAttribute('aria-label').replace(/^Watch /, '');
+            frame.hidden = true;
+            frame.loading = 'eager';
+            frame.src = `https://www.youtube.com/embed/${id}?enablejsapi=1&playsinline=1&rel=0&origin=${encodeURIComponent(location.origin)}`;
+            frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+            frame.allowFullscreen = true;
+            frame.referrerPolicy = 'strict-origin-when-cross-origin';
+            holder.appendChild(frame);
+            entry = { frame, ready: false, player: null };
+            players.set(id, entry);
+            loadYouTubeAPI().then((YT) => {
+              if (!frame.isConnected || !players.has(id)) return;
+              entry.player = new YT.Player(frame, { events: { onReady: () => {
+                entry.ready = true;
+                if (active === entry && modal.open) entry.player.playVideo();
+              } } });
+            }).catch(() => {}); // The iframe's own play button is still available.
+          }
+          on(btn, 'click', () => {
+            active = entry;
+            entry.frame.hidden = false;
+            modal.classList.toggle('is-wide', btn.hasAttribute('data-wide'));
+            opener = btn;
+            modal.showModal();
+            if (entry.ready) entry.player.playVideo();
+          });
+        });
+        cleanups.push(() => {
+          close();
+          players.forEach(entry => entry.player?.destroy());
+          players.clear();
+          holder.replaceChildren();
+        });
       } else {
         // no <dialog> support: open the video on YouTube instead
         cst.querySelectorAll('[data-video]').forEach((btn) => on(btn, 'click', () => window.open(btn.hasAttribute('data-wide') ? `https://www.youtube.com/watch?v=${btn.dataset.video}` : `https://www.youtube.com/shorts/${btn.dataset.video}`, '_blank', 'noopener')));
