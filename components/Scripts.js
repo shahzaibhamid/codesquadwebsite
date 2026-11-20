@@ -397,24 +397,33 @@ export default function Scripts() {
         seoSync();
       };
       const frame = (t) => {
-        raf = requestAnimationFrame(frame);
+        raf = 0;
+        if (mq.matches || !inView || document.hidden) return;
         const dt = Math.min(0.05, (t - last) / 1000 || 0.016); last = t;
         if (!drag) {
           const diff = target - angle;
           angle = Math.abs(diff) < 0.02 ? target : angle + diff * (1 - Math.exp(-dt * 5));
         }
         paint();
+        // A settled ring needs no animation work until the next interaction or step.
+        if (!drag && Math.abs(target - angle) > 0.02) raf = requestAnimationFrame(frame);
+      };
+      const wake = () => {
+        if (!raf && !mq.matches && inView && !document.hidden) {
+          last = performance.now(); raf = requestAnimationFrame(frame);
+        }
       };
       function paused() { return focused || !inView || document.hidden || !!drag || mq.matches; }
       const schedule = () => {
         clearTimeout(timer);
         eng.classList.toggle('is-paused', paused());
         if (!paused()) timer = setTimeout(() => { target = (Math.round(target / STEP) + 1) * STEP; setActive(false); schedule(); }, INTERVAL);
+        wake();
         seoSync();
       };
       const sync = () => {
-        const want = !mq.matches && inView;
-        if (want && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+        const want = !mq.matches && inView && !document.hidden;
+        if (want) wake();
         if (!want && raf) { cancelAnimationFrame(raf); raf = 0; }
         schedule();
       };
@@ -471,6 +480,7 @@ export default function Scripts() {
         drag.v = ((drag.px - e.clientX) * 0.3) / Math.max(1, now - drag.pt) * 1000 * 0.5 + drag.v * 0.5;
         drag.px = e.clientX; drag.pt = now;
         angle = drag.a - dx * 0.3; target = angle;
+        paint();
       });
       const release = () => {
         if (!drag) return;
@@ -496,23 +506,18 @@ export default function Scripts() {
 
     // "Ready to build?" inline Calendly (tablet/desktop only; phones use the Book a Free Call button and load nothing).
     // The card has a fixed height (the section never grows); longer Calendly views scroll inside with the scrollbar clipped.
-    // Chrome pauses cross-origin iframes while they are off-screen, so a calendar loaded below the fold only starts
-    // rendering once scrolled to (~2s of Calendly's own loader). To avoid that, once the page is idle the calendar is
-    // pre-rendered in an invisible holder pinned inside the viewport (outside the section, whose transform/overflow
-    // would hide it), then moved into its card with moveBefore(), which keeps the loaded iframe instead of reloading.
-    // Browsers without moveBefore() load it in place as the section is approached.
-    // If it can't load, the placeholder keeps a link to the booking page.
+    // Fetch the third-party app only as the visitor approaches the booking section.
+    // The placeholder keeps a working link if the calendar cannot load.
     const cal = document.querySelector('[data-calendly]');
     if (cal && !cal.querySelector('iframe')) {
       const slot = cal.parentElement;
       const url = cal.getAttribute('data-calendly') + '?hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1&primary_color=0fae9b';
       const phoneMq = window.matchMedia('(max-width: 640px)');
-      const canMove = typeof cal.moveBefore === 'function';
-      let failTimer = 0, revealTimer = 0, started = false, near = false, frame = null, holder = null, rendered = false;
+      let failTimer = 0, revealTimer = 0, started = false, frame = null, rendered = false;
       const fail = () => { if (!rendered) cal.classList.add('is-failed'); };
       const ready = () => {
         clearTimeout(failTimer); clearTimeout(revealTimer); rendered = true;
-        if (!holder) cal.classList.add('is-ready');
+        cal.classList.add('is-ready');
       };
       // Calendly posts calendly.page_height once its page has rendered; ignore the tiny interim heights while it boots
       on(window, 'message', (e) => {
@@ -523,16 +528,6 @@ export default function Scripts() {
         cal.classList.toggle('is-tall', h > 612);
         ready();
       });
-      // move the pre-rendered iframe from the holder into the card (state-preserving), or fall back to a fresh load
-      const settle = () => {
-        if (!holder) return;
-        const h = holder; holder = null;
-        if (frame && frame.parentNode === h) {
-          try { cal.moveBefore(frame, cal.firstChild); } catch (err) { frame = null; started = false; }
-        }
-        h.remove();
-        if (frame) { if (rendered) cal.classList.add('is-ready'); } else load(cal);
-      };
       const mount = (target) => {
         if (!window.Calendly || frame) return;
         window.Calendly.initInlineWidget({ url, parentElement: target });
@@ -542,11 +537,14 @@ export default function Scripts() {
           on(frame, 'load', () => { revealTimer = setTimeout(ready, 4000); });
         }
         failTimer = setTimeout(() => { if (!rendered) fail(); }, 15000);
-        if (target === holder && near) settle();
       };
       const load = (target) => {
         if (started || phoneMq.matches) return;
         started = true;
+        ['https://assets.calendly.com', 'https://calendly.com'].forEach((href) => {
+          if (document.querySelector('link[rel="preconnect"][href="' + href + '"]')) return;
+          const l = document.createElement('link'); l.rel = 'preconnect'; l.href = href; document.head.appendChild(l);
+        });
         if (window.Calendly) { mount(target); return; }
         let s = document.querySelector('script[data-calendly-widget]');
         if (!s) {
@@ -559,34 +557,13 @@ export default function Scripts() {
         on(s, 'load', () => mount(target));
         on(s, 'error', fail);
       };
-      // open the connections early so the script and iframe start faster
-      if (!phoneMq.matches) ['https://assets.calendly.com', 'https://calendly.com'].forEach((href) => {
-        if (document.querySelector('link[rel="preconnect"][href="' + href + '"]')) return;
-        const l = document.createElement('link'); l.rel = 'preconnect'; l.href = href; l.crossOrigin = ''; document.head.appendChild(l);
-      });
-      const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
-      const cancelIdle = window.cancelIdleCallback || clearTimeout;
-      let idleId = 0;
-      const warm = () => { idleId = idle(() => {
-        if (started || phoneMq.matches || near || !canMove) return;
-        holder = document.createElement('div');
-        holder.className = 'rd-cal-warm';
-        holder.setAttribute('aria-hidden', 'true');
-        holder.setAttribute('inert', '');
-        holder.style.width = (slot.clientWidth || 540) + 'px';
-        document.body.appendChild(holder);
-        load(holder);
-      }, { timeout: 4000 }); };
-      if (document.readyState === 'complete') warm(); else on(window, 'load', warm);
-      // as the section is approached: drop the pre-rendered calendar into place, or load it now
       const calIo = new IntersectionObserver((es) => {
-        near = es[0].isIntersecting;
-        if (!near || phoneMq.matches) return;
+        if (!es[0].isIntersecting || phoneMq.matches) return;
         calIo.disconnect();
-        if (holder) { if (frame) settle(); } else load(cal);
-      }, { rootMargin: '900px 0px' });
+        load(cal);
+      }, { rootMargin: '300px 0px' });
       calIo.observe(slot);
-      cleanups.push(() => { calIo.disconnect(); clearTimeout(failTimer); clearTimeout(revealTimer); cancelIdle(idleId); if (holder) holder.remove(); });
+      cleanups.push(() => { calIo.disconnect(); clearTimeout(failTimer); clearTimeout(revealTimer); });
     }
 
     // hero typing headline: types each word, pauses, deletes, loops; syncs the audience chips
@@ -691,7 +668,7 @@ export default function Scripts() {
       on(rail, 'dragstart', (e) => e.preventDefault()); // stop the browser dragging images / links instead
 
       // poster that fails to load (e.g. a non-Shorts video has no vertical thumbnail) falls back once
-      cst.querySelectorAll('img[data-fallback-src]').forEach((img) => on(img, 'error', () => { if (img.src !== img.dataset.fallbackSrc) { img.classList.remove('is-short'); img.src = img.dataset.fallbackSrc; } }));
+      cst.querySelectorAll('img[data-fallback-src]').forEach((img) => on(img, 'error', () => { if (img.src !== img.dataset.fallbackSrc) { img.classList.remove('is-short'); img.removeAttribute('srcset'); img.removeAttribute('sizes'); img.src = img.dataset.fallbackSrc; } }));
 
       const modal = cst.querySelector('.cst-modal');
       const holder = modal && modal.querySelector('.cst-modal-frame');

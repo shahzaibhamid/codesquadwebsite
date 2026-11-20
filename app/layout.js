@@ -1,5 +1,10 @@
 import './globals.css';
 import SiteChrome from '../components/SiteChrome';
+import Script from 'next/script';
+import { DM_Sans, Fraunces } from 'next/font/google';
+
+const bodyFont = DM_Sans({ subsets: ['latin'], display: 'swap', variable: '--font-dm-sans' });
+const displayFont = Fraunces({ subsets: ['latin'], style: ['normal', 'italic'], display: 'swap', variable: '--font-fraunces' });
 
 // Favicon comes from the file-based convention (app/favicon.ico, app/icon.png,
 // app/apple-icon.png) so it's served from a stable, crawlable URL — Google's
@@ -14,12 +19,12 @@ export const viewport = { width: 'device-width', initialScale: 1, themeColor: '#
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${bodyFont.variable} ${displayFont.variable}`}>
       <head>
         {/* Facebook domain verification (Meta Business → Domains) */}
         <meta name="facebook-domain-verification" content="r2i0hqgw34i3st9vulojncr8qfp03h" />
         {/* Google Tag Manager */}
-        <script
+        <Script id="google-tag-manager" strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -30,7 +35,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
         {/* End Google Tag Manager */}
         {/* Meta Pixel Code */}
-        <script
+        <Script id="meta-pixel" strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -54,12 +59,6 @@ fbq('track', 'PageView');`
           />
         </noscript>
         {/* End Meta Pixel Code */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=DM+Sans:opsz,wght@9..40,400..900&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body>
         {/* Google Tag Manager (noscript) */}

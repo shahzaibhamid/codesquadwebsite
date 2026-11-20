@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getPosts, getPost } from '../../../lib/store';
 import { postRedirects, isHiddenPost } from '../../../lib/redirects.mjs';
 
-export const revalidate = 30;
+export const revalidate = 300;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {

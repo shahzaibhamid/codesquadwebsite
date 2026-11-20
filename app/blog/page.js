@@ -1,7 +1,9 @@
 import { blogCats } from '../../lib/posts';
 import { getPosts } from '../../lib/store';
 import { postRedirects, isHiddenPost } from '../../lib/redirects.mjs';
-export const revalidate = 30;
+import Image from 'next/image';
+import { canOptimizeImage } from '../../lib/image-config.mjs';
+export const revalidate = 300;
 export const metadata = {
   title: 'CodeSquad Blog | AI Automation, SMEs & Business Growth',
   description: 'Practical, technical perspectives on AI automation, SMEs, AEO/SEO, lead generation, software development and scaling operations.'
@@ -30,7 +32,7 @@ export default async function Page() {
             {blogPosts.map((p) => (
               <a className="bpost reveal" href={`/blog/${p.slug}`} key={p.slug} data-cat={p.cat}>
                 <span className={p.img ? 'bthumb' : 'bthumb bthumb--empty'}>
-                  {p.img ? <img src={p.img} alt={p.title} loading="lazy" /> : <span className="bthumb__ph" aria-hidden="true">{p.cat}</span>}
+                  {p.img ? <Image src={p.img} alt={p.title} width={1000} height={625} sizes="(max-width: 640px) 100vw, (max-width: 1023px) 50vw, 400px" unoptimized={!canOptimizeImage(p.img)} /> : <span className="bthumb__ph" aria-hidden="true">{p.cat}</span>}
                 </span>
                 <span className="bbody">
                   <span className="bmeta">{p.cat}<span className="bdate">{p.date}</span></span>

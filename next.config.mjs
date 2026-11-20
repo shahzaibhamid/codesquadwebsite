@@ -1,8 +1,9 @@
 import { postRedirects, serviceRedirects } from './lib/redirects.mjs';
+import { remoteImagePatterns } from './lib/image-config.mjs';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: { unoptimized: true },
+  images: { remotePatterns: remoteImagePatterns, minimumCacheTTL: 86400 },
   async redirects() {
     return [
       // The all-services hub page was removed; the homepage lists every service.

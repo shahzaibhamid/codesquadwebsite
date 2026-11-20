@@ -1,7 +1,8 @@
 import { getContent } from '../lib/content';
 import { renderClientStories } from '../lib/clientStories';
 import { getPublishedCases } from '../lib/store';
-export const revalidate = 30;
+// Dashboard saves invalidate this route immediately; refresh in the background otherwise.
+export const revalidate = 300;
 
 const title = 'AI Automation, Custom Software & Growth Marketing Agency | CodeSquad';
 const description = 'CodeSquad designs and builds AI automation, custom software, SEO/GEO/AEO, and performance marketing systems for growing businesses — engineered into your stack, measured on revenue.';

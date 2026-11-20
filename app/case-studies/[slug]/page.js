@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getCases, getCase } from '../../../lib/store';
 
-export const revalidate = 30;
+export const revalidate = 300;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {

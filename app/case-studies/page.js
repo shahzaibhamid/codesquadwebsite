@@ -1,6 +1,8 @@
 import { caseCats } from '../../lib/posts';
 import { getPublishedCases } from '../../lib/store';
-export const revalidate = 30;
+import Image from 'next/image';
+import { canOptimizeImage } from '../../lib/image-config.mjs';
+export const revalidate = 300;
 export const metadata = {
   title: 'Case Studies | CodeSquad',
   description: 'Production systems built for healthcare, physical appointment-based businesses, and e-commerce teams — designed around their needs.'
@@ -62,7 +64,7 @@ export default async function Page() {
                 data-cat={c.filter}
                 style={caseCats[0] === 'All' || c.filter === caseCats[0] ? undefined : { display: 'none' }}
               >
-                <div className="cs-scard__thumb"><img src={c.img} alt={c.name} loading="lazy" /></div>
+                <div className="cs-scard__thumb"><Image src={c.img} alt={c.name} width={1000} height={625} sizes="(max-width: 640px) 100vw, (max-width: 1023px) 50vw, 400px" unoptimized={!canOptimizeImage(c.img)} /></div>
                 <div className="cs-scard__body">
                   <span className="cs-scard__tag">{c.cat}</span>
                   <h3>{c.tagline}</h3>
