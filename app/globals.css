@@ -3285,6 +3285,7 @@ a.co-chip{text-decoration:none;transition:color .2s,border-color .2s,background 
   .cst-top{flex:0 0 auto}
   .cst-bottom{grid-template-columns:88px minmax(0,1fr);grid-template-areas:"avatar who" "avatar stars" "voice voice";grid-template-rows:auto auto auto;gap:10px 16px;margin-top:22px;padding-top:22px}
   .cst-side{display:contents}
+  .cst-bottom--byline{grid-template-areas:"avatar voice" "stars voice" ". who";grid-template-rows:auto auto 1fr}
   .cst-av{grid-area:avatar}
   .cst-who{align-self:end;margin:0}
   .cst-stars{grid-area:stars;align-self:start;justify-content:flex-start}
