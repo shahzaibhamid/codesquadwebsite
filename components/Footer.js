@@ -105,7 +105,7 @@ export default function Footer() {
             <ul>
               <li><a href="tel:+13073964945"><PhoneIcon />+1 (307) 396-4945</a></li>
               <li><a href="mailto:info@codesquad.ai"><MailIcon />info@codesquad.ai</a></li>
-              <li><a href="https://www.google.com/maps/search/?api=1&query=J2+Johar+Town+Lahore" target="_blank" rel="noopener noreferrer"><PinIcon />J2 Johar Town, Lahore</a></li>
+              <li><a href="https://www.google.com/maps/search/?api=1&query=Lahore%2C+Pakistan" target="_blank" rel="noopener noreferrer"><PinIcon />Lahore, Pakistan</a></li>
             </ul>
           </div>
           <div>
